@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAKU STUDIO｜Web制作・ホームページ制作</title>
+<meta name="description" content="HAKU STUDIOは茨城県日立市を拠点とするWeb制作スタジオです。飲食店・店舗・中小企業のホームページ制作をお手頃な価格で承ります。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:   #0a0a0a;
+    --white:   #f8f8f6;
+    --gray:    #8a8a8a;
+    --gray-lt: #d4d4d0;
+    --accent:  #c8a96e;
+    --divider: rgba(200,169,110,0.25);
+    --bg-dark: #111110;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; font-size:16px; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: transform .1s;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,169,110,.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: all .18s ease;
+  }
+
+  /* NAV */
+  header {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 68px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    background: rgba(10,10,10,.85);
+    backdrop-filter: blur(20px);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 300;
+    letter-spacing: .35em;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  nav { display: flex; gap: 2.5rem; align-items: center; }
+  nav a {
+    font-size: .72rem; letter-spacing: .22em;
+    color: var(--gray); text-decoration: none;
+    text-transform: uppercase;
+    transition: color .25s;
+  }
+  nav a:hover { color: var(--white); }
+
+  .nav-contact {
+    font-size: .7rem; letter-spacing: .22em;
+    color: var(--accent) !important;
+    border: 1px solid var(--divider);
+    padding: .4rem 1.1rem; border-radius: 1px;
+    transition: background .25s, color .25s !important;
+  }
+  .nav-contact:hover { background: var(--accent); color: var(--black) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 8vw 8vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(120px, 22vw, 280px);
+    font-weight: 300;
+    letter-spacing: .1em;
+    color: rgba(255,255,255,.03);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-line {
+    position: absolute;
+    top: 0; right: 22vw;
+    width: 1px; height: 100vh;
+    background: linear-gradient(to bottom, transparent, rgba(200,169,110,.2) 30%, rgba(200,169,110,.2) 70%, transparent);
+  }
+
+  .hero-content { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    font-size: .65rem; letter-spacing: .45em;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp .8s .2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 300; line-height: 1.1;
+    letter-spacing: .02em;
+    opacity: 0; animation: fadeUp .8s .4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    margin-top: 2.5rem;
+    max-width: 420px;
+    font-size: .85rem; line-height: 2;
+    color: var(--gray); letter-spacing: .08em;
+    opacity: 0; animation: fadeUp .8s .6s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 3.5rem; display: flex; gap: 1.5rem; align-items: center;
+    opacity: 0; animation: fadeUp .8s .8s forwards;
+  }
+
+  .btn-main {
+    display: inline-flex; align-items: center; gap: .8rem;
+    font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--black); background: var(--accent);
+    padding: .9rem 2rem; border-radius: 1px;
+    text-decoration: none; transition: background .25s, transform .2s;
+  }
+  .btn-main:hover { background: #d4b87a; transform: translateY(-2px); }
+  .btn-main::after { content: '→'; font-size: .8rem; }
+
+  .btn-sub {
+    font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--gray); text-decoration: none;
+    border-bottom: 1px solid rgba(138,138,138,.3);
+    padding-bottom: .2rem;
+    transition: color .25s, border-color .25s;
+  }
+  .btn-sub:hover { color: var(--white); border-color: var(--white); }
+
+  .hero-scroll {
+    position: absolute; bottom: 3rem; right: 8vw;
+    display: flex; flex-direction: column; align-items: center; gap: .8rem;
+    font-size: .58rem; letter-spacing: .3em; color: rgba(255,255,255,.25);
+    text-transform: uppercase; z-index: 2;
+    writing-mode: vertical-rl;
+  }
+  .hero-scroll::after {
+    content: ''; display: block; width: 1px; height: 60px;
+    background: linear-gradient(to bottom, rgba(200,169,110,.5), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(24px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  section { padding: 8rem 8vw; }
+
+  .eyebrow {
+    font-size: .62rem; letter-spacing: .45em;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300; line-height: 1.25; letter-spacing: .04em;
+  }
+
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  .divider-line {
+    width: 40px; height: 1px;
+    background: var(--accent); margin: 1.8rem 0 3rem;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center;
+    margin-top: 1rem;
+  }
+
+  .about-text p {
+    font-size: .88rem; line-height: 2.3; color: #aaa; margin-bottom: 1.2rem;
+  }
+
+  .about-numbers {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 3rem;
+  }
+
+  .about-num-item {}
+  .about-num-item .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300; color: var(--accent); line-height: 1;
+    letter-spacing: .05em;
+  }
+  .about-num-item .num-label {
+    font-size: .7rem; letter-spacing: .2em; color: var(--gray);
+    margin-top: .5rem; text-transform: uppercase;
+  }
+
+  .about-visual {
+    position: relative;
+    aspect-ratio: 3/4;
+    background: var(--bg-dark);
+    border: 1px solid rgba(255,255,255,.06);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  .about-visual-inner {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem; font-weight: 300;
+    color: rgba(200,169,110,.08);
+    letter-spacing: .1em;
+  }
+
+  .about-visual::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(200,169,110,.05) 100%);
+  }
+
+  /* WORKS */
+  .works-section { background: var(--bg-dark); }
+
+  .works-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    margin-top: 3rem;
+  }
+
+  .work-card {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: #1a1a18;
+    overflow: hidden;
+    display: flex; align-items: flex-end;
+    padding: 2rem;
+    cursor: none;
+  }
+
+  .work-card-bg {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem; font-weight: 300;
+    color: rgba(255,255,255,.04);
+    transition: transform .6s ease;
+  }
+
+  .work-card:hover .work-card-bg { transform: scale(1.05); }
+
+  .work-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.8) 30%, transparent 100%);
+  }
+
+  .work-card-body { position: relative; z-index: 2; }
+
+  .work-tag {
+    font-size: .6rem; letter-spacing: .3em; color: var(--accent);
+    text-transform: uppercase; margin-bottom: .5rem;
+  }
+
+  .work-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 400; letter-spacing: .05em;
+  }
+
+  .work-desc {
+    font-size: .72rem; color: var(--gray); letter-spacing: .08em; margin-top: .4rem;
+  }
+
+  .work-card-main {
+    grid-column: span 2;
+    aspect-ratio: 16/7;
+  }
+
+  .work-card-main .work-card-bg { font-size: 10rem; }
+  .work-card-main .work-name { font-size: 2rem; }
+
+  /* PRICE */
+  .price-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem;
+  }
+
+  .price-card {
+    border: 1px solid rgba(255,255,255,.07);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: border-color .3s;
+  }
+  .price-card:hover { border-color: var(--accent); }
+
+  .price-card.featured {
+    border-color: var(--accent);
+    background: rgba(200,169,110,.04);
+  }
+
+  .price-badge {
+    position: absolute; top: -1px; left: 2rem;
+    font-size: .58rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--black); background: var(--accent);
+    padding: .25rem .7rem;
+  }
+
+  .price-plan {
+    font-size: .65rem; letter-spacing: .35em; color: var(--accent);
+    text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+
+  .price-amount {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 2.2rem; font-weight: 300; color: var(--white);
+    letter-spacing: .04em; line-height: 1;
+  }
+
+  .price-amount small {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: .75rem; font-weight: 300; color: var(--gray); margin-left: .3rem;
+  }
+
+  .price-divider { width: 100%; height: 1px; background: rgba(255,255,255,.07); margin: 1.5rem 0; }
+
+  .price-features { list-style: none; }
+  .price-features li {
+    font-size: .78rem; color: #999; letter-spacing: .06em;
+    padding: .5rem 0; border-bottom: 1px solid rgba(255,255,255,.04);
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .price-features li::before { content: '—'; color: var(--accent); font-size: .7rem; }
+  .price-features li:last-child { border-bottom: none; }
+
+  .price-note { margin-top: 2rem; font-size: .72rem; color: var(--gray); letter-spacing: .08em; line-height: 1.9; }
+
+  /* CONTACT */
+  .contact-section { background: var(--bg-dark); }
+
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: start;
+  }
+
+  .contact-info p {
+    font-size: .85rem; color: var(--gray); line-height: 2.2; letter-spacing: .08em; margin-bottom: 2rem;
+  }
+
+  .contact-detail {
+    display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2.5rem;
+  }
+
+  .contact-detail-item { display: flex; flex-direction: column; gap: .3rem; }
+  .contact-detail-label { font-size: .6rem; letter-spacing: .3em; color: var(--accent); text-transform: uppercase; }
+  .contact-detail-value { font-size: .85rem; color: #ccc; letter-spacing: .1em; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: .5rem; }
+
+  .form-label {
+    font-size: .62rem; letter-spacing: .3em; color: var(--accent); text-transform: uppercase;
+  }
+
+  .form-input, .form-textarea {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    padding: .9rem 1rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: .82rem; font-weight: 300;
+    color: var(--white); letter-spacing: .06em;
+    outline: none; border-radius: 1px;
+    transition: border-color .25s;
+    width: 100%;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+  .form-textarea { resize: vertical; min-height: 140px; }
+
+  .form-submit {
+    display: inline-flex; align-items: center; gap: .8rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--black); background: var(--accent);
+    padding: 1rem 2.2rem; border: none; cursor: none;
+    border-radius: 1px; transition: background .25s, transform .2s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: #d4b87a; transform: translateY(-2px); }
+  .form-submit::after { content: '→'; }
+
+
+  .contact-line {
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    gap: 1.5rem; padding-top: 1rem;
+  }
+  .contact-line-desc {
+    font-size: .88rem; color: var(--gray); line-height: 2.2; letter-spacing: .08em;
+  }
+  .line-btn {
+    display: inline-flex; align-items: center; gap: .8rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: .82rem; font-weight: 500; letter-spacing: .15em;
+    color: #fff; background: #06C755;
+    padding: 1rem 2.2rem; border-radius: 4px;
+    text-decoration: none; transition: background .25s, transform .2s;
+  }
+  .line-btn:hover { background: #05b34c; transform: translateY(-2px); }
+  .line-note {
+    font-size: .7rem; color: rgba(255,255,255,.25); letter-spacing: .12em;
+  }
+
+
+  /* FLOW */
+  .flow-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid rgba(255,255,255,.07);
+    margin-top: 1rem;
+  }
+  .flow-item {
+    display: flex; gap: 2rem; align-items: flex-start;
+    padding: 2.5rem;
+    border-right: 1px solid rgba(255,255,255,.07);
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .flow-item:nth-child(even) { border-right: none; }
+  .flow-item:nth-child(3), .flow-item:nth-child(4) { border-bottom: none; }
+  .flow-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 300;
+    color: var(--accent); opacity: .6;
+    line-height: 1; min-width: 52px;
+  }
+  .flow-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 400;
+    letter-spacing: .06em; color: var(--white);
+    margin-bottom: .7rem;
+  }
+  .flow-desc {
+    font-size: .8rem; color: var(--gray);
+    line-height: 2; letter-spacing: .06em;
+  }
+
+  /* VOICE */
+  .voice-section { background: var(--bg-dark); }
+  .voice-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    margin-top: 1rem;
+  }
+  .voice-card {
+    padding: 3rem 2.5rem;
+    border: 1px solid rgba(255,255,255,.07);
+    position: relative;
+    display: flex; flex-direction: column; gap: 1.5rem;
+  }
+  .voice-card-empty { opacity: .4; }
+  .voice-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem; font-weight: 300;
+    color: var(--accent); line-height: .8;
+    opacity: .5;
+  }
+  .voice-text {
+    font-size: .85rem; color: #bbb;
+    line-height: 2.2; letter-spacing: .07em;
+    font-style: italic;
+  }
+  .voice-author { margin-top: auto; display: flex; flex-direction: column; gap: .3rem; }
+  .voice-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 400;
+    color: var(--accent); letter-spacing: .08em;
+  }
+  .voice-type {
+    font-size: .68rem; color: var(--gray); letter-spacing: .15em;
+  }
+
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; margin-top: 1rem; }
+  .faq-item { border-bottom: 1px solid rgba(255,255,255,.07); }
+  .faq-item:first-child { border-top: 1px solid rgba(255,255,255,.07); }
+  .faq-q {
+    width: 100%; display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 0; background: none; border: none;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: .88rem; font-weight: 300;
+    color: var(--white); letter-spacing: .08em;
+    cursor: none; text-align: left; gap: 1rem;
+  }
+  .faq-q:hover { color: var(--accent); }
+  .faq-icon {
+    font-size: 1.2rem; color: var(--accent);
+    transition: transform .3s; flex-shrink: 0;
+    font-weight: 300;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    display: none; padding: 0 0 1.4rem;
+  }
+  .faq-item.open .faq-a { display: block; }
+  .faq-a p {
+    font-size: .82rem; color: var(--gray);
+    line-height: 2.1; letter-spacing: .07em;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 8vw;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 300; letter-spacing: .35em; color: var(--white);
+    text-transform: uppercase;
+  }
+  .footer-logo span { color: var(--accent); }
+
+  .footer-copy { font-size: .62rem; color: rgba(255,255,255,.2); letter-spacing: .15em; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    section { padding: 5rem 5vw; }
+    header { padding: 0 4vw; height: 60px; }
+    .nav-links { display: none !important; }
+    .hero { padding: 0 5vw 10vh; }
+    .hero-bg-text { font-size: 22vw; }
+    .hero-line { display: none; }
+    .hero-cta { flex-direction: column; gap: 1.2rem; align-items: flex-start; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-visual { display: none; }
+    .about-numbers { grid-template-columns: 1fr 1fr; }
+    .works-grid { grid-template-columns: 1fr; }
+    .work-card-main { grid-column: span 1; aspect-ratio: 4/3; }
+    .price-grid { grid-template-columns: 1fr; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<header>
+  <a class="nav-logo" href="#">HAKU <span>STUDIO</span></a>
+  <nav>
+    <span class="nav-links" style="display:flex;gap:2.5rem;align-items:center;">
+      <a href="#works">Works</a>
+      <a href="#about">About</a>
+      <a href="#price">Price</a>
+      <a href="#flow">Flow</a>
+      <a href="#faq">FAQ</a>
+    </span>
+    <a class="nav-contact" href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="メインビジュアル">
+    <div class="hero-bg-text" aria-hidden="true">HAKU</div>
+    <div class="hero-line" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Web Design Studio · Ibaraki</p>
+      <h1 class="hero-title">
+        余白が語る、<br>
+        <em>洗練された</em><br>
+        ウェブの世界。
+      </h1>
+      <p class="hero-desc">
+        茨城県日立市を拠点に、飲食店・店舗・中小企業のホームページ制作を手がけるWebデザインスタジオです。シンプルで美しく、伝わるデザインを提供します。
+      </p>
+      <div class="hero-cta">
+        <a class="btn-main" href="#works">制作実績を見る</a>
+        <a class="btn-sub" href="#contact">お問い合わせ</a>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">Scroll</div>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works" class="works-section" aria-labelledby="works-title">
+    <p class="eyebrow">Works</p>
+    <h2 class="section-title" id="works-title">制作<em>実績</em></h2>
+    <div class="divider-line"></div>
+
+    <div class="works-grid">
+      <!-- 実績1: とん亭 -->
+      <div class="work-card work-card-main">
+        <div class="work-card-bg">とん亭</div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-body">
+          <p class="work-tag">Restaurant · Web Design · SEO</p>
+          <h3 class="work-name">とん亭｜老舗とんかつ専門店</h3>
+          <p class="work-desc">茨城県日立市大みか町 · 和モダンデザイン · SEO対応 · スマホ最適化</p>
+        </div>
+      </div>
+
+      <!-- 実績2: ダミー -->
+      <div class="work-card">
+        <div class="work-card-bg">Coming</div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-body">
+          <p class="work-tag">Coming Soon</p>
+          <h3 class="work-name">制作実績 追加予定</h3>
+        </div>
+      </div>
+
+      <!-- 実績3: ダミー -->
+      <div class="work-card">
+        <div class="work-card-bg">Soon</div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-body">
+          <p class="work-tag">Coming Soon</p>
+          <h3 class="work-name">制作実績 追加予定</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" aria-labelledby="about-title">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="eyebrow">About</p>
+        <h2 class="section-title" id="about-title"><em>HAKU</em> STUDIO<br>について</h2>
+        <div class="divider-line"></div>
+        <p>茨城県日立市を拠点に活動するWebデザインスタジオです。「余白の美しさ」をコンセプトに、シンプルで洗練されたデザインを追求しています。</p>
+        <p>飲食店・美容室・整体院・小売店など、地域に根ざした店舗・中小企業のWeb制作を得意としています。デザインだけでなく、SEO対応・スマートフォン最適化まで一貫して対応します。</p>
+        <p>制作後のサポートも丁寧に対応。「HPを作って終わり」ではなく、長期的なパートナーとして関わらせていただきます。</p>
+        <div class="about-numbers">
+          <div class="about-num-item">
+            <div class="num">1+</div>
+            <div class="num-label">制作実績</div>
+          </div>
+          <div class="about-num-item">
+            <div class="num">SEO</div>
+            <div class="num-label">対応済み</div>
+          </div>
+          <div class="about-num-item">
+            <div class="num">SP</div>
+            <div class="num-label">スマホ最適化</div>
+          </div>
+          <div class="about-num-item">
+            <div class="num">∞</div>
+            <div class="num-label">修正対応</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual" aria-hidden="true">
+        <div class="about-visual-inner">白</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICE -->
+  <section id="price" aria-labelledby="price-title">
+    <p class="eyebrow">Price</p>
+    <h2 class="section-title" id="price-title">料金<em>プラン</em></h2>
+    <div class="divider-line"></div>
+
+    <div class="price-grid">
+      <div class="price-card">
+        <p class="price-plan">Light</p>
+        <div class="price-amount">30,000<small>円〜</small></div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>1ページ構成（LP）</li>
+          <li>スマホ対応</li>
+          <li>お問い合わせフォーム</li>
+          <li>納期：2〜3週間</li>
+        </ul>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-badge">Popular</div>
+        <p class="price-plan">Standard</p>
+        <div class="price-amount">80,000<small>円〜</small></div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>複数ページ構成</li>
+          <li>スマホ対応</li>
+          <li>SEO基本対策</li>
+          <li>Google マップ埋め込み</li>
+          <li>お問い合わせフォーム</li>
+          <li>納期：3〜4週間</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <p class="price-plan">Premium</p>
+        <div class="price-amount">150,000<small>円〜</small></div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>フルオーダーデザイン</li>
+          <li>スマホ対応</li>
+          <li>SEO対策（構造化データ含む）</li>
+          <li>アニメーション演出</li>
+          <li>更新管理システム</li>
+          <li>納期：4〜6週間</li>
+        </ul>
+      </div>
+    </div>
+    <p class="price-note">
+      ※ 上記はあくまで目安です。ご要望・ページ数・機能により変動します。<br>
+      まずはお気軽にご相談ください。無料でお見積もりいたします。
+    </p>
+  </section>
+
+
+  <!-- FLOW -->
+  <section id="flow" aria-labelledby="flow-title">
+    <p class="eyebrow">Flow</p>
+    <h2 class="section-title" id="flow-title">制作の<em>流れ</em></h2>
+    <div class="divider-line"></div>
+    <div class="flow-grid">
+      <div class="flow-item">
+        <div class="flow-num">01</div>
+        <div class="flow-body">
+          <h3 class="flow-title">ご相談・ヒアリング</h3>
+          <p class="flow-desc">LINEにてお気軽にご連絡ください。業種・ご予算・ご希望・現状のお悩みをお聞きします。無料でご相談いただけます。</p>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-num">02</div>
+        <div class="flow-body">
+          <h3 class="flow-title">お見積もり・ご提案</h3>
+          <p class="flow-desc">ヒアリング内容をもとに、プランと費用をご提案します。ご納得いただけるまで何度でもご相談ください。</p>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-num">03</div>
+        <div class="flow-body">
+          <h3 class="flow-title">制作・確認</h3>
+          <p class="flow-desc">デザイン・コーディングを進めます。途中経過をご確認いただきながら、ご要望を反映していきます。</p>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-num">04</div>
+        <div class="flow-body">
+          <h3 class="flow-title">公開・納品</h3>
+          <p class="flow-desc">最終確認後、ウェブサイトを公開します。公開後のサポートも丁寧に対応しますので、安心してお任せください。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICE -->
+  <section id="voice" class="voice-section" aria-labelledby="voice-title">
+    <p class="eyebrow">Voice</p>
+    <h2 class="section-title" id="voice-title">お客様の<em>声</em></h2>
+    <div class="divider-line"></div>
+    <div class="voice-grid">
+      <div class="voice-card">
+        <div class="voice-quote">"</div>
+        <p class="voice-text">お店の雰囲気をそのままデザインに落とし込んでもらえて、本当に満足しています。スマホでも見やすくて、お客様からも「HPを見て来ました」と言っていただけるようになりました。</p>
+        <div class="voice-author">
+          <span class="voice-name">とん亭</span>
+          <span class="voice-type">茨城県日立市 · とんかつ専門店</span>
+        </div>
+      </div>
+      <div class="voice-card voice-card-empty">
+        <div class="voice-quote">"</div>
+        <p class="voice-text">制作の流れがわかりやすく、LINEで気軽に相談できたのが良かったです。思っていたより早く完成して、クオリティにも大満足です。</p>
+        <div class="voice-author">
+          <span class="voice-name">Coming Soon</span>
+          <span class="voice-type">次のお客様の声をお待ちしています</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" aria-labelledby="faq-title">
+    <p class="eyebrow">FAQ</p>
+    <h2 class="section-title" id="faq-title">よくある<em>質問</em></h2>
+    <div class="divider-line"></div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>制作期間はどのくらいかかりますか？</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>プランによって異なりますが、Lightプランで2〜3週間、Standardプランで3〜4週間、Premiumプランで4〜6週間が目安です。お急ぎの場合はご相談ください。</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>写真や文章がなくても大丈夫ですか？</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>大丈夫です。スマートフォンで撮影した写真でも十分使えます。文章についてもヒアリングをもとにこちらで作成することが可能です。お気軽にご相談ください。</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>制作後に自分で更新できますか？</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>はい。簡単な更新（営業時間・お知らせなど）ができるよう、わかりやすく仕上げます。更新作業をご依頼いただくことも可能です。</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>支払い方法を教えてください。</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>銀行振込にて承っております。着手時に50%、納品時に残り50%のお支払いをお願いしています。</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>エリア外でも対応できますか？</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>はい、全国対応しています。LINEやオンラインでのやり取りで完結しますので、どちらにお住まいでもお気軽にご相談ください。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section" aria-labelledby="contact-title">
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <p class="eyebrow">Contact</p>
+        <h2 class="section-title" id="contact-title">お<em>問い合わせ</em></h2>
+        <div class="divider-line"></div>
+        <p>ホームページ制作のご依頼・ご相談はお気軽にどうぞ。内容をお聞きした上で、無料でお見積もりいたします。</p>
+        <p>制作の流れや料金について、疑問があればなんでも聞いてください。</p>
+        <div class="contact-detail">
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Studio</span>
+            <span class="contact-detail-value">HAKU STUDIO</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Location</span>
+            <span class="contact-detail-value">茨城県日立市</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Response</span>
+            <span class="contact-detail-value">2営業日以内にご返信します</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-line">
+        <p class="contact-line-desc">LINEからお気軽にご相談ください。<br>業種・ご予算・ご希望など、なんでもお聞きします。<br>2営業日以内にご返信します。</p>
+        <a class="line-btn" href="https://line.me/R/ti/p/@131gmndm" target="_blank" rel="noopener noreferrer">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.070 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          LINEで相談する
+        </a>
+        <p class="line-note">友だち追加後、メッセージをお送りください</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span class="footer-logo">HAKU <span>STUDIO</span></span>
+  <small class="footer-copy">© 2026 HAKU STUDIO All Rights Reserved.</small>
+</footer>
+
+<script>
+
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('open');
+  }
+
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * .12;
+    ry += (my - ry) * .12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.transform = 'translate(-50%,-50%) scale(1.8)';
+      ring.style.borderColor = 'rgba(200,169,110,.8)';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.borderColor = 'rgba(200,169,110,.5)';
+    });
+  });
+</script>
+
+</body>
+</html>
