@@ -647,29 +647,26 @@
         </div>
       </a>
 
-      <!-- 実績2: 居酒屋デモ -->
+      <!-- 実績2: ダミー -->
       <div class="work-card">
-        <a href="https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/" target="_blank">
-          <div class="work-card-bg" style="background:url(https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/izakaya.png) center/cover"></div>
-          <div class="work-card-overlay"></div>
-          <div class="work-card-body">
-            <p class="work-tag">居酒屋 ・ Web Design</p>
-            <h3 class="work-name">酒場 燈 デモサイト</h3>
-          </div>
-        </a>
+        <div class="work-card-bg">Coming</div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-body">
+          <p class="work-tag">Coming Soon</p>
+          <h3 class="work-name">制作実績 追加予定</h3>
+        </div>
       </div>
 
-      <!-- 実績3: ビューティーデモ -->
+      <!-- 実績3: ダミー -->
       <div class="work-card">
-        <a href="https://haku-studio-jp.github.io/demo-izakaya/demo-beauty/" target="_blank">
-          <div class="work-card-bg" style="background:url(https://haku-studio-jp.github.io/demo-izakaya/demo-beauty/beauty.png) center/cover"></div>
-          <div class="work-card-overlay"></div>
-          <div class="work-card-body">
-            <p class="work-tag">美容室 ・ Web Design</p>
-            <h3 class="work-name">Beauty デモサイト</h3>
-          </div>
-        </a>
+        <div class="work-card-bg">Soon</div>
+        <div class="work-card-overlay"></div>
+        <div class="work-card-body">
+          <p class="work-tag">Coming Soon</p>
+          <h3 class="work-name">制作実績 追加予定</h3>
+        </div>
       </div>
+    </div>
   </section>
 
   <!-- ABOUT -->
