@@ -48,10 +48,11 @@ nav a:hover{color:var(--black)}
 
 /* 背景装飾ライン */
 .hero-lines{position:absolute;inset:0;pointer-events:none;z-index:1}
-.hero-lines span{position:absolute;top:0;bottom:0;width:1px;background:var(--line);transform:scaleY(0);transform-origin:top;animation:line-in 1.4s cubic-bezier(.77,0,.175,1) forwards}
-.hero-lines span:nth-child(1){left:25%;animation-delay:.2s}
-.hero-lines span:nth-child(2){left:50%;animation-delay:.35s}
-.hero-lines span:nth-child(3){left:75%;animation-delay:.5s}
+.hero-lines span{position:absolute;top:0;bottom:0;width:1px;background:var(--line);transform:scaleY(0);transform-origin:top;animation:line-in 1.6s cubic-bezier(.77,0,.175,1) forwards}
+.hero-lines span:nth-child(1){left:20%;animation-delay:.1s}
+.hero-lines span:nth-child(2){left:40%;animation-delay:.25s}
+.hero-lines span:nth-child(3){left:60%;animation-delay:.4s}
+.hero-lines span:nth-child(4){left:80%;animation-delay:.55s}
 @keyframes line-in{to{transform:scaleY(1)}}
 
 /* 背景大文字 */
@@ -259,7 +260,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-lines"><span></span><span></span><span></span></div>
+  <div class="hero-lines"><span></span><span></span><span></span><span></span></div>
   <div class="hero-bg-txt">HAKU</div>
   <div class="hero-l">
     <div class="h-tag">Web Design Studio · Ibaraki</div>
