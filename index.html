@@ -72,7 +72,7 @@ section{padding:10rem 5rem}
 .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 #works{background:var(--gray-100)}
 .works-grid{display:grid;grid-template-columns:repeat(2,1fr);background:var(--line);gap:1px;margin-top:5rem}
-.w-card{background:var(--white);position:relative;overflow:hidden}
+.w-card{background:var(--white);position:relative;overflow:hidden;display:block;text-decoration:none;color:inherit}
 .w-thumb{width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;background:var(--black)}
 .w-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.25,.46,.45,.94);filter:grayscale(20%)}
 .w-card:hover .w-thumb img{transform:scale(1.05);filter:grayscale(0%)}
@@ -231,7 +231,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:2.5rem 1.8rem}
 <div class="s-label rv">Works</div>
 <h2 class="s-title rv d1">制作<em>実績</em></h2>
 <div class="works-grid">
-<div class="w-card rv d1"><div class="w-thumb"><img src="tontei-thumb.jpg" alt="とん亭"></div><div class="w-body"><div class="w-cats"><span class="w-cat">Restaurant</span><span class="w-cat">Web Design</span><span class="w-cat">SEO</span></div><div class="w-name">とん亭｜老舗とんかつ専門店</div><div class="w-desc">茨城県日立市大みか町・和モダンデザイン・SEO対応・スマホ最適化</div><a href="https://tontei-web.github.io/tontei/" target="_blank" class="w-link">View Site →</a></div></div>
+<a href="https://tontei-web.github.io/tontei/" target="_blank" class="w-card rv d1"><div class="w-thumb"><img src="tontei-thumb.jpg" alt="とん亭"></div><div class="w-body"><div class="w-cats"><span class="w-cat">Restaurant</span><span class="w-cat">Web Design</span><span class="w-cat">SEO</span></div><div class="w-name">とん亭｜老舗とんかつ専門店</div><div class="w-desc">茨城県日立市大みか町・和モダンデザイン・SEO対応・スマホ最適化</div></div></a>
 <div class="w-card rv d2"><div class="w-thumb"><img src="aoba-thumb.jpg" alt="あおば整体院"></div><div class="w-body"><div class="w-cats"><span class="w-cat">整体院</span><span class="w-cat">Web Design</span></div><div class="w-name">あおば整体院</div><div class="w-desc">茨城県日立市・シンプルデザイン・スマホ最適化・約3万円〜</div></div></div>
 <div class="w-card rv d3"><div class="w-thumb"><img src="https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/food1.jpg" alt="酒場 燈"></div><div class="w-body"><div class="w-cats"><span class="w-cat">居酒屋</span><span class="w-cat">Web Design</span></div><div class="w-name">酒場 燈</div><div class="w-desc">居酒屋・飲食店向け・和モダンデザイン・スマホ最適化・約8万円〜</div></div></div>
 <div class="w-card rv d4"><div class="w-thumb"><img src="beauty-thumb.jpg" alt="Beauty"></div><div class="w-body"><div class="w-cats"><span class="w-cat">美容室</span><span class="w-cat">Web Design</span></div><div class="w-name">Beauty</div><div class="w-desc">美容室・サロン向け・洗練されたデザイン・スマホ最適化・約15万円〜</div></div></div>
