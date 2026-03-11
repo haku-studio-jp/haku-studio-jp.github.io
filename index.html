@@ -567,6 +567,11 @@
   /* MOBILE */
   @media (max-width: 768px) {
     section { padding: 5rem 5vw; }
+    .flow-grid { grid-template-columns: 1fr; }
+    .flow-item { border-right: none; }
+    .flow-item:nth-child(3), .flow-item:nth-child(4) { border-bottom: 1px solid rgba(255,255,255,.07); }
+    .flow-item:last-child { border-bottom: none; }
+    .voice-grid { grid-template-columns: 1fr; }
     header { padding: 0 4vw; height: 60px; }
     .nav-links { display: none !important; }
     .hero { padding: 0 5vw 10vh; }
