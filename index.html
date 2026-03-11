@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" style="overflow-x:hidden;">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -567,11 +567,6 @@
   /* MOBILE */
   @media (max-width: 768px) {
     section { padding: 5rem 5vw; }
-    .flow-grid { grid-template-columns: 1fr; }
-    .flow-item { border-right: none; }
-    .flow-item:nth-child(3), .flow-item:nth-child(4) { border-bottom: 1px solid rgba(255,255,255,.07); }
-    .flow-item:last-child { border-bottom: none; }
-    .voice-grid { grid-template-columns: 1fr; }
     header { padding: 0 4vw; height: 60px; }
     .nav-links { display: none !important; }
     .hero { padding: 0 5vw 10vh; }
@@ -642,46 +637,33 @@
 
     <div class="works-grid">
       <!-- 実績1: とん亭 -->
-      <a class="work-card work-card-main" href="https://tontei-web.github.io/tontei/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
-        <div class="work-card-bg" style="background:url(tontei-thumb.jpg) center/cover;height:300px;"></div>
+      <div class="work-card work-card-main">
+        <div class="work-card-bg">とん亭</div>
         <div class="work-card-overlay"></div>
         <div class="work-card-body">
-          <p class="work-tag">Restaurant ・ Web Design ・ SEO</p>
+          <p class="work-tag">Restaurant · Web Design · SEO</p>
           <h3 class="work-name">とん亭｜老舗とんかつ専門店</h3>
-          <p class="work-desc">茨城県日立市大みか町・和モダンデザイン・SEO対応・スマホ最適化 →</p>
-        </div>
-      </a>
-
-      <!-- 実績2: あおば整体院 -->
-      <div class="work-card" style="cursor:pointer;" onclick="window.open('https://haku-studio-jp.github.io/demo-seikotsuin/','_blank')">
-        <div class="work-card-bg" style="background:url(aoba-thumb.jpg) center/cover;height:300px;"></div>
-        <div class="work-card-overlay"></div>
-        <div class="work-card-body">
-          <p class="work-tag">整体院 ・ Web Design</p>
-          <h3 class="work-name">あおば整体院</h3>
-          <p class="work-desc">茨城県日立市・シンプルデザイン・スマホ最適化・約3万円〜</p>
+          <p class="work-desc">茨城県日立市大みか町 · 和モダンデザイン · SEO対応 · スマホ最適化</p>
         </div>
       </div>
 
-      <!-- 実績3: 居酒屋デモ -->
-      <div class="work-card" style="cursor:pointer;" onclick="window.open('https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/','_blank')">
-        <div class="work-card-bg" style="background:url(https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/food1.jpg) center/cover;height:300px;"></div>
+      <!-- 実績2: ダミー -->
+      <div class="work-card">
+        <div class="work-card-bg">Coming</div>
         <div class="work-card-overlay"></div>
         <div class="work-card-body">
-          <p class="work-tag">居酒屋 ・ Web Design</p>
-          <h3 class="work-name">酒場 燈</h3>
-          <p class="work-desc">居酒屋・飲食店向け・和モダンデザイン・スマホ最適化・約8万円〜</p>
+          <p class="work-tag">Coming Soon</p>
+          <h3 class="work-name">制作実績 追加予定</h3>
         </div>
       </div>
 
-      <!-- 実績4: 美容室デモ -->
-      <div class="work-card" style="cursor:pointer;" onclick="window.open('https://haku-studio-jp.github.io/demo-izakaya/demo-beauty/','_blank')">
-        <div class="work-card-bg" style="background:url(beauty-thumb.jpg) center/cover;height:300px;"></div>
+      <!-- 実績3: ダミー -->
+      <div class="work-card">
+        <div class="work-card-bg">Soon</div>
         <div class="work-card-overlay"></div>
         <div class="work-card-body">
-          <p class="work-tag">美容室 ・ Web Design</p>
-          <h3 class="work-name">Beauty</h3>
-          <p class="work-desc">美容室・サロン向け・洗練されたデザイン・スマホ最適化・約15万円〜</p>
+          <p class="work-tag">Coming Soon</p>
+          <h3 class="work-name">制作実績 追加予定</h3>
         </div>
       </div>
     </div>
