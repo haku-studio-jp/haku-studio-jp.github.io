@@ -201,12 +201,13 @@ footer{background:var(--g900);border-top:1px solid rgba(255,255,255,.06);padding
   <style>
     .hero-banner-wrap{
       width:100%;
-      max-width:100vw;
+      max-width:100%;
       margin-top:60px;
-      overflow:hidden;
+      overflow:clip;
+      overflow-x:clip;
       position:relative;
       background:#f8f8f8;
-      isolation:isolate;
+      contain:paint;
     }
     /* バナーをwidth:100%に引き伸ばす */
     .hero-banner-wrap .banner{
