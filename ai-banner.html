@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>AIツール・Notionテンプレ バナー</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&family=Noto+Serif+JP:wght@700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#ccc;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;font-family:'Noto Sans JP',sans-serif}
+
+.banner{
+  width:980px;height:520px;
+  background:#fafafa;
+  position:relative;overflow:hidden;
+  box-shadow:0 8px 40px rgba(0,0,0,.2);
+  display:flex;flex-direction:column;
+}
+
+/* ── 右上 幾何学装飾（AIカラー：紫・青・ピンク） ── */
+.geo{position:absolute;top:0;right:0;width:290px;height:290px;pointer-events:none;z-index:1}
+.g1{position:absolute;top:5px;right:5px;width:165px;height:165px;
+  background:linear-gradient(140deg,#8b5cf6,#6366f1);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);opacity:.9}
+.g2{position:absolute;top:32px;right:116px;width:80px;height:80px;
+  background:linear-gradient(140deg,#ec4899,#f472b6);
+  clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);opacity:.9}
+.g3{position:absolute;top:3px;right:146px;width:50px;height:50px;
+  background:linear-gradient(140deg,#3b82f6,#0ea5e9);
+  transform:rotate(15deg);opacity:.88}
+.g4{position:absolute;top:115px;right:12px;width:62px;height:62px;
+  background:linear-gradient(140deg,#a78bfa,#c084fc);
+  clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);opacity:.88}
+.g5{position:absolute;top:160px;right:84px;width:34px;height:34px;
+  background:linear-gradient(140deg,#34d399,#10b981);border-radius:50%;opacity:.82}
+.g6{position:absolute;top:0;right:198px;width:30px;height:30px;
+  background:linear-gradient(140deg,#fbbf24,#f59e0b);border-radius:50%;opacity:.78}
+
+/* ── 中央下 幾何学装飾 ── */
+.geo2{position:absolute;bottom:68px;right:175px;width:180px;height:140px;pointer-events:none;z-index:1}
+.g21{position:absolute;bottom:0;left:0;width:108px;height:108px;
+  background:linear-gradient(140deg,#6366f1,#8b5cf6);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);opacity:.45}
+.g22{position:absolute;bottom:30px;left:78px;width:60px;height:60px;
+  background:linear-gradient(140deg,#ec4899,#f472b6);
+  clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);opacity:.5}
+.g23{position:absolute;bottom:2px;left:112px;width:40px;height:40px;
+  background:linear-gradient(140deg,#3b82f6,#0ea5e9);
+  border-radius:4px;transform:rotate(22deg);opacity:.5}
+
+/* ── 本体 ── */
+.bdy{
+  position:relative;z-index:2;
+  flex:1;display:flex;
+  padding:26px 36px 0 40px;
+  gap:20px;
+}
+
+/* ── 左カラム ── */
+.lft{
+  display:flex;flex-direction:column;
+  justify-content:flex-start;
+  flex:1;min-width:0;
+}
+
+.tag{
+  display:inline-flex;align-items:center;gap:5px;
+  background:#f5f3ff;border:1.5px solid #c4b5fd;
+  border-radius:4px;padding:3px 10px;
+  font-size:10px;font-weight:700;color:#7c3aed;
+  letter-spacing:.1em;margin-bottom:10px;width:fit-content;
+}
+
+.sub1{
+  font-size:13.5px;font-weight:900;color:#333;
+  letter-spacing:.05em;margin-bottom:4px;
+}
+
+.h1{
+  font-family:'Noto Serif JP',serif;
+  font-size:38px;font-weight:700;
+  color:#0a0a0a;
+  line-height:1.12;letter-spacing:-.01em;
+  margin-bottom:5px;white-space:nowrap;
+}
+.hl{
+  background:linear-gradient(transparent 52%,#c4b5fd 52%);
+  padding:0 3px;
+}
+
+.sub2{
+  font-size:14px;font-weight:900;color:#222;
+  letter-spacing:.02em;margin-bottom:14px;
+}
+
+.checks{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.ci{
+  display:flex;align-items:center;gap:9px;
+  background:#1e1b4b;border-radius:5px;
+  padding:8px 14px;
+  font-size:12.5px;font-weight:700;color:#fff;
+  letter-spacing:.03em;white-space:nowrap;
+  width:fit-content;min-width:360px;
+}
+.ck{
+  width:20px;height:20px;flex-shrink:0;
+  border-radius:50%;
+  background:linear-gradient(135deg,#8b5cf6,#6366f1);
+  display:flex;align-items:center;justify-content:center;
+}
+.ck svg{width:11px;height:11px;display:block}
+
+/* 数値バッジ（紫グラデ） */
+.stats{display:flex;gap:5px;margin-bottom:10px}
+.stat{
+  flex:1;max-width:115px;
+  background:linear-gradient(135deg,#6d28d9,#7c3aed);
+  border-radius:8px;padding:7px 5px;text-align:center;
+  box-shadow:0 3px 10px rgba(109,40,217,.35);
+}
+.sv{
+  display:block;
+  font-size:20px;font-weight:900;color:#fff;
+  line-height:1;font-family:'Noto Sans JP',sans-serif;
+}
+.sl{
+  display:block;
+  font-size:7.5px;font-weight:700;
+  color:rgba(255,255,255,.8);
+  letter-spacing:.08em;text-transform:uppercase;
+  margin-top:3px;
+}
+
+/* 価格（Bebas Neue） */
+.price{
+  display:inline-flex;align-items:center;gap:0;
+  background:linear-gradient(135deg,#f5f3ff,#ede9fe);
+  border:2.5px solid #a78bfa;
+  border-radius:8px;overflow:hidden;width:fit-content;
+  box-shadow:0 3px 12px rgba(139,92,246,.28);
+}
+.pl{
+  font-size:10px;font-weight:700;color:#5b21b6;
+  white-space:nowrap;
+  background:rgba(167,139,250,.25);
+  padding:6px 10px;
+  border-right:1.5px solid #a78bfa;
+  letter-spacing:.06em;
+}
+.pv-wrap{
+  display:flex;align-items:baseline;gap:2px;
+  padding:4px 12px 4px 10px;
+}
+.pv-sym{
+  font-size:18px;font-weight:900;color:#1e1b4b;
+  font-family:'Noto Sans JP',sans-serif;
+  line-height:1;margin-top:4px;
+}
+.pv{
+  font-size:38px;font-weight:400;color:#1e1b4b;
+  letter-spacing:-.02em;
+  font-family:'Bebas Neue',sans-serif;
+  line-height:1;
+}
+.pv-comma{
+  font-size:28px;font-weight:400;color:#3730a3;
+  font-family:'Bebas Neue',sans-serif;line-height:1;
+}
+.pu{
+  font-size:10px;color:#6b7280;font-weight:700;
+  white-space:nowrap;padding:6px 10px 6px 0;align-self:center;
+}
+
+/* ── 右カラム（Notionモック） ── */
+.rgt{
+  width:300px;flex-shrink:0;
+  display:flex;align-items:flex-end;justify-content:center;
+  position:relative;
+}
+
+/* Notionウィンドウ */
+.notion-win{
+  width:270px;
+  background:#fff;
+  border-radius:8px;
+  border:1.5px solid #e5e7eb;
+  box-shadow:0 8px 32px rgba(0,0,0,.12);
+  overflow:hidden;
+  position:relative;z-index:2;
+  margin-bottom:6px;
+}
+.notion-bar{
+  background:#f7f7f5;border-bottom:1px solid #e5e7eb;
+  padding:6px 10px;display:flex;align-items:center;gap:5px;
+}
+.nd{width:10px;height:10px;border-radius:50%}
+.notion-body{padding:12px 14px}
+.notion-icon{font-size:18px;line-height:1;margin-bottom:4px}
+.notion-title{
+  font-size:13px;font-weight:700;color:#111;
+  margin-bottom:8px;letter-spacing:-.01em;
+  font-family:system-ui,sans-serif;
+}
+.n-row{
+  display:flex;align-items:center;gap:0;
+  padding:3px 0;border-bottom:1px solid #f3f4f6;
+}
+.n-key{
+  font-size:9.5px;color:#9ca3af;width:72px;flex-shrink:0;
+  font-family:system-ui,sans-serif;
+}
+.n-val{
+  font-size:9.5px;color:#374151;
+  font-family:system-ui,sans-serif;
+}
+.n-pill{
+  display:inline-block;font-size:8.5px;
+  padding:1px 6px;border-radius:3px;
+  font-family:system-ui,sans-serif;
+}
+.n-blue{background:#dbeafe;color:#1d4ed8}
+.n-green{background:#dcfce7;color:#15803d}
+.n-orange{background:#fef3c7;color:#d97706}
+.notion-db{margin-top:8px}
+.n-dh{
+  display:grid;grid-template-columns:1.6fr 1fr 1fr;
+  background:#f9fafb;border:1px solid #e5e7eb;
+  border-radius:4px 4px 0 0;
+  font-size:8.5px;font-weight:600;color:#6b7280;
+  font-family:system-ui,sans-serif;
+}
+.n-dt{padding:4px 6px;border-right:1px solid #e5e7eb}
+.n-dt:last-child{border-right:none}
+.n-dr{
+  display:grid;grid-template-columns:1.6fr 1fr 1fr;
+  border:1px solid #f0f0ee;border-top:none;
+}
+.n-dd{
+  font-size:8.5px;color:#374151;padding:4px 6px;
+  border-right:1px solid #f0f0ee;
+  font-family:system-ui,sans-serif;
+}
+.n-dd:last-child{border-right:none}
+.n-status{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:8px;padding:1px 5px;border-radius:3px;
+  font-family:system-ui,sans-serif;
+}
+.n-status::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.ns-done{background:#dcfce7;color:#15803d}
+.ns-done::before{background:#15803d}
+.ns-wip{background:#fef3c7;color:#d97706}
+.ns-wip::before{background:#d97706}
+
+/* AIチャット吹き出し（右上フロート） */
+.ai-bubble{
+  position:absolute;top:0;right:0;z-index:4;
+  width:130px;
+  background:#1e1b4b;
+  border-radius:10px 10px 10px 0;
+  padding:8px 10px;
+  box-shadow:0 4px 16px rgba(30,27,75,.3);
+}
+.ai-bubble-label{
+  font-size:7.5px;font-weight:700;color:#a78bfa;
+  letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:4px;display:flex;align-items:center;gap:3px;
+}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:#8b5cf6;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.ai-line{height:4px;border-radius:2px;margin-bottom:3px}
+
+/* ── フッターバー（紫グラデ） ── */
+.ftr{
+  position:relative;z-index:5;height:74px;
+  background:linear-gradient(90deg,#4c1d95,#6d28d9 40%,#7c3aed);
+  display:flex;align-items:center;
+  padding:0 28px;gap:14px;flex-shrink:0;
+}
+.badge{
+  background:#fff;border-radius:30px;
+  padding:9px 20px;
+  font-size:12.5px;font-weight:900;color:#5b21b6;
+  white-space:nowrap;flex-shrink:0;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
+  display:flex;align-items:center;gap:6px;
+}
+.ft{
+  font-size:18px;font-weight:900;color:#fff;
+  letter-spacing:.02em;
+  text-shadow:0 1px 4px rgba(0,0,0,.2);
+  white-space:nowrap;
+}
+.fr{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:1px;flex-shrink:0}
+.fb{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.95);letter-spacing:.07em}
+.fa{font-size:9.5px;color:rgba(255,255,255,.7);letter-spacing:.05em}
+</style>
+</head>
+<body>
+<div class="banner">
+
+  <div class="geo">
+    <div class="g1"></div><div class="g2"></div><div class="g3"></div>
+    <div class="g4"></div><div class="g5"></div><div class="g6"></div>
+  </div>
+  <div class="geo2">
+    <div class="g21"></div><div class="g22"></div><div class="g23"></div>
+  </div>
+
+  <div class="bdy">
+
+    <!-- 左 -->
+    <div class="lft">
+      <div class="tag">★ AI活用 × 業務効率化に特化</div>
+
+      <div class="sub1">「管理がバラバラ」「毎回同じ作業」をゼロに</div>
+      <div class="h1">業務を<span class="hl">丸ごと効率化。</span></div>
+      <div class="sub2">AIツール・Notionで仕事が劇的にラクになる！</div>
+
+      <div class="checks">
+        <div class="ci">
+          <div class="ck"><svg viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,8.5 10,2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          業種別カスタムNotionテンプレを納品
+        </div>
+        <div class="ci">
+          <div class="ck"><svg viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,8.5 10,2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          AI自動生成ツール・ダッシュボード制作
+        </div>
+        <div class="ci">
+          <div class="ck"><svg viewBox="0 0 11 11" fill="none"><polyline points="1,5.5 4,8.5 10,2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          飲食店・美容室・フリーランス 幅広く対応
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><span class="sv">1/10</span><span class="sl">作業時間削減</span></div>
+        <div class="stat"><span class="sv">¥3K</span><span class="sl">From / 1テンプレ</span></div>
+        <div class="stat"><span class="sv">3日</span><span class="sl">最短納品</span></div>
+      </div>
+
+      <div class="price">
+        <span class="pl">制作費</span>
+        <div class="pv-wrap">
+          <span class="pv-sym">¥</span>
+          <span class="pv">3</span>
+          <span class="pv-comma">,</span>
+          <span class="pv">000</span>
+        </div>
+        <span class="pu">〜 / 1テンプレ</span>
+      </div>
+    </div>
+
+    <!-- 右：Notionモック -->
+    <div class="rgt">
+
+      <!-- AIチャット吹き出し -->
+      <div class="ai-bubble">
+        <div class="ai-bubble-label"><div class="ai-dot"></div>AI が生成中</div>
+        <div class="ai-line" style="width:90%;background:rgba(167,139,250,.6)"></div>
+        <div class="ai-line" style="width:75%;background:rgba(167,139,250,.4)"></div>
+        <div class="ai-line" style="width:55%;background:rgba(167,139,250,.25)"></div>
+      </div>
+
+      <!-- Notionウィンドウ -->
+      <div class="notion-win">
+        <div class="notion-bar">
+          <div class="nd" style="background:#ff5f57"></div>
+          <div class="nd" style="background:#febc2e"></div>
+          <div class="nd" style="background:#28c840"></div>
+          <span style="font-size:8px;color:#9ca3af;margin-left:6px;font-family:system-ui">月次売上管理 / 2026年3月</span>
+        </div>
+        <div class="notion-body">
+          <div class="notion-icon">📊</div>
+          <div class="notion-title">月次売上管理 — 2026年3月</div>
+          <div class="n-row">
+            <div class="n-key">💰 売上合計</div>
+            <div class="n-val" style="font-weight:700;font-size:11px;color:#111">¥842,000</div>
+          </div>
+          <div class="n-row">
+            <div class="n-key">📈 前月比</div>
+            <div class="n-val" style="color:#15803d;font-weight:700">▲ +12.4%</div>
+          </div>
+          <div class="n-row">
+            <div class="n-key">🏷 状態</div>
+            <div class="n-val"><span class="n-pill n-orange">集計中</span></div>
+          </div>
+          <div class="notion-db">
+            <div class="n-dh">
+              <div class="n-dt">商品名</div>
+              <div class="n-dt">売上</div>
+              <div class="n-dt">状態</div>
+            </div>
+            <div class="n-dr">
+              <div class="n-dd">🍱 ランチ</div>
+              <div class="n-dd" style="font-weight:600">¥320,000</div>
+              <div class="n-dd"><span class="n-status ns-done">完了</span></div>
+            </div>
+            <div class="n-dr">
+              <div class="n-dd">🍽 ディナー</div>
+              <div class="n-dd" style="font-weight:600">¥380,000</div>
+              <div class="n-dd"><span class="n-status ns-done">完了</span></div>
+            </div>
+            <div class="n-dr">
+              <div class="n-dd">🛍 テイクアウト</div>
+              <div class="n-dd" style="font-weight:600">¥142,000</div>
+              <div class="n-dd"><span class="n-status ns-wip">集計中</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- フッター -->
+  <div class="ftr">
+    <div class="badge">✓ Notion・AIツール・ダッシュボード 制作実績あり</div>
+    <div class="ft">業務をまるごと効率化！最短3日で納品</div>
+    <div class="fr">
+      <div class="fb">HAKU STUDIO</div>
+      <div class="fa">茨城県日立市</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

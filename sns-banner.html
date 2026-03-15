@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNS投稿代行バナー</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#e8e8e8;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;font-family:'Noto Sans JP',sans-serif}
+
+.banner{
+  width:980px;
+  height:520px;
+  background:#fff;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,.15);
+  display:flex;
+  flex-direction:column;
+}
+
+/* ── 右上 幾何学装飾 ── */
+.deco-tr{position:absolute;top:0;right:0;width:280px;height:280px;pointer-events:none;z-index:1}
+.dt1{position:absolute;top:6px;right:6px;width:170px;height:170px;background:linear-gradient(140deg,#00c9a7,#00a8ff);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);opacity:.9}
+.dt2{position:absolute;top:36px;right:118px;width:82px;height:82px;background:linear-gradient(140deg,#ff6b9d,#ff9a3c);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);opacity:.9}
+.dt3{position:absolute;top:4px;right:148px;width:52px;height:52px;background:linear-gradient(140deg,#a78bfa,#6366f1);transform:rotate(15deg);opacity:.85}
+.dt4{position:absolute;top:118px;right:14px;width:64px;height:64px;background:linear-gradient(140deg,#fbbf24,#f59e0b);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);opacity:.85}
+.dt5{position:absolute;top:162px;right:88px;width:36px;height:36px;background:linear-gradient(140deg,#34d399,#059669);border-radius:50%;opacity:.8}
+.dt6{position:absolute;top:0;right:200px;width:32px;height:32px;background:linear-gradient(140deg,#f472b6,#ec4899);border-radius:50%;opacity:.7}
+
+/* ── 中央下 幾何学装飾 ── */
+.deco-bm{position:absolute;bottom:68px;right:180px;width:180px;height:130px;pointer-events:none;z-index:1}
+.db1{position:absolute;bottom:0;left:0;width:110px;height:110px;background:linear-gradient(140deg,#818cf8,#6366f1);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);opacity:.6}
+.db2{position:absolute;bottom:30px;left:80px;width:64px;height:64px;background:linear-gradient(140deg,#f472b6,#ec4899);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);opacity:.65}
+.db3{position:absolute;bottom:4px;left:116px;width:42px;height:42px;background:linear-gradient(140deg,#fbbf24,#f59e0b);border-radius:4px;transform:rotate(20deg);opacity:.65}
+
+/* ── メインコンテンツ ── */
+.main{
+  position:relative;z-index:2;
+  flex:1;
+  display:flex;
+  padding:32px 44px 0 44px;
+  gap:28px;
+}
+
+/* ── 左カラム ── */
+.left{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  min-width:0;
+}
+
+.tag{
+  display:inline-flex;align-items:center;gap:5px;
+  background:#f0f7ff;border:1px solid #93c5fd;border-radius:4px;
+  padding:4px 10px;
+  font-size:11px;font-weight:700;color:#2563eb;
+  letter-spacing:.06em;
+  margin-bottom:14px;
+  width:fit-content;
+}
+.tag::before{content:'★';font-size:10px;color:#3b82f6}
+
+.main-title{
+  font-size:30px;font-weight:900;color:#111;
+  line-height:1.2;letter-spacing:-.02em;
+  margin-bottom:4px;
+}
+.highlight{
+  background:linear-gradient(transparent 54%,#fde047 54%);
+  padding:0 2px;
+}
+
+.sub-title{
+  font-size:13.5px;font-weight:700;color:#444;
+  line-height:1.6;
+  margin-bottom:16px;
+}
+
+.checklist{
+  display:flex;flex-direction:column;gap:6px;
+  margin-bottom:14px;
+}
+.check-item{
+  display:flex;align-items:center;gap:10px;
+  background:#111;border-radius:4px;
+  padding:8px 14px;
+  color:#fff;font-size:12.5px;font-weight:700;
+  white-space:nowrap;
+}
+.ck{
+  width:20px;height:20px;flex-shrink:0;
+  border-radius:50%;
+  background:linear-gradient(135deg,#06C755,#04a544);
+  display:flex;align-items:center;justify-content:center;
+}
+.ck svg{width:12px;height:12px;display:block}
+
+.stats-row{
+  display:flex;gap:6px;
+  margin-bottom:12px;
+}
+.stat{
+  flex:1;
+  background:#f0f7ff;border:1px solid #dbeafe;border-radius:6px;
+  padding:7px 6px;text-align:center;
+}
+.sv{
+  font-size:19px;font-weight:900;color:#1e40af;line-height:1;
+  display:block;
+}
+.sl{
+  font-size:8px;color:#6b7280;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;
+  display:block;margin-top:2px;
+}
+
+.price-wrap{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fffbeb;border:1.5px solid #fde047;border-radius:6px;
+  padding:7px 14px;width:fit-content;
+}
+.pl{font-size:10px;font-weight:700;color:#92400e;white-space:nowrap}
+.pv{font-size:22px;font-weight:900;color:#111;letter-spacing:-.02em}
+.pu{font-size:10px;color:#6b7280;font-weight:600;white-space:nowrap}
+
+/* ── 右カラム ── */
+.right{
+  width:330px;flex-shrink:0;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  position:relative;
+}
+
+/* PCモック */
+.pc{
+  width:230px;
+  position:relative;z-index:2;
+}
+.pc-screen{
+  border:3px solid #374151;border-radius:7px 7px 0 0;
+  background:#1e40af;overflow:hidden;height:140px;
+}
+.pc-inner{
+  height:100%;
+  background:linear-gradient(135deg,#1e3a8a 0%,#3b82f6 100%);
+  padding:8px 10px;
+  display:flex;flex-direction:column;gap:5px;
+}
+.pc-topbar{
+  display:flex;gap:3px;align-items:center;
+  background:rgba(255,255,255,.1);border-radius:3px;
+  padding:3px 6px;height:12px;
+}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5)}
+.pc-row{height:5px;background:rgba(255,255,255,.7);border-radius:2px}
+.pc-row.half{width:55%;background:rgba(255,255,255,.4)}
+.pc-cards{display:flex;gap:4px;margin-top:2px}
+.pc-card{flex:1;height:32px;background:rgba(255,255,255,.12);border-radius:3px}
+.pc-base{height:7px;background:#374151}
+.pc-stand{height:11px;width:42px;background:#374151;margin:0 auto}
+.pc-foot{height:3px;width:88px;background:#374151;margin:0 auto;border-radius:2px}
+
+/* スマホモック */
+.sp{
+  position:absolute;bottom:20px;right:20px;
+  z-index:3;
+}
+.sp-frame{
+  width:72px;
+  border:2.5px solid #374151;border-radius:13px;
+  background:#111;padding:5px 4px;
+}
+.sp-notch{
+  width:22px;height:4px;
+  background:#374151;border-radius:3px;
+  margin:0 auto 3px;
+}
+.sp-screen{
+  border-radius:7px;height:96px;overflow:hidden;
+  background:linear-gradient(135deg,#0284c7,#7c3aed);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:4px;padding:8px 6px;
+}
+.sp-lw{height:4px;width:88%;background:rgba(255,255,255,.8);border-radius:2px}
+.sp-img{width:88%;height:28px;background:rgba(255,255,255,.15);border-radius:3px}
+.sp-lh{height:4px;width:65%;background:rgba(255,255,255,.4);border-radius:2px}
+.sp-home{
+  width:20px;height:3px;
+  background:#374151;border-radius:3px;
+  margin:4px auto 0;
+}
+
+/* SNSアイコン */
+.sns-icons{
+  position:absolute;top:12px;right:14px;z-index:4;
+  display:flex;flex-direction:column;gap:5px;
+}
+.si{
+  width:30px;height:30px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+  font-size:14px;font-family:serif;font-weight:700;color:#fff;
+}
+.si-ig{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af)}
+.si-x{background:#000}
+
+/* ── フッターバー ── */
+.footer-bar{
+  position:relative;z-index:5;
+  height:72px;
+  background:linear-gradient(90deg,#05b04b,#06C755 40%,#04d45e);
+  display:flex;align-items:center;
+  padding:0 26px;
+  gap:14px;
+  flex-shrink:0;
+}
+.badge{
+  background:#fff;border-radius:28px;
+  padding:8px 18px;
+  font-size:12.5px;font-weight:900;color:#047857;
+  white-space:nowrap;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+  display:flex;align-items:center;gap:5px;
+}
+.footer-text{
+  font-size:17px;font-weight:900;color:#fff;
+  letter-spacing:.02em;white-space:nowrap;
+  text-shadow:0 1px 3px rgba(0,0,0,.15);
+}
+.footer-right{
+  margin-left:auto;
+  display:flex;flex-direction:column;align-items:flex-end;gap:1px;flex-shrink:0;
+}
+.footer-brand{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.05em}
+.footer-area{font-size:9.5px;color:rgba(255,255,255,.7);letter-spacing:.05em}
+</style>
+</head>
+<body>
+<div class="banner">
+
+  <!-- 右上装飾 -->
+  <div class="deco-tr">
+    <div class="dt1"></div>
+    <div class="dt2"></div>
+    <div class="dt3"></div>
+    <div class="dt4"></div>
+    <div class="dt5"></div>
+    <div class="dt6"></div>
+  </div>
+
+  <!-- 中央下装飾 -->
+  <div class="deco-bm">
+    <div class="db1"></div>
+    <div class="db2"></div>
+    <div class="db3"></div>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <div class="main">
+
+    <!-- 左カラム -->
+    <div class="left">
+      <div class="tag">SNS運用 × 集客に特化</div>
+
+      <div class="main-title">
+        投稿を<span class="highlight">丸ごとお任せ。</span>
+      </div>
+      <div class="sub-title">貼るだけでOK！集客に強いSNS運用代行</div>
+
+      <div class="checklist">
+        <div class="check-item">
+          <div class="ck"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6.5 4.5,9.5 10.5,2.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          投稿文・ハッシュタグを毎月まとめて納品
+        </div>
+        <div class="check-item">
+          <div class="ck"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6.5 4.5,9.5 10.5,2.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          地元の飲食店・美容室・整体院向け特化
+        </div>
+        <div class="check-item">
+          <div class="ck"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6.5 4.5,9.5 10.5,2.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          月額5,000円〜・いつでも解約OK
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="sv">+241</span>
+          <span class="sl">Followers / 2M</span>
+        </div>
+        <div class="stat">
+          <span class="sv">×3</span>
+          <span class="sl">Engagement</span>
+        </div>
+        <div class="stat">
+          <span class="sv">週3</span>
+          <span class="sl">Post / Week</span>
+        </div>
+      </div>
+
+      <div class="price-wrap">
+        <span class="pl">月額</span>
+        <span class="pv">¥5,000</span>
+        <span class="pu">〜 / 月</span>
+      </div>
+    </div>
+
+    <!-- 右カラム -->
+    <div class="right">
+      <div class="sns-icons">
+        <div class="si si-ig">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/><circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="white"/></svg>
+        </div>
+        <div class="si si-x" style="font-family:serif;font-size:15px;font-weight:700">𝕏</div>
+      </div>
+
+      <div class="pc">
+        <div class="pc-screen">
+          <div class="pc-inner">
+            <div class="pc-topbar">
+              <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
+            <div class="pc-row" style="width:68%"></div>
+            <div class="pc-row half"></div>
+            <div class="pc-cards">
+              <div class="pc-card"></div>
+              <div class="pc-card" style="background:rgba(255,255,255,.08)"></div>
+              <div class="pc-card" style="background:rgba(255,255,255,.05)"></div>
+            </div>
+            <div style="display:flex;gap:4px;margin-top:3px">
+              <div style="height:4px;width:42%;background:rgba(255,255,255,.55);border-radius:2px"></div>
+              <div style="height:4px;width:26%;background:rgba(255,255,255,.3);border-radius:2px"></div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-base"></div>
+        <div class="pc-stand"></div>
+        <div class="pc-foot"></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-frame">
+          <div class="sp-notch"></div>
+          <div class="sp-screen">
+            <div class="sp-lw"></div>
+            <div class="sp-img"></div>
+            <div class="sp-lw"></div>
+            <div class="sp-lh"></div>
+          </div>
+          <div class="sp-home"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+
+  <!-- フッターバー -->
+  <div class="footer-bar">
+    <div class="badge">✓ 飲食店・美容室・整体院 対応実績あり</div>
+    <div class="footer-text">SNS投稿をまるごとお任せ！毎月コピペするだけ</div>
+    <div class="footer-right">
+      <div class="footer-brand">HAKU STUDIO</div>
+      <div class="footer-area">茨城県日立市</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
