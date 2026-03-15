@@ -116,7 +116,15 @@ section{padding:10rem 5rem}
 
 /* ABOUT */
 #about{background:var(--white)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:end}
+.about-grid{display:grid;grid-template-columns:280px 1fr;gap:6rem;align-items:start;margin-top:4rem}
+.about-icon-wrap{position:relative}
+.about-icon-img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(8%)}
+.about-name{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;letter-spacing:.08em;margin-bottom:.3rem}
+.about-role{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.25em;color:var(--gray-400);text-transform:uppercase;margin-bottom:2rem}
+.about-text{font-size:.88rem;line-height:2.3;color:var(--gray-600);margin-bottom:2rem}
+.about-skills{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
+.skill-tag{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;padding:.3rem .8rem;border:1px solid var(--gray-200);color:var(--gray-600);background:var(--white)}
+.about-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
 .about-text{font-size:.9rem;line-height:2.3;color:var(--gray-600);margin-top:3rem}
 .about-nums{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
 .a-num{border-top:1px solid var(--line);padding-top:2rem}
@@ -283,7 +291,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <h2 class="s-title rv d1">制作<em>実績</em></h2>
   <div class="works-grid">
 
-    <div class="w-card rv d1">
+    <a href="https://tontei-web.github.io/tontei/" target="_blank" class="w-card rv d1">
       <div class="w-thumb">
         <img src="tontei-thumb.jpg" alt="とん亭">
       </div>
@@ -297,9 +305,9 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         <div class="w-desc">茨城県日立市大みか町・和モダンデザイン・SEO対応・スマホ最適化</div>
         <a href="https://tontei-web.github.io/tontei/" target="_blank" class="w-link">View Site →</a>
       </div>
-    </div>
+    </a>
 
-    <div class="w-card rv d2">
+    <a href="https://haku-studio-jp.github.io/demo-seikotsuin/" target="_blank" class="w-card rv d2">
       <div class="w-thumb">
         <img src="aoba-thumb.jpg" alt="あおば整体院">
       </div>
@@ -311,9 +319,9 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         <div class="w-name">あおば整体院</div>
         <div class="w-desc">茨城県日立市・シンプルデザイン・スマホ最適化・約3万円〜</div>
       </div>
-    </div>
+    </a>
 
-    <div class="w-card rv d3">
+    <a href="https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/" target="_blank" class="w-card rv d3">
       <div class="w-thumb">
         <img src="https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/food1.jpg" alt="酒場 燈">
       </div>
@@ -325,9 +333,9 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         <div class="w-name">酒場 燈</div>
         <div class="w-desc">居酒屋・飲食店向け・和モダンデザイン・スマホ最適化・約8万円〜</div>
       </div>
-    </div>
+    </a>
 
-    <div class="w-card rv d4">
+    <a href="https://haku-studio-jp.github.io/demo-beauty/" target="_blank" class="w-card rv d4">
       <div class="w-thumb">
         <img src="beauty-thumb.jpg" alt="Beauty">
       </div>
@@ -341,38 +349,29 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       </div>
     </div>
 
-  </div>
+  </a>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
+  <div class="s-label rv">About</div>
+  <h2 class="s-title rv d1">デザイナー<em>紹介</em></h2>
   <div class="about-grid">
-    <div>
-      <div class="s-label rv">About</div>
-      <h2 class="s-title rv d1"><em>HAKU</em> STUDIO について</h2>
-      <p class="about-text rv d2">茨城県日立市を拠点に活動するWebデザインスタジオです。「余白の美しさ」をコンセプトに、シンプルで洗練されたデザインを追求しています。<br><br>飲食店・美容室・整体院・小売店など、地域に根ざした店舗・中小企業のWeb制作を得意としています。デザインだけでなく、SEO対応・スマートフォン最適化まで一貫して対応します。<br><br>制作後のサポートも丁寧に対応。「HPを作って終わり」ではなく、長期的なパートナーとして関わらせていただきます。</p>
-    </div>
-    <div class="about-nums rv d2">
-      <div class="a-num">
-        <div class="a-num-v">1<sup style="font-size:1.1rem">+</sup></div>
-        <div class="a-num-l">制作実績</div>
-      </div>
-      <div class="a-num">
-        <div class="a-num-v">SEO</div>
-        <div class="a-num-l">対応済み</div>
-      </div>
-      <div class="a-num">
-        <div class="a-num-v">SP</div>
-        <div class="a-num-l">スマホ最適化</div>
-      </div>
-      <div class="a-num">
-        <div class="a-num-v">∞</div>
-        <div class="a-num-l">修正対応</div>
+    <div class="about-icon-wrap rv d2"><img src="about-icon.jpg" alt="星覚哉" class="about-icon-img"></div>
+    <div class="about-c rv d2">
+      <div class="about-name">星 覚哉</div>
+      <div class="about-role">Web Designer / HAKU STUDIO</div>
+      <p class="about-text">茨城県日立市を拠点に、地域の店舗・中小企業のWeb制作を行っています。「余白の美しさ」をコンセプトに、シンプルで伝わるデザインを追求しています。<br><br>飲食店・美容室・整体院など、業種ごとの強みを引き出したサイト制作が得意です。デザインから公開・アフターサポートまで一貫して対応します。</p>
+      <div class="about-skills"><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">JavaScript</span><span class="skill-tag">GitHub Pages</span><span class="skill-tag">SEO</span><span class="skill-tag">Responsive</span><span class="skill-tag">AI活用</span><span class="skill-tag">Canva</span><span class="skill-tag">SNS運用</span><span class="skill-tag">Notion</span></div>
+      <div class="about-nums">
+        <div class="a-num"><div class="a-num-v">6<sup style="font-size:1.1rem">+</sup></div><div class="a-num-l">制作実績</div></div>
+        <div class="a-num"><div class="a-num-v">SEO</div><div class="a-num-l">対応済み</div></div>
+        <div class="a-num"><div class="a-num-v">SP</div><div class="a-num-l">スマホ最適化</div></div>
+        <div class="a-num"><div class="a-num-v">∞</div><div class="a-num-l">修正対応</div></div>
       </div>
     </div>
   </div>
 </section>
-
 <!-- PRICE -->
 <section id="price">
   <div class="s-label rv">Price</div>
@@ -389,7 +388,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         <li class="p-feat">納期：2〜3週間</li>
       </ul>
     </div>
-    <div class="p-card featured rv d2">
+    <div class="p-card rv d2">
       <div class="p-pop">Popular</div>
       <div class="p-plan">Standard</div>
       <div class="p-val"><span>¥</span>80,000〜</div>
@@ -417,6 +416,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       <div class="p-note">※ 上記はあくまで目安です。ご要望・ページ数・機能により変動します。まずはお気軽にご相談ください。無料でお見積もりいたします。</div>
     </div>
   </div>
+  <div style="margin-top:3rem;border-top:1px solid var(--line);padding-top:3rem"><div style="font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.4em;color:var(--gray-400);text-transform:uppercase;display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem"><span style="display:inline-block;width:32px;height:1px;background:var(--gray-200)"></span>Other Services</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)"><div style="background:var(--white);padding:2rem"><div style="font-size:.75rem;font-weight:400;color:var(--black);margin-bottom:.5rem">SNS投稿代行</div><div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--black);line-height:1;margin-bottom:.3rem">¥5,000<span style="font-size:.8rem">〜</span></div><div style="font-size:.6rem;color:var(--gray-400);margin-bottom:1rem">/ 月</div><div style="font-size:.72rem;color:var(--gray-600);line-height:1.9">投稿文・ハッシュタグ・画像テンプレを毎月納品。貼るだけで投稿完了。</div><a href="sns-service.html" style="display:inline-block;margin-top:1rem;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;color:var(--black);text-decoration:none;border-bottom:1px solid var(--black);padding-bottom:2px">詳細を見る →</a></div><div style="background:var(--white);padding:2rem"><div style="font-size:.75rem;font-weight:400;color:var(--black);margin-bottom:.5rem">AIツール・Notionテンプレ制作</div><div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--black);line-height:1;margin-bottom:.3rem">¥3,000<span style="font-size:.8rem">〜</span></div><div style="font-size:.6rem;color:var(--gray-400);margin-bottom:1rem">/ 1テンプレ</div><div style="font-size:.72rem;color:var(--gray-600);line-height:1.9">業種別カスタムNotionテンプレ・AI業務効率化ツール。最短3日納品。</div><a href="ai-service.html" style="display:inline-block;margin-top:1rem;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;color:var(--black);text-decoration:none;border-bottom:1px solid var(--black);padding-bottom:2px">詳細を見る →</a></div></div></div>
 </section>
 
 <!-- FLOW -->
