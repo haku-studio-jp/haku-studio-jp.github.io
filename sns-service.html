@@ -19,7 +19,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 a{color:inherit;text-decoration:none}
 html{scroll-behavior:smooth;overflow-x:hidden}
-body{background:var(--white);color:var(--g900);font-family:'Noto Sans JP',sans-serif;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
+body{background:var(--white);color:var(--g900);word-break:break-word;font-family:'Noto Sans JP',sans-serif;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
 img{display:block;max-width:100%}
 
 /* ───── NAV ───── */
@@ -86,7 +86,7 @@ img{display:block;max-width:100%}
 
 /* ───── PHOTO SPLIT ───── */
 .photo-split{display:grid;grid-template-columns:1fr 1fr;min-height:480px}
-@media(max-width:768px){.photo-split{grid-template-columns:1fr}}
+@media(max-width:768px){.photo-split{grid-template-columns:1fr;min-height:0}}
 .ps-img{overflow:hidden;position:relative}
 .ps-img img{width:100%;height:100%;object-fit:cover}
 .ps-body{background:var(--g900);padding:4.5rem 4rem;display:flex;flex-direction:column;justify-content:center}
