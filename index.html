@@ -47,6 +47,9 @@ nav a:hover{color:var(--black)}
 .hero-l{display:flex;flex-direction:column;justify-content:flex-end;padding:0 5rem 9rem 5rem;position:relative;z-index:2;max-width:900px}
 
 /* 背景装飾ライン */
+.hero-panels{position:fixed;inset:0;z-index:8500;display:flex;pointer-events:none}
+.hero-panel{flex:1;background:var(--black);transform-origin:top;transition:transform .8s cubic-bezier(.77,0,.175,1)}
+.hero-panel.out{transform:scaleY(0)}
 .hero-lines{position:absolute;inset:0;pointer-events:none;z-index:1}
 .hero-lines span{position:absolute;top:0;bottom:0;width:1px;background:var(--line);transform:scaleY(0);transform-origin:top;animation:line-in 1.6s cubic-bezier(.77,0,.175,1) forwards}
 .hero-lines span:nth-child(1){left:20%;animation-delay:.1s}
@@ -244,6 +247,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
+<div class="hero-panels"><div class="hero-panel" id="p1"></div><div class="hero-panel" id="p2"></div><div class="hero-panel" id="p3"></div><div class="hero-panel" id="p4"></div></div>
 
 <!-- LOADER -->
 <div id="loader">
@@ -573,7 +577,10 @@ const t=setInterval(()=>{
   if(n>=100){n=100;clearInterval(t);}
   fill.style.width=n+'%';cnt.textContent=n;
 },55);
-window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('out'),2300));
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('out');
+  const panels=[document.getElementById('p1'),document.getElementById('p2'),document.getElementById('p3'),document.getElementById('p4')];
+  panels.forEach((p,i)=>setTimeout(()=>p&&p.classList.add('out'),i*400));
+},2300));
 
 // HEADER
 const hdr=document.getElementById('hdr');
