@@ -577,7 +577,7 @@ const t=setInterval(()=>{
   if(n>=100){n=100;clearInterval(t);}
   fill.style.width=n+'%';cnt.textContent=n;
 },55);
-window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('out');
+window.addEventListener('load',()=>setTimeout(()=>{document.getElementById('loader').classList.add('out');
   const panels=[document.getElementById('p1'),document.getElementById('p2'),document.getElementById('p3'),document.getElementById('p4')];
   panels.forEach((p,i)=>setTimeout(()=>p&&p.classList.add('out'),i*400));
 },2300));
