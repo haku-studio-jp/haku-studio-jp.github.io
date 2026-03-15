@@ -354,8 +354,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       </div>
     </div>
 
-  <a href="sns-service.html" class="w-card rv d5"><div class="w-thumb" style="position:relative;overflow:hidden;background:#111"><iframe src="sns-banner.html" scrolling="no" style="width:980px;height:520px;border:none;transform-origin:top left;transform:scale(0.367);position:absolute;top:0;left:0;pointer-events:none;" loading="lazy"></iframe></div><div class="w-body"><div class="w-cats"><span class="w-cat">SNS運用</span><span class="w-cat">投稿代行</span></div><div class="w-name">SNS投稿代行</div><div class="w-desc">毎月の投稿文・ハッシュタグをすべて代行。貼るだけでOK！5,000円～</div></div></a>
-  <a href="ai-service.html" class="w-card rv d6"><div class="w-thumb" style="position:relative;overflow:hidden;background:#0f0c29"><iframe src="ai-banner.html" scrolling="no" style="width:980px;height:520px;border:none;transform-origin:top left;transform:scale(0.367);position:absolute;top:0;left:0;pointer-events:none;" loading="lazy"></iframe></div><div class="w-body"><div class="w-cats"><span class="w-cat">AIツール</span><span class="w-cat">Notion</span></div><div class="w-name">AIツール・Notionテンプレ制作</div><div class="w-desc">業種別カスタムNotionテンプレ・AI自動化ツール。￥3,000～</div></div></a>
+  <a href="sns-service.html" class="w-card rv d5"><div class="w-thumb" style="position:relative;overflow:hidden;background:#111"><iframe src="sns-banner.html" scrolling="no" style="width:980px;height:520px;border:none;transform-origin:top left;position:absolute;top:0;left:0;pointer-events:none;" loading="lazy"></iframe></div><div class="w-body"><div class="w-cats"><span class="w-cat">SNS運用</span><span class="w-cat">投稿代行</span></div><div class="w-name">SNS投稿代行</div><div class="w-desc">毎月の投稿文・ハッシュタグをすべて代行。貼るだけでOK！5,000円～</div></div></a>
+  <a href="ai-service.html" class="w-card rv d6"><div class="w-thumb" style="position:relative;overflow:hidden;background:#0f0c29"><iframe src="ai-banner.html" scrolling="no" style="width:980px;height:520px;border:none;transform-origin:top left;position:absolute;top:0;left:0;pointer-events:none;" loading="lazy"></iframe></div><div class="w-body"><div class="w-cats"><span class="w-cat">AIツール</span><span class="w-cat">Notion</span></div><div class="w-name">AIツール・Notionテンプレ制作</div><div class="w-desc">業種別カスタムNotionテンプレ・AI自動化ツール。￥3,000～</div></div></a>
   </a>
 </section>
 
@@ -628,6 +628,20 @@ window.addEventListener('scroll',()=>{
   const bg=document.querySelector('.hero-bg-txt');
   if(bg)bg.style.transform='translateX('+scrollY*.1+'px)';
 },{passive:true});
+</script>
+<script>
+(function(){
+  function scaleBanners(){
+    document.querySelectorAll('.w-thumb iframe').forEach(function(f){
+      var t=f.parentNode, w=t.offsetWidth;
+      if(w>0){var s=w/980;f.style.transform='scale('+s+')';f.style.height=(520/s)+'px';t.style.height=(520*s)+'px';}
+    });
+  }
+  window.addEventListener('load',scaleBanners);
+  window.addEventListener('resize',scaleBanners);
+  setTimeout(scaleBanners,300);
+  setTimeout(scaleBanners,1000);
+})();
 </script>
 </body>
 </html>
