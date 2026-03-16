@@ -167,19 +167,20 @@ section{padding:10rem 5rem}
 
 /* ABOUT */
 #about{background:var(--white)}
-.about-grid{display:grid;grid-template-columns:280px 1fr;gap:6rem;align-items:start;margin-top:4rem}
+.about-members{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);margin-top:5rem}
+.about-member{background:var(--white);padding:4rem 3.5rem}
+.about-grid{display:grid;grid-template-columns:140px 1fr;gap:2.5rem;align-items:start;margin-bottom:2rem}
 .about-icon-wrap{position:relative}
 .about-icon-img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(8%)}
 .about-name{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;letter-spacing:.08em;margin-bottom:.3rem}
-.about-role{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.25em;color:var(--gray-400);text-transform:uppercase;margin-bottom:2rem}
-.about-text{font-size:.88rem;line-height:2.3;color:var(--gray-600);margin-bottom:2rem}
-.about-skills{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
+.about-role{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.25em;color:var(--gray-400);text-transform:uppercase;margin-bottom:1.5rem}
+.about-text{font-size:.85rem;line-height:2.2;color:var(--gray-600);margin-bottom:1.8rem}
+.about-skills{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
 .skill-tag{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;padding:.3rem .8rem;border:1px solid var(--gray-200);color:var(--gray-600);background:var(--white)}
-.about-text{font-size:.9rem;line-height:2.3;color:var(--gray-600);margin-top:3rem}
-.about-nums{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
-.a-num{border-top:1px solid var(--line);padding-top:2rem}
-.a-num-v{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;line-height:1}
-.a-num-l{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;color:var(--gray-400);margin-top:.4rem;text-transform:uppercase}
+.about-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--line)}
+.a-num{}
+.a-num-v{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1}
+.a-num-l{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.18em;color:var(--gray-400);margin-top:.4rem;text-transform:uppercase}
 
 /* PRICE */
 #price{background:var(--gray-100)}
@@ -268,7 +269,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 /* RESPONSIVE */
 @media(max-width:960px){
-  .about-grid{grid-template-columns:1fr;gap:4rem}
+  .about-members{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:120px 1fr;gap:2rem}
   .works-grid{grid-template-columns:1fr}
   .price-grid{grid-template-columns:1fr}
   .voice-grid{grid-template-columns:1fr}
@@ -440,21 +442,51 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 <!-- ABOUT -->
 <section id="about">
   <div class="s-label rv">About</div>
-  <h2 class="s-title rv d1">デザイナー<em>紹介</em></h2>
-  <div class="about-grid">
-    <div class="about-icon-wrap rv d2"><img src="about-icon.jpg" alt="星覚哉" class="about-icon-img"></div>
-    <div class="about-c rv d2">
-      <div class="about-name">星 覚哉</div>
-      <div class="about-role">Web Designer / HAKU STUDIO</div>
-      <p class="about-text">茨城県日立市を拠点に、地域の店舗・中小企業のWeb制作を行っています。「余白の美しさ」をコンセプトに、シンプルで伝わるデザインを追求しています。<br><br>飲食店・美容室・整体院など、業種ごとの強みを引き出したサイト制作が得意です。デザインから公開・アフターサポートまで一貫して対応します。</p>
-      <div class="about-skills"><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">JavaScript</span><span class="skill-tag">GitHub Pages</span><span class="skill-tag">SEO</span><span class="skill-tag">Responsive</span><span class="skill-tag">AI活用</span><span class="skill-tag">Canva</span><span class="skill-tag">SNS運用</span><span class="skill-tag">Notion</span></div>
+  <h2 class="s-title rv d1">メンバー<em>紹介</em></h2>
+  <div class="about-members">
+
+    <!-- 星 覚哉 -->
+    <div class="about-member rv d1">
+      <div class="about-grid">
+        <div class="about-icon-wrap"><img src="about-icon.jpg" alt="星覚哉" class="about-icon-img"></div>
+        <div>
+          <div class="about-name">星 覚哉</div>
+          <div class="about-role">Founder / Web Designer</div>
+        </div>
+      </div>
+      <p class="about-text">茨城県日立市を拠点に、地域の店舗・中小企業のWeb制作を行っています。「余白の美しさ」をコンセプトに、シンプルで伝わるデザインを追求しています。飲食店・美容室・整体院など、業種ごとの強みを引き出したサイト制作が得意です。</p>
+      <div class="about-skills">
+        <span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">JavaScript</span><span class="skill-tag">GitHub Pages</span><span class="skill-tag">SEO</span><span class="skill-tag">Responsive</span><span class="skill-tag">Canva</span>
+      </div>
       <div class="about-nums">
-        <div class="a-num"><div class="a-num-v">6<sup style="font-size:1.1rem">+</sup></div><div class="a-num-l">制作実績</div></div>
+        <div class="a-num"><div class="a-num-v">6<sup style="font-size:.9rem">+</sup></div><div class="a-num-l">制作実績</div></div>
         <div class="a-num"><div class="a-num-v">SEO</div><div class="a-num-l">対応済み</div></div>
         <div class="a-num"><div class="a-num-v">SP</div><div class="a-num-l">スマホ最適化</div></div>
         <div class="a-num"><div class="a-num-v">∞</div><div class="a-num-l">修正対応</div></div>
       </div>
     </div>
+
+    <!-- 関 辰也 -->
+    <div class="about-member rv d2">
+      <div class="about-grid">
+        <div class="about-icon-wrap"><img src="seki-icon.jpg" alt="関辰也" class="about-icon-img"></div>
+        <div>
+          <div class="about-name">関 辰也</div>
+          <div class="about-role">SNS & AI Specialist</div>
+        </div>
+      </div>
+      <p class="about-text">SNS運用・AI業務効率化を専門に担当。InstagramやX（Twitter）の投稿代行から、NotionテンプレートやAI自動化ツールの制作まで幅広く対応。飲食店・美容室の集客強化を得意としています。</p>
+      <div class="about-skills">
+        <span class="skill-tag">SNS運用</span><span class="skill-tag">Instagram</span><span class="skill-tag">X(Twitter)</span><span class="skill-tag">AIツール</span><span class="skill-tag">Notion</span><span class="skill-tag">ChatGPT</span><span class="skill-tag">自動化</span>
+      </div>
+      <div class="about-nums">
+        <div class="a-num"><div class="a-num-v">SNS</div><div class="a-num-l">運用代行</div></div>
+        <div class="a-num"><div class="a-num-v">AI</div><div class="a-num-l">ツール制作</div></div>
+        <div class="a-num"><div class="a-num-v">¥5K</div><div class="a-num-l">月額〜</div></div>
+        <div class="a-num"><div class="a-num-v">3日</div><div class="a-num-l">最短納品</div></div>
+      </div>
+    </div>
+
   </div>
 </section>
 
