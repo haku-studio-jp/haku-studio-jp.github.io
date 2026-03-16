@@ -101,16 +101,63 @@ section{padding:10rem 5rem}
 
 /* WORKS */
 #works{background:var(--gray-100)}
-.works-grid{display:grid;grid-template-columns:repeat(2,1fr);background:var(--line);gap:1px;margin-top:5rem}
-.w-card{background:var(--white);position:relative;overflow:hidden}
-.w-thumb{width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;background:var(--black)}
-.w-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.25,.46,.45,.94);filter:grayscale(20%)}
+
+/* ===== Works グリッド改善 ===== */
+.works-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  background:var(--line);
+  gap:1px;
+  margin-top:5rem;
+}
+.w-card{
+  background:var(--white);
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* 通常サムネ（img） */
+.w-thumb{
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  position:relative;
+  background:var(--black);
+  flex-shrink:0;
+}
+.w-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .7s cubic-bezier(.25,.46,.45,.94);
+  filter:grayscale(20%);
+}
 .w-card:hover .w-thumb img{transform:scale(1.05);filter:grayscale(0%)}
-.w-thumb-ph{width:100%;aspect-ratio:16/9;background:var(--black);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.w-thumb-ph .ph-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:24px 24px}
-.w-thumb-ph .ph-icon{font-size:4rem;opacity:.1;position:relative;z-index:1;transition:transform .5s}
-.w-card:hover .ph-icon{transform:scale(1.1)}
-.w-body{padding:2.5rem 3rem}
+
+/* iframeサムネ（SNS・AI） */
+.w-thumb-iframe{
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  position:relative;
+  background:#fff;
+  flex-shrink:0;
+}
+.w-thumb-iframe iframe{
+  position:absolute;
+  top:0;
+  left:0;
+  width:980px;
+  height:600px;
+  border:none;
+  transform-origin:top left;
+  pointer-events:none;
+}
+
+.w-body{padding:2.5rem 3rem;flex:1}
 .w-cats{display:flex;gap:.7rem;margin-bottom:1rem;flex-wrap:wrap}
 .w-cat{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.2em;color:var(--gray-400);text-transform:uppercase;border:1px solid var(--line);padding:.3rem .7rem}
 .w-name{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;margin-bottom:.6rem}
@@ -128,7 +175,6 @@ section{padding:10rem 5rem}
 .about-text{font-size:.88rem;line-height:2.3;color:var(--gray-600);margin-bottom:2rem}
 .about-skills{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
 .skill-tag{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;padding:.3rem .8rem;border:1px solid var(--gray-200);color:var(--gray-600);background:var(--white)}
-.about-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
 .about-text{font-size:.9rem;line-height:2.3;color:var(--gray-600);margin-top:3rem}
 .about-nums{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
 .a-num{border-top:1px solid var(--line);padding-top:2rem}
@@ -296,6 +342,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <h2 class="s-title rv d1">制作<em>実績</em></h2>
   <div class="works-grid">
 
+    <!-- とん亭 -->
     <a href="https://tontei-web.github.io/tontei/" target="_blank" class="w-card rv d1">
       <div class="w-thumb">
         <img src="tontei-thumb.jpg" alt="とん亭">
@@ -308,10 +355,11 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         </div>
         <div class="w-name">とん亭｜老舗とんかつ専門店</div>
         <div class="w-desc">茨城県日立市大みか町・和モダンデザイン・SEO対応・スマホ最適化</div>
-        <a href="https://tontei-web.github.io/tontei/" target="_blank" class="w-link">View Site →</a>
+        <span class="w-link">View Site →</span>
       </div>
     </a>
 
+    <!-- あおば整体院 -->
     <a href="https://haku-studio-jp.github.io/demo-seikotsuin/" target="_blank" class="w-card rv d2">
       <div class="w-thumb">
         <img src="aoba-thumb.jpg" alt="あおば整体院">
@@ -326,6 +374,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       </div>
     </a>
 
+    <!-- 酒場 燈 -->
     <a href="https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/" target="_blank" class="w-card rv d3">
       <div class="w-thumb">
         <img src="https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/food1.jpg" alt="酒場 燈">
@@ -340,6 +389,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       </div>
     </a>
 
+    <!-- Beauty -->
     <a href="https://haku-studio-jp.github.io/demo-beauty/" target="_blank" class="w-card rv d4">
       <div class="w-thumb">
         <img src="beauty-thumb.jpg" alt="Beauty">
@@ -352,11 +402,39 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         <div class="w-name">Beauty</div>
         <div class="w-desc">美容室・サロン向け・洗練されたデザイン・スマホ最適化・約15万円〜</div>
       </div>
-    </div>
+    </a>
 
-  <a href="sns-service.html" class="w-card rv d5"><div class="w-thumb" id="d5-thumb" style="position:relative;overflow:hidden;background:#fff;"><iframe src="sns-banner.html" scrolling="no" id="d5-iframe" style="width:980px;height:520px;border:none;transform-origin:top left;position:absolute;top:0;left:0;pointer-events:none;"></iframe></div><div class="w-body"><div class="w-cats"><span class="w-cat">SNS運用</span><span class="w-cat">投稿代行</span></div><div class="w-name">SNS投稿代行</div><div class="w-desc">毎月の投稿文・ハッシュタグをすべて代行。貼るだけでOK！5,000円～</div></div></a>
-  <a href="ai-service.html" class="w-card rv d6"><div class="w-thumb" id="d6-thumb" style="position:relative;overflow:hidden;background:#fafafa;"><iframe src="ai-banner.html" scrolling="no" id="d6-iframe" style="width:980px;height:520px;border:none;transform-origin:top left;position:absolute;top:0;left:0;pointer-events:none;"></iframe></div><div class="w-body"><div class="w-cats"><span class="w-cat">AIツール</span><span class="w-cat">Notion</span></div><div class="w-name">AIツール・Notionテンプレ制作</div><div class="w-desc">業種別カスタムNotionテンプレ・AI自動化ツール。￥3,000～</div></div></a>
-  </a>
+    <!-- SNS投稿代行 -->
+    <a href="sns-service.html" class="w-card rv d5">
+      <div class="w-thumb-iframe" id="d5-thumb">
+        <iframe src="sns-banner.html" scrolling="no" id="d5-iframe"></iframe>
+      </div>
+      <div class="w-body">
+        <div class="w-cats">
+          <span class="w-cat">SNS運用</span>
+          <span class="w-cat">投稿代行</span>
+        </div>
+        <div class="w-name">SNS投稿代行</div>
+        <div class="w-desc">毎月の投稿文・ハッシュタグをすべて代行。貼るだけでOK！5,000円～</div>
+      </div>
+    </a>
+
+    <!-- AIツール -->
+    <a href="ai-service.html" class="w-card rv d6">
+      <div class="w-thumb-iframe" id="d6-thumb">
+        <iframe src="ai-banner.html" scrolling="no" id="d6-iframe"></iframe>
+      </div>
+      <div class="w-body">
+        <div class="w-cats">
+          <span class="w-cat">AIツール</span>
+          <span class="w-cat">Notion</span>
+        </div>
+        <div class="w-name">AIツール・Notionテンプレ制作</div>
+        <div class="w-desc">業種別カスタムNotionテンプレ・AI自動化ツール。￥3,000～</div>
+      </div>
+    </a>
+
+  </div>
 </section>
 
 <!-- ABOUT -->
@@ -379,6 +457,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     </div>
   </div>
 </section>
+
 <!-- PRICE -->
 <section id="price">
   <div class="s-label rv">Price</div>
@@ -629,22 +708,32 @@ window.addEventListener('scroll',()=>{
   if(bg)bg.style.transform='translateX('+scrollY*.1+'px)';
 },{passive:true});
 </script>
+
 <script>
+// iframeバナー スケーリング（SNS・AI両対応）
 (function(){
   function scaleBanners(){
-    document.querySelectorAll('.w-thumb iframe').forEach(function(f){
-      var t=f.parentNode, w=t.offsetWidth;
-      if(w>0){var s=w/980;f.style.transform='scale('+s+')';f.style.height=(520/s)+'px';t.style.height=(520*s)+'px';}
+    [['d5-thumb','d5-iframe'],['d6-thumb','d6-iframe']].forEach(function(p){
+      var wrap=document.getElementById(p[0]);
+      var iframe=document.getElementById(p[1]);
+      if(!wrap||!iframe)return;
+      var w=wrap.offsetWidth;
+      if(w<=0)return;
+      var s=w/980;
+      iframe.style.transform='scale('+s+')';
+      // iframeの表示高さをアスペクト比16/9に合わせて調整
+      var displayH=w*(9/16);
+      wrap.style.height=displayH+'px';
+      iframe.style.height=(displayH/s)+'px';
     });
   }
   window.addEventListener('load',scaleBanners);
   window.addEventListener('resize',scaleBanners);
   setTimeout(scaleBanners,300);
-  setTimeout(scaleBanners,1000);
+  setTimeout(scaleBanners,800);
+  setTimeout(scaleBanners,1500);
 })();
 </script>
-<script>
-(function(){function f(){[["d5-thumb","d5-iframe"],["d6-thumb","d6-iframe"]].forEach(function(p){var t=document.getElementById(p[0]),i=document.getElementById(p[1]);if(!t||!i)return;var w=t.offsetWidth;if(w>0){var s=w/980;i.style.transform="scale("+s+")";}});}window.addEventListener("load",f);window.addEventListener("resize",f);setTimeout(f,500);setTimeout(f,1500);})();
-</script>
+
 </body>
 </html>
