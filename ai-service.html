@@ -20,7 +20,6 @@
   --teal:#3aaa9a;--teal-light:#e8f8f6;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-a{color:inherit;text-decoration:none}
 html{scroll-behavior:smooth}
 body{background:var(--white);color:var(--black);font-family:'Noto Sans JP',sans-serif;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
@@ -241,12 +240,13 @@ footer{background:#0a0a14;border-top:1px solid rgba(255,255,255,.06);padding:2re
 </div>
 <script>
 (function(){
-  var wrap=document.getElementById('ai-hero-iframe').parentNode;
-  var iframe=document.getElementById('ai-hero-iframe');
-  var MAX_H=560;
-  function resize(){var w=wrap.offsetWidth;if(w<=600){iframe.style.height='auto';}else{iframe.style.height=Math.min(w*520/980,MAX_H)+'px';}}
-  iframe.onload=function(){resize();};
-  window.addEventListener('resize',resize);
+  var iframe = document.getElementById('ai-hero-iframe');
+  function resize(){
+    var w = iframe.offsetWidth;
+    iframe.style.height = (w * 520 / 980) + 'px';
+  }
+  iframe.onload = resize;
+  window.addEventListener('resize', resize);
   resize();
 })();
 </script>
