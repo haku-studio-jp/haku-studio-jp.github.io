@@ -145,7 +145,7 @@ section{padding:10rem 5rem}
 /* iframeサムネ（SNS・AI） */
 .w-thumb-iframe{
   width:100%;
-  aspect-ratio:16/9;
+  aspect-ratio:980/520;
   overflow:hidden;
   position:relative;
   background:#fff;
@@ -156,7 +156,7 @@ section{padding:10rem 5rem}
   top:0;
   left:0;
   width:980px;
-  height:600px;
+  height:520px;
   border:none;
   transform-origin:top left;
   pointer-events:none;
@@ -765,7 +765,7 @@ window.addEventListener('scroll',()=>{
       var s=w/980;
       iframe.style.transform='scale('+s+')';
       // iframeの表示高さをアスペクト比16/9に合わせて調整
-      var displayH=w*(9/16);
+      var displayH=w*(520/980);
       wrap.style.height=displayH+'px';
       iframe.style.height=(displayH/s)+'px';
     });
