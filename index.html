@@ -99,6 +99,11 @@ section{padding:10rem 5rem}
 .rv.on{opacity:1;transform:translateY(0)}
 .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
+/* WORKS slide-in */
+.works-grid .w-card.rv{transition:opacity .6s ease,transform .6s ease;}
+.works-grid .w-card:nth-child(odd).rv{transform:translateX(-60px);}
+.works-grid .w-card:nth-child(even).rv{transform:translateX(60px);}
+.works-grid .w-card.rv.on{opacity:1;transform:translateX(0);}
 /* WORKS */
 #works{background:var(--gray-100)}
 
@@ -702,6 +707,11 @@ window.addEventListener('scroll',()=>hdr.classList.toggle('on',scrollY>80),{pass
 // REVEAL
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:.08,rootMargin:'0px 0px -50px 0px'});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// WORKS slide-in
+const wCards=document.querySelectorAll('.works-grid .w-card');
+const wObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');wObs.unobserve(e.target);}}),{threshold:.08,rootMargin:'0px 0px -50px 0px'});
+wCards.forEach((el,i)=>{el.style.transitionDelay=(i*.1)+'s';wObs.observe(el);});
 
 // FAQ
 document.querySelectorAll('.fq-q').forEach(q=>{
