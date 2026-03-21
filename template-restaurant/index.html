@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ▼ タイトル・ディスクリプションを変更 -->
+<title>店名｜キャッチコピー</title>
+<meta name="description" content="店の説明文をここに入れる。100〜120文字程度。">
+<!-- ▲ ここまで変更 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:     #1c1409;
+    --gold:    #b8882a;
+    --gold-lt: #d4aa55;
+    --cream:   #f6f0e4;
+    --warm:    #fdf8f0;
+    --brown:   #3e2208;
+    --smoke:   #7a6a55;
+    --divider: rgba(184,136,42,0.35);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--warm); color:var(--ink); font-family:'Noto Serif JP',serif; overflow-x:hidden; }
+  a { text-decoration:none; color:inherit; }
+  img { display:block; width:100%; height:100%; object-fit:cover; }
+
+  /* ========== NAV ========== */
+  header {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 5vw; height:60px;
+    background:rgba(28,20,9,0.92); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--divider);
+  }
+  /* ▼ 店名ロゴ */
+  .nav-logo {
+    font-family:'Shippori Mincho B1',serif;
+    font-size:1.4rem; font-weight:700;
+    color:var(--gold-lt); letter-spacing:.15em;
+  }
+  .nav-links { display:flex; gap:1.8rem; align-items:center; }
+  .nav-links a {
+    font-size:.76rem; letter-spacing:.18em;
+    color:#ccc0a8; transition:color .25s;
+  }
+  .nav-links a:hover { color:var(--gold-lt); }
+  /* ▼ 電話番号 */
+  .nav-tel {
+    font-family:'Shippori Mincho B1',serif;
+    font-size:.8rem; font-weight:600; letter-spacing:.1em;
+    color:var(--gold-lt); border:1px solid var(--divider);
+    padding:.3rem .9rem; transition:background .25s;
+  }
+  .nav-tel:hover { background:rgba(184,136,42,0.15); }
+
+  /* ========== HERO ========== */
+  .hero {
+    position:relative; height:100svh; min-height:560px;
+    display:flex; align-items:flex-end;
+  }
+  .hero-bg {
+    position:absolute; inset:0; z-index:0;
+    /* ▼ ヒーロー背景画像 */
+    background:url("images/hero.jpg") center/cover no-repeat;
+  }
+  .hero-overlay {
+    position:absolute; inset:0; z-index:1;
+    background:linear-gradient(to top, rgba(28,20,9,0.82) 0%, rgba(28,20,9,0.3) 55%, rgba(28,20,9,0.1) 100%);
+  }
+  .hero-content {
+    position:relative; z-index:2;
+    padding:0 8vw 8vh; max-width:720px;
+  }
+  .hero-label {
+    font-size:.66rem; letter-spacing:.42em;
+    color:var(--gold-lt); text-transform:uppercase; margin-bottom:1rem;
+  }
+  /* ▼ ヒーロー大見出し */
+  .hero-title {
+    font-family:'Shippori Mincho B1',serif;
+    font-size:clamp(2rem,5vw,3.8rem);
+    font-weight:800; line-height:1.35; letter-spacing:.06em;
+    color:#fff; margin-bottom:1.2rem;
+  }
+  .hero-title span { color:var(--gold-lt); }
+  /* ▼ ヒーローサブコピー */
+  .hero-sub {
+    font-size:.9rem; line-height:2; color:rgba(255,255,255,.7);
+    margin-bottom:2rem; max-width:28em;
+  }
+  .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn-primary {
+    display:inline-block; padding:.85rem 2rem;
+    background:var(--gold); color:#fff;
+    font-size:.8rem; letter-spacing:.18em;
+    transition:background .25s;
+  }
+  .btn-primary:hover { background:var(--gold-lt); }
+  .btn-outline {
+    display:inline-block; padding:.85rem 2rem;
+    border:1px solid rgba(255,255,255,.5); color:#fff;
+    font-size:.8rem; letter-spacing:.18em;
+    transition:border-color .25s;
+  }
+  .btn-outline:hover { border-color:var(--gold-lt); color:var(--gold-lt); }
+  .hero-scroll {
+    position:absolute; bottom:2.5rem; right:5vw; z-index:2;
+    writing-mode:vertical-rl; font-size:.58rem; letter-spacing:.4em;
+    color:rgba(255,255,255,.35);
+  }
+
+  /* ========== FEATURE STRIP ========== */
+  .feature-strip {
+    display:grid; grid-template-columns:repeat(4,1fr);
+    border-top:2px solid var(--gold);
+    background:var(--ink);
+  }
+  .feature-item {
+    padding:2rem 1.5rem;
+    border-right:1px solid var(--divider);
+    text-align:center;
+  }
+  .feature-item:last-child { border-right:none; }
+  .feature-item strong {
+    display:block;
+    font-family:'Shippori Mincho B1',serif;
+    font-size:1rem; font-weight:700;
+    color:var(--gold-lt); letter-spacing:.08em;
+    margin-bottom:.5rem;
+  }
+  .feature-item span {
+    font-size:.72rem; line-height:1.9;
+    color:rgba(230,210,175,.6);
+  }
+
+  /* ========== SHARED ========== */
+  section { padding:6rem 8vw; }
+  .section-eyebrow {
+    font-size:.66rem; letter-spacing:.42em;
+    color:var(--gold); text-transform:uppercase; margin-bottom:1rem;
+  }
+  .section-title {
+    font-family:'Shippori Mincho B1',serif;
+    font-size:clamp(1.6rem,3.2vw,2.6rem);
+    font-weight:700; line-height:1.38; letter-spacing:.06em; color:var(--brown);
+  }
+  .section-divider {
+    width:44px; height:2px; background:var(--gold); margin:1.3rem 0 2.6rem;
+  }
+
+  /* ========== ABOUT ========== */
+  #about { background:var(--warm); }
+  .about-wrap {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:5vw; align-items:center;
+  }
+  .about-body { font-size:.88rem; line-height:2.2; color:var(--smoke); }
+  .about-body p + p { margin-top:1.2rem; }
+  .about-badge {
+    display:inline-block; margin-top:2rem;
+    font-size:.7rem; letter-spacing:.15em;
+    color:var(--gold); border:1px solid var(--gold);
+    padding:.3rem 1rem;
+  }
+  .about-image {
+    aspect-ratio:4/3; overflow:hidden;
+    /* ▼ about画像 */
+  }
+  .about-image img { transition:transform .6s; }
+  .about-image:hover img { transform:scale(1.04); }
+
+  /* ========== MENU ========== */
+  .menu-section { background:var(--cream); }
+  .menu-grid {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1.5rem; margin-top:1rem;
+  }
+  .menu-card {
+    background:#fff;
+    border:1px solid var(--divider);
+  }
+  .menu-card-img { aspect-ratio:4/3; overflow:hidden; }
+  .menu-card-img img { transition:transform .5s; }
+  .menu-card:hover .menu-card-img img { transform:scale(1.05); }
+  .menu-card-body { padding:1.4rem 1.5rem 1.8rem; }
+  .menu-tag {
+    font-size:.6rem; letter-spacing:.22em;
+    color:var(--gold); text-transform:uppercase; margin-bottom:.4rem;
+  }
+  .menu-name {
+    font-family:'Shippori Mincho B1',serif;
+    font-size:1.1rem; font-weight:700; letter-spacing:.06em;
+    color:var(--brown); margin-bottom:.6rem;
+  }
+  .menu-desc { font-size:.78rem; line-height:1.9; color:var(--smoke); margin-bottom:.8rem; }
+  .menu-price {
+    font-family:'Shippori Mincho B1',serif;
+    font-size:1.5rem; font-weight:700; color:var(--brown);
+  }
+  .menu-price small { font-size:.75rem; font-weight:400; }
+  .menu-note {
+    margin-top:2rem; font-size:.75rem; color:var(--smoke);
+    letter-spacing:.06em; text-align:center;
+  }
+
+  /* ========== INFO ========== */
+  .info-section { background:var(--ink); color:#e8dcc8; }
+  .info-section .section-title { color:#e8dcc8; }
+  .info-section .section-eyebrow { color:var(--gold-lt); }
+  .info-section .section-divider { background:var(--gold); }
+  .info-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:4vw; align-items:start;
+  }
+  .info-table { width:100%; border-collapse:collapse; font-size:.85rem; }
+  .info-table tr { border-bottom:1px solid rgba(184,136,42,0.2); }
+  .info-table th {
+    padding:1rem 0; text-align:left; font-weight:400;
+    color:var(--gold-lt); letter-spacing:.08em;
+    width:7em; vertical-align:top;
+  }
+  .info-table td { padding:1rem 0; line-height:1.9; color:#d5c8b0; }
+  .info-note { font-size:.72rem; color:var(--smoke); margin-top:.3rem; }
+  .tel-block { margin-top:2.5rem; }
+  .tel-label {
+    font-size:.6rem; letter-spacing:.35em;
+    color:var(--gold); text-transform:uppercase; margin-bottom:.5rem;
+  }
+  .tel-number {
+    display:block;
+    font-family:'Shippori Mincho B1',serif;
+    font-size:2rem; font-weight:700;
+    color:var(--gold-lt); letter-spacing:.08em;
+    transition:color .2s;
+  }
+  .tel-number:hover { color:#fff; }
+  .tel-sub { font-size:.72rem; color:var(--smoke); margin-top:.3rem; }
+  .map-wrap {
+    aspect-ratio:4/3; overflow:hidden;
+    border:1px solid var(--divider);
+  }
+  .map-wrap iframe { width:100%; height:100%; border:none; filter:grayscale(30%); }
+  .map-link {
+    display:inline-block; margin-top:1rem;
+    font-size:.72rem; letter-spacing:.12em;
+    color:var(--gold-lt); border-bottom:1px solid var(--divider);
+    padding-bottom:2px; transition:color .2s;
+  }
+  .map-link:hover { color:#fff; }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background:var(--ink); border-top:1px solid var(--divider);
+    padding:2.5rem 8vw;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:1rem;
+  }
+  .footer-logo {
+    font-family:'Shippori Mincho B1',serif;
+    font-size:1.3rem; font-weight:700;
+    color:var(--gold-lt); letter-spacing:.2em;
+  }
+  .footer-copy {
+    font-size:.62rem; letter-spacing:.18em;
+    color:rgba(255,255,255,.25);
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width:768px) {
+    section { padding:4rem 5vw; }
+    .feature-strip { grid-template-columns:repeat(2,1fr); }
+    .feature-item { border-bottom:1px solid var(--divider); }
+    .about-wrap { grid-template-columns:1fr; }
+    .about-image { order:-1; }
+    .menu-grid { grid-template-columns:1fr; }
+    .info-grid { grid-template-columns:1fr; }
+    .nav-links { display:none; }
+    footer { flex-direction:column; text-align:center; }
+    .hero-content { padding:0 5vw 6vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<header>
+  <!-- ▼ 店名ロゴ -->
+  <a class="nav-logo" href="#" aria-label="店名 トップへ">店名</a><!-- ▲ 店名 -->
+  <nav>
+    <span class="nav-links">
+      <a href="#about">こだわり</a>
+      <a href="#menu">メニュー</a>
+      <a href="#info">店舗情報</a>
+    </span>
+    <!-- ▼ 電話番号 -->
+    <a class="nav-tel" href="tel:000-000-0000">000-000-0000</a><!-- ▲ 電話番号 -->
+  </nav>
+</header>
+
+<!-- ========== HERO ========== -->
+<!-- 背景画像: images/hero.jpg -->
+<section class="hero" aria-label="メインビジュアル">
+  <div class="hero-bg" role="img" aria-label="店名 外観"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <!-- ▼ エリア情報（例: Ibaraki · Hitachi · Omika） -->
+    <p class="hero-label">都道府県 · 市区町村 · 地区名</p><!-- ▲ エリア -->
+    <!-- ▼ キャッチコピー -->
+    <h1 class="hero-title">地域で愛される<br><span>本格○○料理</span>店名</h1><!-- ▲ キャッチ -->
+    <!-- ▼ サブコピー（2〜3行） -->
+    <p class="hero-sub">こだわりの食材を使った、本格的な○○料理。<br>長年地域に愛され続ける味をご堪能ください。</p><!-- ▲ サブコピー -->
+    <div class="hero-cta">
+      <a class="btn-primary" href="#menu">メニューを見る</a>
+      <a class="btn-outline" href="#info">店舗情報</a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">SCROLL</div>
+</section>
+
+<!-- ========== FEATURE STRIP ========== -->
+<!-- ▼ 4つの強み（テキストのみ差し替え） -->
+<div class="feature-strip" role="list">
+  <div class="feature-item" role="listitem">
+    <strong>こだわり食材</strong>
+    <span>産地直送の厳選素材<br>素材の旨みを最大限に</span>
+  </div>
+  <div class="feature-item" role="listitem">
+    <strong>昔ながらの製法</strong>
+    <span>長年受け継がれた技<br>変わらぬ本物の味</span>
+  </div>
+  <div class="feature-item" role="listitem">
+    <strong>○○無料サービス</strong>
+    <span>ご飯・○○<br>各1回おかわり自由</span>
+  </div>
+  <div class="feature-item" role="listitem">
+    <strong>駐車場あり</strong>
+    <span>店舗前駐車場完備<br>お気軽にどうぞ</span>
+  </div>
+</div><!-- ▲ feature-strip ここまで -->
+
+<!-- ========== ABOUT ========== -->
+<section id="about" aria-labelledby="about-title">
+  <div class="about-wrap">
+    <div class="about-text">
+      <p class="section-eyebrow">Our Story</p>
+      <!-- ▼ Aboutの見出し -->
+      <h2 class="section-title" id="about-title">地域で○○年<br>愛され続ける味</h2><!-- ▲ 見出し -->
+      <div class="section-divider"></div>
+      <!-- ▼ 店の説明文（2〜3段落） -->
+      <div class="about-body">
+        <p>創業以来、地域のお客様に支えられてきた○○専門店です。素材の選定から調理まで、すべてに妥協なくこだわり続けています。</p>
+        <p>代々受け継がれてきた製法を守りながら、現代のお客様にも満足いただける味を追求しています。</p>
+      </div><!-- ▲ 説明文 -->
+      <!-- ▼ バッジテキスト（こだわりの一言） -->
+      <span class="about-badge">○○県産ブランド食材使用</span><!-- ▲ バッジ -->
+    </div>
+    <!-- 画像: images/about.jpg -->
+    <div class="about-image">
+      <img src="images/about.jpg" alt="店内・食材のイメージ"><!-- ▲ about画像 -->
+    </div>
+  </div>
+</section>
+
+<!-- ========== MENU ========== -->
+<section id="menu" class="menu-section" aria-labelledby="menu-title">
+  <p class="section-eyebrow">Menu</p>
+  <h2 class="section-title" id="menu-title">おすすめメニュー</h2>
+  <div class="section-divider"></div>
+  <div class="menu-grid">
+
+    <!-- ▼ メニューカード1 -->
+    <!-- 画像: images/menu1.jpg -->
+    <article class="menu-card">
+      <div class="menu-card-img">
+        <img src="images/menu1.jpg" alt="メニュー名1">
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-tag">Most Popular</p><!-- ▲ バッジ（Most Popular / Ladies' Favorite / など） -->
+        <h3 class="menu-name">○○定食（一番人気）</h3><!-- ▲ メニュー名 -->
+        <p class="menu-desc">メニューの説明文。食材・味わい・特徴を2〜3文で。</p><!-- ▲ 説明 -->
+        <p class="menu-price">1,500<small>円（税込）</small></p><!-- ▲ 価格 -->
+      </div>
+    </article>
+
+    <!-- ▼ メニューカード2 -->
+    <!-- 画像: images/menu2.jpg -->
+    <article class="menu-card">
+      <div class="menu-card-img">
+        <img src="images/menu2.jpg" alt="メニュー名2">
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-tag">Recommended</p>
+        <h3 class="menu-name">○○定食（二番人気）</h3>
+        <p class="menu-desc">メニューの説明文。食材・味わい・特徴を2〜3文で。</p>
+        <p class="menu-price">1,800<small>円（税込）</small></p>
+      </div>
+    </article>
+
+    <!-- ▼ メニューカード3 -->
+    <!-- 画像: images/menu3.jpg -->
+    <article class="menu-card">
+      <div class="menu-card-img">
+        <img src="images/menu3.jpg" alt="メニュー名3">
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-tag">Seasonal</p>
+        <h3 class="menu-name">○○定食（季節限定）</h3>
+        <p class="menu-desc">メニューの説明文。食材・味わい・特徴を2〜3文で。</p>
+        <p class="menu-price">2,000<small>円（税込）</small></p>
+      </div>
+    </article>
+
+  </div>
+  <!-- ▼ メニュー注記 -->
+  <p class="menu-note">※ ご飯・味噌汁のおかわりは各1回無料です。</p><!-- ▲ 注記 -->
+</section>
+
+<!-- ========== INFO ========== -->
+<section id="info" class="info-section" aria-labelledby="info-title">
+  <p class="section-eyebrow">Shop Info</p>
+  <h2 class="section-title" id="info-title">店舗情報</h2>
+  <div class="section-divider"></div>
+  <div class="info-grid">
+    <div>
+      <table class="info-table" aria-label="店舗詳細情報">
+        <!-- ▼ 各行：左=項目名・右=内容を差し替え -->
+        <tr><th scope="row">住所</th><td>〒000-0000<br>○○県○○市○○町0-0-0</td></tr><!-- ▲ 住所 -->
+        <tr><th scope="row">営業時間</th><td>ランチ　11:00〜14:00<br>ディナー　17:00〜21:00</td></tr><!-- ▲ 営業時間 -->
+        <tr><th scope="row">定休日</th><td>○曜日・○曜日</td></tr><!-- ▲ 定休日 -->
+        <tr><th scope="row">駐車場</th><td>あり（店舗前）<p class="info-note">台数に限りがございます。</p></td></tr><!-- ▲ 駐車場 -->
+      </table>
+      <div class="tel-block">
+        <p class="tel-label">RESERVATION / TEL</p>
+        <!-- ▼ 電話番号 -->
+        <a class="tel-number" href="tel:000-000-0000">000-000-0000</a><!-- ▲ 電話番号 -->
+        <p class="tel-sub">営業時間内にお電話ください</p>
+      </div>
+    </div>
+    <div>
+      <!-- ▼ Google Mapsのiframe埋め込みコードに差し替え -->
+      <div class="map-wrap">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=XXXXXXXXXX"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="店舗地図"></iframe>
+      </div><!-- ▲ Google Maps -->
+      <!-- ▼ Google Mapsリンク -->
+      <a class="map-link" href="https://maps.google.com/?q=住所" target="_blank" rel="noopener noreferrer">
+        Google マップで開く →
+      </a><!-- ▲ マップリンク -->
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <!-- ▼ 店名 -->
+  <span class="footer-logo">店名</span><!-- ▲ 店名 -->
+  <!-- ▼ コピーライト年・店名 -->
+  <span class="footer-copy">© 2026 店名 All Rights Reserved.</span><!-- ▲ コピーライト -->
+</footer>
+
+<script>
+// スクロール時にヘッダーを少し暗くする（任意）
+window.addEventListener('scroll', () => {
+  document.querySelector('header').style.background =
+    scrollY > 60 ? 'rgba(28,20,9,0.97)' : 'rgba(28,20,9,0.92)';
+}, { passive: true });
+</script>
+
+</body>
+</html>
