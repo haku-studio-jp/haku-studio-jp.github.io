@@ -228,15 +228,28 @@ footer{background:#0a0a14;border-top:1px solid rgba(255,255,255,.06);padding:2re
   </a>
 </header>
 
-<div style="width:100%;margin-top:60px;line-height:0;position:relative;padding-top:53.06%;">
+<!-- HERO -->
+<div style="width:100%;margin-top:60px;line-height:0;">
   <iframe
     src="ai-banner.html"
-    style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"
+    style="width:100%;height:0;border:none;display:block;"
     scrolling="no"
     id="ai-hero-iframe"
     title="AIツール・Notionテンプレ制作"
   ></iframe>
 </div>
+<script>
+(function(){
+  var iframe = document.getElementById('ai-hero-iframe');
+  function resize(){
+    var w = iframe.offsetWidth;
+    iframe.style.height = (w * 520 / 980) + 'px';
+  }
+  iframe.onload = resize;
+  window.addEventListener('resize', resize);
+  resize();
+})();
+</script>
 
 <!-- PAIN -->
 <section class="sec" id="pain">
