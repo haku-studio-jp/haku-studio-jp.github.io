@@ -195,15 +195,23 @@ footer{background:var(--g900);border-top:1px solid rgba(255,255,255,.06);padding
 </header>
 
 <!-- HERO -->
-<div style="width:100%;margin-top:60px;line-height:0;position:relative;padding-top:53.06%;">
+<div style="width:100%;margin-top:60px;overflow:hidden;" id="sns-hero-wrap">
   <iframe
     src="sns-banner.html"
-    style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"
+    style="width:980px;height:520px;border:none;display:block;transform-origin:top left;"
     scrolling="no"
     id="sns-hero-iframe"
     title="SNS投稿代行"
   ></iframe>
 </div>
+<script>
+(function(){
+  var wrap=document.getElementById('sns-hero-wrap');
+  var iframe=document.getElementById('sns-hero-iframe');
+  function resize(){var s=wrap.offsetWidth/980;iframe.style.transform='scale('+s+')';wrap.style.height=(520*s)+'px';}
+  iframe.onload=resize;window.addEventListener('resize',resize);resize();
+})();
+</script>
 
 
 <!-- PAIN -->
