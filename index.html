@@ -414,8 +414,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
     <!-- SNS投稿代行 -->
     <a href="sns-service.html" class="w-card rv d5">
-      <div class="w-thumb-iframe" id="d5-thumb">
-        <iframe src="sns-banner.html" scrolling="no" id="d5-iframe"></iframe>
+      <div class="w-thumb">
+        <img src="sns-hero.jpg" alt="SNS投稿代行">
       </div>
       <div class="w-body">
         <div class="w-cats">
@@ -429,8 +429,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
     <!-- AIツール -->
     <a href="ai-service.html" class="w-card rv d6">
-      <div class="w-thumb-iframe" id="d6-thumb">
-        <iframe src="ai-banner.html" scrolling="no" id="d6-iframe"></iframe>
+      <div class="w-thumb">
+        <img src="ai-hero.png" alt="AIツール・Notionテンプレ制作">
       </div>
       <div class="w-body">
         <div class="w-cats">
@@ -752,31 +752,6 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 </script>
 
-<script>
-// iframeバナー スケーリング（SNS・AI両対応）
-(function(){
-  function scaleBanners(){
-    [['d5-thumb','d5-iframe'],['d6-thumb','d6-iframe']].forEach(function(p){
-      var wrap=document.getElementById(p[0]);
-      var iframe=document.getElementById(p[1]);
-      if(!wrap||!iframe)return;
-      var w=wrap.offsetWidth;
-      if(w<=0)return;
-      var s=w/980;
-      iframe.style.transform='scale('+s+')';
-      // iframeの表示高さをアスペクト比16/9に合わせて調整
-      var displayH=w*(520/980);
-      wrap.style.height=displayH+'px';
-      iframe.style.height=(displayH/s)+'px';
-    });
-  }
-  window.addEventListener('load',scaleBanners);
-  window.addEventListener('resize',scaleBanners);
-  setTimeout(scaleBanners,300);
-  setTimeout(scaleBanners,800);
-  setTimeout(scaleBanners,1500);
-})();
-</script>
 
 </body>
 </html>
