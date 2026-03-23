@@ -170,6 +170,17 @@ section{padding:10rem 5rem}
 .w-link{display:inline-flex;align-items:center;gap:.8rem;margin-top:1.5rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--black);text-decoration:none;text-transform:uppercase;border-bottom:1px solid var(--black);padding-bottom:.3rem;transition:opacity .3s}
 .w-link:hover{opacity:.4}
 
+/* SERVICES */
+#services{background:var(--white)}
+.svc-list{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);margin-top:5rem}
+.svc-item{background:var(--gray-100);display:flex;flex-direction:column;text-decoration:none;color:inherit;overflow:hidden;transition:background .3s}
+.svc-item:hover{background:var(--white)}
+.svc-img{width:100%;overflow:hidden}
+.svc-img img{width:100%;height:auto;display:block;transition:transform .7s cubic-bezier(.25,.46,.45,.94)}
+.svc-item:hover .svc-img img{transform:scale(1.03)}
+.svc-body{padding:2.5rem 3rem;flex:1}
+@media(max-width:768px){.svc-list{grid-template-columns:1fr}}
+
 /* ABOUT */
 #about{background:var(--white)}
 .about-members{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);margin-top:5rem}
@@ -317,6 +328,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <a href="#" class="hdr-logo">Haku Studio</a>
   <nav>
     <a href="#works">Works</a>
+    <a href="#services">Services</a>
     <a href="#about">About</a>
     <a href="#price">Price</a>
     <a href="#flow">Flow</a>
@@ -412,33 +424,42 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       </div>
     </a>
 
-    <!-- SNS投稿代行 -->
-    <a href="sns-service.html" class="w-card rv d5">
-      <div class="w-thumb">
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="s-label rv">Services</div>
+  <h2 class="s-title rv d1">提供<em>サービス</em></h2>
+  <div class="svc-list">
+
+    <a href="sns-service.html" class="svc-item rv d1">
+      <div class="svc-img">
         <img src="sns-hero.jpg" alt="SNS投稿代行">
       </div>
-      <div class="w-body">
+      <div class="svc-body">
         <div class="w-cats">
           <span class="w-cat">SNS運用</span>
           <span class="w-cat">投稿代行</span>
         </div>
         <div class="w-name">SNS投稿代行</div>
-        <div class="w-desc">毎月の投稿文・ハッシュタグをすべて代行。貼るだけでOK！5,000円～</div>
+        <div class="w-desc">毎月の投稿文・ハッシュタグをすべて代行。貼るだけでOK！月額¥5,000〜</div>
+        <span class="w-link">詳しく見る →</span>
       </div>
     </a>
 
-    <!-- AIツール -->
-    <a href="ai-service.html" class="w-card rv d6">
-      <div class="w-thumb">
+    <a href="ai-service.html" class="svc-item rv d2">
+      <div class="svc-img">
         <img src="ai-hero.png" alt="AIツール・Notionテンプレ制作">
       </div>
-      <div class="w-body">
+      <div class="svc-body">
         <div class="w-cats">
           <span class="w-cat">AIツール</span>
           <span class="w-cat">Notion</span>
         </div>
         <div class="w-name">AIツール・Notionテンプレ制作</div>
-        <div class="w-desc">業種別カスタムNotionテンプレ・AI自動化ツール。￥3,000～</div>
+        <div class="w-desc">業種別カスタムNotionテンプレ・AI自動化ツール。¥3,000〜</div>
+        <span class="w-link">詳しく見る →</span>
       </div>
     </a>
 
