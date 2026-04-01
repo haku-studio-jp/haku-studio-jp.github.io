@@ -384,13 +384,13 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   display:flex;
   align-items:center;
   gap:3px;
-  background:rgba(250,250,248,0.82);
-  backdrop-filter:blur(20px) saturate(140%);
-  -webkit-backdrop-filter:blur(20px) saturate(140%);
-  border:1px solid rgba(10,10,10,0.07);
+  background:rgba(10,10,10,0.92);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(201,169,110,0.3);
   border-radius:100px;
   padding:5px;
-  box-shadow:0 8px 32px rgba(0,0,0,0.08),inset 0 1px 0 rgba(255,255,255,0.9);
+  box-shadow:0 8px 24px rgba(0,0,0,0.2);
   animation:bn-rise .9s cubic-bezier(.34,1.56,.64,1) both;
   animation-delay:.4s;
 }
@@ -405,7 +405,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   border-radius:100px;
   font-family:'DM Mono',monospace;
   font-size:.58rem;font-weight:400;letter-spacing:.25em;
-  color:rgba(10,10,10,0.4);
+  color:rgba(255,255,255,0.4);
   text-decoration:none;
   text-transform:uppercase;
   transition:color .3s ease;
@@ -425,25 +425,26 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   bottom:7px;left:50%;
   width:calc(100% - 48px);
   height:1px;
-  background:rgba(10,10,10,0.25);
+  background:rgba(255,255,255,0.3);
   transform:translateX(-50%) scaleX(0);
   transform-origin:center;
   transition:transform .4s cubic-bezier(.25,.46,.45,.94);
 }
-.bn-item:hover{color:rgba(10,10,10,0.8);}
-.bn-item:hover::before{background:rgba(10,10,10,0.04);}
+.bn-item:hover{color:rgba(255,255,255,0.8);}
+.bn-item:hover::before{background:rgba(255,255,255,0.04);}
 .bn-item:hover::after{transform:translateX(-50%) scaleX(1);}
 .bn-item:last-child{
-  color:#C9A96E;
-  background:var(--black);
-  border:1px solid var(--black);
+  color:#0a0a0a;
+  background:linear-gradient(135deg,#D4B07A,#C9A96E,#B8934A);
+  border:none;
+  font-weight:500;
   animation:bn-glow 3s ease-in-out infinite;
 }
 .bn-item:last-child::after{display:none;}
-.bn-item:last-child:hover{color:#E8D5A3;background:#1a1714;}
+.bn-item:last-child:hover{background:linear-gradient(135deg,#E0BE88,#D4B07A,#C9A96E);}
 @keyframes bn-glow{
-  0%,100%{box-shadow:0 0 0 0 rgba(201,169,110,0.15)}
-  50%{box-shadow:0 0 16px rgba(201,169,110,0.18)}
+  0%,100%{box-shadow:0 2px 12px rgba(201,169,110,0.2)}
+  50%{box-shadow:0 4px 20px rgba(201,169,110,0.35)}
 }
 
 /* RESPONSIVE */
