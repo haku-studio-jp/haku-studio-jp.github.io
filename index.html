@@ -976,10 +976,26 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   });
 })();
 
-// HERO BG パララックス
+// HERO BG パララックス ＋ タイトルスクロールフェード
+const _heroEl=document.getElementById('hero');
+const _heroTitle=document.querySelector('.h-title');
+const _heroTag=document.querySelector('.h-tag');
+const _heroSub=document.querySelector('.h-sub');
 window.addEventListener('scroll',()=>{
   const bg=document.querySelector('.hero-bg-txt');
   if(bg)bg.style.transform='translateX('+scrollY*.1+'px)';
+
+  if(!_heroEl)return;
+  const fade=Math.max(0,Math.min(scrollY/(_heroEl.offsetHeight*.45),1));
+  if(_heroTitle){
+    _heroTitle.style.opacity=1-fade;
+    _heroTitle.style.transform='translateY('+(fade*-50)+'px)';
+  }
+  if(_heroTag){_heroTag.style.opacity=Math.max(0,1-fade*1.8);}
+  if(_heroSub){
+    _heroSub.style.opacity=Math.max(0,1-fade*1.4);
+    _heroSub.style.transform='translateY('+(fade*-25)+'px)';
+  }
 },{passive:true});
 
 // SECTION TITLE SPLIT
