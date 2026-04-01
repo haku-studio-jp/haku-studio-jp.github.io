@@ -493,21 +493,24 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .bn-item{flex:1;padding:10px 0;font-size:.65rem;}
   #bottom-nav{display:none}
   #mascot-cta{
-    display:flex;flex-direction:column;align-items:center;gap:.5rem;
+    display:flex;flex-direction:row;align-items:center;gap:.65rem;
     position:fixed;bottom:1.8rem;right:1.2rem;z-index:200;
     text-decoration:none;
+    background:rgba(250,250,248,0.95);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(10,10,10,0.08);
+    border-radius:100px;
+    padding:5px 18px 5px 5px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
     animation:mascot-rise .9s cubic-bezier(.34,1.56,.64,1) .5s both, mascot-float 3s ease-in-out 1.4s infinite;
   }
   #mascot-cta img{
-    width:62px;height:62px;border-radius:50%;object-fit:cover;
-    box-shadow:0 6px 20px rgba(0,0,0,0.15);
-    border:2px solid rgba(255,255,255,0.9);
+    width:44px;height:44px;border-radius:50%;object-fit:cover;
+    border:1px solid rgba(10,10,10,0.06);flex-shrink:0;
   }
   #mascot-cta span{
     font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--white);background:var(--black);
-    padding:.35rem .9rem;border-radius:100px;white-space:nowrap;
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    text-transform:uppercase;color:var(--black);white-space:nowrap;
   }
   @keyframes mascot-rise{
     from{opacity:0;transform:translateY(24px) scale(0.9)}
