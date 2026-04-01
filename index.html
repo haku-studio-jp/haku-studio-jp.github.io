@@ -335,10 +335,11 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .ft-qr-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.2em;color:rgba(255,255,255,.3);text-transform:uppercase}
 
 /* FIXED BOTTOM NAV */
-#bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(250,250,248,.96);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:center}
-.bn-item{flex:1;max-width:180px;display:flex;align-items:center;justify-content:center;padding:1rem .5rem;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.25em;color:var(--gray-400);text-decoration:none;text-transform:uppercase;transition:color .3s;border-right:1px solid var(--line)}
-.bn-item:last-child{border-right:none}
-.bn-item:hover{color:var(--black)}
+#bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--black);display:flex;justify-content:center;height:56px}
+.bn-item{flex:1;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif JP',serif;font-size:.82rem;font-weight:300;letter-spacing:.15em;color:rgba(255,255,255,.45);text-decoration:none;transition:color .3s;border-right:1px solid rgba(255,255,255,.08)}
+.bn-item:last-child{border-right:none;background:#06C755;color:#fff;font-weight:400;letter-spacing:.2em}
+.bn-item:hover{color:rgba(255,255,255,.9)}
+.bn-item:last-child:hover{background:#05a847}
 
 /* RESPONSIVE */
 @media(max-width:960px){
@@ -770,7 +771,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     <div class="ft-copy">© 2026 HAKU STUDIO All Rights Reserved.</div>
   </div>
   <div class="ft-qr">
-    <img src="https://chart.googleapis.com/chart?chs=80x80&cht=qr&chl=https://line.me/R/ti/p/@131gmndm" alt="LINE QR">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://line.me/R/ti/p/@131gmndm" alt="LINE QR">
     <div class="ft-qr-label">Line</div>
   </div>
 </footer>
