@@ -334,6 +334,44 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .ft-qr img{width:80px;height:80px;border-radius:4px;display:block}
 .ft-qr-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.2em;color:rgba(255,255,255,.3);text-transform:uppercase}
 
+/* 縦線非表示 */
+.hero-lines{display:none}
+
+/* セクションタイトル文字スプリット */
+.split-char{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .65s cubic-bezier(.25,.46,.45,.94),transform .65s cubic-bezier(.25,.46,.45,.94);
+  will-change:transform,opacity;
+}
+.split-char.on{opacity:1;transform:translateY(0)}
+
+/* ページ遷移オーバーレイ */
+#pg-overlay{position:fixed;inset:0;z-index:9400;display:flex;pointer-events:none}
+.pg-p{flex:1;background:var(--black);transform:scaleY(0);transform-origin:bottom;transition:transform .5s cubic-bezier(.77,0,.175,1)}
+.pg-p:nth-child(2){transition-delay:.06s}
+.pg-p:nth-child(3){transition-delay:.12s}
+#pg-overlay.in{pointer-events:all}
+#pg-overlay.in .pg-p{transform:scaleY(1)}
+#pg-overlay.out .pg-p{transform-origin:top;transform:scaleY(0)}
+#pg-overlay.out .pg-p:nth-child(2){transition-delay:.06s}
+#pg-overlay.out .pg-p:nth-child(3){transition-delay:.12s}
+
+/* ワークカードホバー強化 */
+.w-thumb::after{
+  content:'VIEW →';
+  position:absolute;inset:0;
+  display:flex;align-items:flex-end;
+  padding:1.5rem 2rem;
+  background:linear-gradient(to top,rgba(10,10,10,.72) 0%,transparent 60%);
+  font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.28em;color:rgba(255,255,255,.9);
+  opacity:0;transition:opacity .45s ease;
+  z-index:1;
+}
+.w-card:hover .w-thumb::after{opacity:1}
+.w-card:hover .w-thumb img{transform:scale(1.08);filter:grayscale(0%)}
+
 /* FIXED BOTTOM NAV */
 #bottom-nav{
   position:fixed;
@@ -428,6 +466,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .ct-btns{flex-direction:column;align-items:center;width:100%}
   .ct-line-btn,.ct-mail-btn{width:100%;max-width:300px;padding:1.3rem 2rem}
   .hero-bg-txt{font-size:clamp(7rem,28vw,14rem);right:-0.5rem;bottom:1rem}
+  .h-title{font-size:2.6rem}
   #bottom-nav{
     bottom:1rem;left:1rem;right:1rem;
     transform:none;
@@ -620,7 +659,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         <span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">JavaScript</span><span class="skill-tag">GitHub Pages</span><span class="skill-tag">SEO</span><span class="skill-tag">Responsive</span><span class="skill-tag">Canva</span>
       </div>
       <div class="about-nums">
-        <div class="a-num"><div class="a-num-v">6<sup style="font-size:.9rem">+</sup></div><div class="a-num-l">制作実績</div></div>
+        <div class="a-num"><div class="a-num-v" data-count="6"><span class="num-val">6</span><sup style="font-size:.9rem">+</sup></div><div class="a-num-l">制作実績</div></div>
         <div class="a-num"><div class="a-num-v" style="font-size:1.4rem">SEO</div><div class="a-num-l">対応済み</div></div>
         <div class="a-num"><div class="a-num-v" style="font-size:1.4rem">SP対応</div><div class="a-num-l">スマホ最適化</div></div>
         <div class="a-num"><div class="a-num-v">∞</div><div class="a-num-l">修正対応</div></div>
@@ -644,7 +683,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         <div class="a-num"><div class="a-num-v">SNS</div><div class="a-num-l">運用代行</div></div>
         <div class="a-num"><div class="a-num-v">AI</div><div class="a-num-l">ツール制作</div></div>
         <div class="a-num"><div class="a-num-v" style="font-size:1.6rem">¥5,000</div><div class="a-num-l">月額〜</div></div>
-        <div class="a-num"><div class="a-num-v">3日</div><div class="a-num-l">最短納品</div></div>
+        <div class="a-num"><div class="a-num-v" data-count="3"><span class="num-val">3</span>日</div><div class="a-num-l">最短納品</div></div>
       </div>
     </div>
 
@@ -852,6 +891,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   </div>
 </footer>
 
+<div id="pg-overlay"><div class="pg-p"></div><div class="pg-p"></div><div class="pg-p"></div></div>
+
 <!-- FIXED BOTTOM NAV -->
 <nav id="bottom-nav">
   <a href="#works" class="bn-item">実績</a>
@@ -934,6 +975,71 @@ window.addEventListener('scroll',()=>{
   const bg=document.querySelector('.hero-bg-txt');
   if(bg)bg.style.transform='translateX('+scrollY*.1+'px)';
 },{passive:true});
+
+// SECTION TITLE SPLIT
+document.querySelectorAll('.s-title').forEach(el=>{
+  el.classList.remove('rv');
+  let i=0;
+  function wrapChars(node,parent){
+    if(node.nodeType===3){
+      const frag=document.createDocumentFragment();
+      [...node.textContent].forEach(ch=>{
+        const s=document.createElement('span');
+        s.className='split-char';
+        s.textContent=ch===' '?'\u00A0':ch;
+        s.style.transitionDelay=(i*55)+'ms';
+        i++;frag.appendChild(s);
+      });
+      parent.replaceChild(frag,node);
+    } else if(node.childNodes.length){
+      [...node.childNodes].forEach(child=>wrapChars(child,node));
+    }
+  }
+  [...el.childNodes].forEach(n=>wrapChars(n,el));
+});
+const splitObs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){
+    e.target.querySelectorAll('.split-char').forEach(c=>c.classList.add('on'));
+    splitObs.unobserve(e.target);
+  }
+}),{threshold:.2,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.s-title').forEach(el=>splitObs.observe(el));
+
+// PAGE TRANSITION
+const pgOv=document.getElementById('pg-overlay');
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=a.getAttribute('href');
+    if(t==='#'||!document.querySelector(t))return;
+    e.preventDefault();
+    pgOv.classList.remove('out');
+    pgOv.classList.add('in');
+    setTimeout(()=>{
+      document.documentElement.style.scrollBehavior='auto';
+      const target=document.querySelector(t);
+      window.scrollTo(0,target.offsetTop-70);
+      document.documentElement.style.scrollBehavior='';
+      setTimeout(()=>{
+        pgOv.classList.remove('in');
+        pgOv.classList.add('out');
+        setTimeout(()=>pgOv.classList.remove('out'),600);
+      },300);
+    },560);
+  });
+});
+
+// NUMBER COUNTER
+const numObs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  const el=e.target,end=+el.dataset.count;
+  const v=el.querySelector('.num-val');
+  if(!v)return;
+  let c=0,step=end/50;
+  const run=()=>{c=Math.min(c+step,end);v.textContent=Math.floor(c);if(c<end)requestAnimationFrame(run);}
+  requestAnimationFrame(run);
+  numObs.unobserve(el);
+}),{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
 </script>
 
 
