@@ -120,7 +120,7 @@ nav a:hover{color:var(--black)}
 
 /* タイトル文字アニメ */
 .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,10vw,7.5rem);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:3rem}
-.h-title .line{display:block;overflow:hidden}
+.h-title .line{display:block;overflow:hidden;white-space:nowrap}
 .h-title .char{display:inline-block;opacity:0;transform:translateY(110%);animation:char-up .75s cubic-bezier(.77,0,.175,1) forwards}
 .h-title em{font-style:italic}
 
@@ -953,11 +953,6 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   });
 });
 
-// アニメ完了後にoverflowをvisibleに（練の切れ防止）
-setTimeout(()=>{
-  document.querySelectorAll('.h-title .line').forEach(l=>l.style.overflow='visible');
-},5500);
-
 // HERO TITLE 文字アニメ
 (function(){
   const lines=[
@@ -970,6 +965,8 @@ setTimeout(()=>{
   lines.forEach((line,li)=>{
     const span=document.createElement('span');
     span.className='line';
+    // イタリック行（練）は斜体のはみ出し分だけ右側を広げる
+    if(line.italic)span.style.paddingRight='0.25em';
     [...line.text].forEach((ch,ci)=>{
       const c=document.createElement(line.italic?'em':'span');
       c.className='char';
