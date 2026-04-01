@@ -64,7 +64,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 a{color:inherit;text-decoration:none}
 html{scroll-behavior:smooth}
-body{background:var(--white);color:var(--black);font-family:'Noto Serif JP',serif;font-weight:300;cursor:none;overflow-x:hidden;padding-bottom:80px}
+body{background:var(--white);color:var(--black);font-family:'Noto Serif JP',serif;font-weight:300;cursor:none;overflow-x:hidden;padding-bottom:72px}
 
 /* CURSOR */
 #cursor{position:fixed;width:8px;height:8px;background:var(--black);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
@@ -336,35 +336,34 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 /* FIXED BOTTOM NAV */
 #bottom-nav{
-  position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);
+  position:fixed;bottom:0;left:0;right:0;
   z-index:200;
   display:flex;
-  width:calc(100% - 3rem);max-width:480px;
-  background:rgba(10,10,10,.55);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:100px;
-  overflow:hidden;
-  box-shadow:0 8px 32px rgba(0,0,0,.28);
+  align-items:center;
+  gap:10px;
+  padding:10px 16px 14px;
+  background:#fff;
+  box-shadow:0 -2px 20px rgba(0,0,0,.08);
 }
 .bn-item{
   flex:1;display:flex;align-items:center;justify-content:center;
-  padding:1rem .5rem;
-  font-family:'Noto Serif JP',serif;font-size:.78rem;font-weight:300;letter-spacing:.18em;
-  color:rgba(255,255,255,.55);
+  padding:14px 0;
+  border-radius:12px;
+  font-family:'Noto Serif JP',serif;font-size:.82rem;font-weight:400;letter-spacing:.1em;
+  color:#fff;
+  background:var(--black);
   text-decoration:none;
-  transition:color .3s;
-  border-right:1px solid rgba(255,255,255,.08);
+  transition:opacity .3s cubic-bezier(.215,.61,.355,1);
 }
+.bn-item:hover{opacity:.75}
 .bn-item:last-child{
-  border-right:none;
-  color:rgba(255,255,255,.9);
-  background:rgba(255,255,255,.08);
-  font-weight:400;
-  letter-spacing:.12em;
+  background:#06C755;
+  animation:bn-pulse 2.4s ease-in-out infinite;
 }
-.bn-item:hover{color:rgba(255,255,255,.9)}
-.bn-item:last-child:hover{background:rgba(255,255,255,.14)}
+@keyframes bn-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(6,199,85,.45)}
+  50%{box-shadow:0 0 0 8px rgba(6,199,85,0)}
+}
 
 /* RESPONSIVE */
 @media(max-width:960px){
