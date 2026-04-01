@@ -953,6 +953,11 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   });
 });
 
+// アニメ完了後にoverflowをvisibleに（練の切れ防止）
+setTimeout(()=>{
+  document.querySelectorAll('.h-title .line').forEach(l=>l.style.overflow='visible');
+},5500);
+
 // HERO TITLE 文字アニメ
 (function(){
   const lines=[
