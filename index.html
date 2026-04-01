@@ -335,17 +335,15 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .ft-qr-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.2em;color:rgba(255,255,255,.3);text-transform:uppercase}
 
 /* 縦線非表示 */
-.hero-lines{display:none}
+.hero-lines{display:none !important}
 
 /* セクションタイトル文字スプリット */
 .split-char{
-  display:inline-block;
+  display:inline;
   opacity:0;
-  transform:translateY(22px);
-  transition:opacity .65s cubic-bezier(.25,.46,.45,.94),transform .65s cubic-bezier(.25,.46,.45,.94);
-  will-change:transform,opacity;
+  transition:opacity .7s ease;
 }
-.split-char.on{opacity:1;transform:translateY(0)}
+.split-char.on{opacity:1}
 
 /* ページ遷移オーバーレイ */
 #pg-overlay{position:fixed;inset:0;z-index:9400;display:flex;pointer-events:none}
@@ -461,12 +459,18 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .ct-info-item{text-align:center}
   .f-item{grid-template-columns:55px 1fr;gap:1.2rem}
   .hero-l{padding:0 1.8rem 6rem}
-  .hero-scroll-line{right:1rem}
+  .hero-scroll-line{display:none}
   .h-btns{flex-direction:column;align-items:flex-start;gap:1rem}
   .ct-btns{flex-direction:column;align-items:center;width:100%}
   .ct-line-btn,.ct-mail-btn{width:100%;max-width:300px;padding:1.3rem 2rem}
   .hero-bg-txt{font-size:clamp(7rem,28vw,14rem);right:-0.5rem;bottom:1rem}
-  .h-title{font-size:2.6rem}
+  .h-title{font-size:clamp(2rem,8.5vw,2.5rem)}
+  .works-grid .w-card.rv{transform:translateY(30px)}
+  .works-grid .w-card.rv.on{transform:translateY(0)}
+  .w-body{padding:1.8rem 1.5rem}
+  .w-name{font-size:1.4rem}
+  .about-role{white-space:nowrap}
+  body{overflow-x:hidden}
   #bottom-nav{
     bottom:1rem;left:1rem;right:1rem;
     transform:none;
