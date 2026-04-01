@@ -461,16 +461,16 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .ct-info{gap:1.5rem;flex-direction:column;align-items:center;text-align:center}
   .ct-info-item{text-align:center}
   .f-item{grid-template-columns:55px 1fr;gap:1.2rem}
-  #hero{justify-content:flex-end !important}
-  .hero-l{flex:none;padding:0 2.5rem 8rem;text-align:center}
+  #hero{justify-content:space-between !important}
+  .hero-l{display:flex;flex-direction:column;flex:1;padding:0 2.5rem;text-align:center;min-height:calc(100vh - 80px)}
   .hero-scroll-line{display:none}
   .h-btns{flex-direction:column;align-items:center;gap:1rem}
   .ct-btns{flex-direction:column;align-items:center;width:100%}
   .ct-line-btn,.ct-mail-btn{width:100%;max-width:300px;padding:1.3rem 2rem}
   .hero-bg-txt{font-size:clamp(7rem,28vw,14rem);right:-0.5rem;bottom:1rem}
-  .h-title{font-size:clamp(2.5rem, 9vw, 4rem) !important;line-height:1.4}
+  .h-title{font-size:clamp(2.5rem, 9vw, 4rem) !important;line-height:1.4;margin-top:auto}
   .h-tag{font-size:0.65rem}
-  .h-sub{margin-top:0;font-size:.75rem;line-height:2;max-width:16em;margin-left:auto;margin-right:auto;word-break:keep-all;overflow-wrap:anywhere}
+  .h-sub{margin-bottom:5rem;font-size:.75rem;line-height:2;max-width:16em;margin-left:auto;margin-right:auto;word-break:keep-all;overflow-wrap:anywhere}
   .h-btns{animation:none !important;opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
   .h-btns.hero-visible{opacity:1;transform:translateY(0)}
   .works-grid .w-card.rv{transform:translateY(30px)}
