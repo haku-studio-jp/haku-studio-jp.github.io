@@ -398,6 +398,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   from{opacity:0;transform:translateX(-50%) translateY(32px) scale(0.94)}
   to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
 }
+#mascot-cta{display:none}
 .bn-item{
   position:relative;
   display:flex;align-items:center;justify-content:center;
@@ -490,6 +491,32 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     to{opacity:1;transform:translateY(0) scale(1)}
   }
   .bn-item{flex:1;padding:10px 0;font-size:.65rem;}
+  #bottom-nav{display:none}
+  #mascot-cta{
+    display:flex;flex-direction:column;align-items:center;gap:.5rem;
+    position:fixed;bottom:1.8rem;right:1.2rem;z-index:200;
+    text-decoration:none;
+    animation:mascot-rise .9s cubic-bezier(.34,1.56,.64,1) .5s both, mascot-float 3s ease-in-out 1.4s infinite;
+  }
+  #mascot-cta img{
+    width:62px;height:62px;border-radius:50%;object-fit:cover;
+    box-shadow:0 6px 20px rgba(0,0,0,0.15);
+    border:2px solid rgba(255,255,255,0.9);
+  }
+  #mascot-cta span{
+    font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--white);background:var(--black);
+    padding:.35rem .9rem;border-radius:100px;white-space:nowrap;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  }
+  @keyframes mascot-rise{
+    from{opacity:0;transform:translateY(24px) scale(0.9)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+  }
+  @keyframes mascot-float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-7px)}
+  }
 }
 </style>
 </head>
@@ -910,6 +937,12 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <a href="#price" class="bn-item">料金</a>
   <a href="#contact" class="bn-item">無料相談</a>
 </nav>
+
+<!-- MASCOT CTA -->
+<a href="#contact" id="mascot-cta">
+  <img src="haku-mascot.jpg" alt="HAKU STUDIO">
+  <span>無料相談</span>
+</a>
 
 <script>
 // CURSOR
