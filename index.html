@@ -312,73 +312,82 @@ section{padding:10rem 5rem}
 .fq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
 .fq-a-in{font-size:.82rem;color:var(--gray-400);line-height:2.2;padding-bottom:2rem}
 
-/* SECTION DECORATIVE RINGS */
+/* SECTION DECORATIVE RINGS — growin.jp style filled circles */
+/* nth-child(1)=r450(外側・薄), nth-child(7)=r75(内側・濃) の順で重なる */
 #works,#services,#about,#price,#flow,#voice,#faq{position:relative;overflow:hidden}
 .c-rings{position:absolute;pointer-events:none;z-index:0;overflow:visible;width:1px;height:1px}
-.c-rings circle{fill:none;stroke:var(--black);stroke-width:1;opacity:0;transform-origin:0 0;transition:transform 1s cubic-bezier(.34,1.4,.64,1),opacity .8s ease,stroke-dashoffset 1.4s cubic-bezier(.25,.46,.45,.94)}
-/* 1. WORKS — bottom-right, inside→outside elastic */
-#works .c-rings{bottom:0;right:0}
+.c-rings circle{fill:rgba(160,128,96,1);stroke:none;opacity:0;transform-origin:0 0;transition:transform 1.2s cubic-bezier(.34,1.3,.64,1),opacity 1s ease}
+#flow .c-rings circle{fill:rgba(255,255,255,1)}
+/* 1. WORKS — top-right, 内→外スタガー */
+#works .c-rings{top:0;right:0}
 #works .c-rings circle{transform:scale(0)}
-#works .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.10;transition-delay:0s}
-#works .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.09;transition-delay:.08s}
-#works .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.08;transition-delay:.16s}
-#works .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.07;transition-delay:.24s}
-#works .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.32s}
-#works .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.05;transition-delay:.40s}
-/* 2. SERVICES — top-left, outside→inside + rotate */
+#works .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10;transition-delay:.00s}
+#works .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08;transition-delay:.06s}
+#works .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.12s}
+#works .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05;transition-delay:.18s}
+#works .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04;transition-delay:.24s}
+#works .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03;transition-delay:.30s}
+#works .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02;transition-delay:.36s}
+/* 2. SERVICES — top-left, 外→内スタガー */
 #services .c-rings{top:0;left:0}
-#services .c-rings circle{transform:scale(1.8) rotate(60deg)}
-#services .c-rings.rs circle:nth-child(6){transform:scale(1) rotate(0deg);opacity:.06;transition-delay:0s}
-#services .c-rings.rs circle:nth-child(5){transform:scale(1) rotate(0deg);opacity:.07;transition-delay:.09s}
-#services .c-rings.rs circle:nth-child(4){transform:scale(1) rotate(0deg);opacity:.08;transition-delay:.18s}
-#services .c-rings.rs circle:nth-child(3){transform:scale(1) rotate(0deg);opacity:.09;transition-delay:.27s}
-#services .c-rings.rs circle:nth-child(2){transform:scale(1) rotate(0deg);opacity:.10;transition-delay:.36s}
-#services .c-rings.rs circle:nth-child(1){transform:scale(1) rotate(0deg);opacity:.11;transition-delay:.45s}
-/* 3. ABOUT — right center, slide from right */
-#about .c-rings{top:50%;right:0}
-#about .c-rings circle{transform:translateX(80px) scale(0.3)}
-#about .c-rings.rs circle:nth-child(1){transform:translateX(0) scale(1);opacity:.11;transition-delay:0s}
-#about .c-rings.rs circle:nth-child(2){transform:translateX(0) scale(1);opacity:.10;transition-delay:.09s}
-#about .c-rings.rs circle:nth-child(3){transform:translateX(0) scale(1);opacity:.09;transition-delay:.18s}
-#about .c-rings.rs circle:nth-child(4){transform:translateX(0) scale(1);opacity:.08;transition-delay:.27s}
-#about .c-rings.rs circle:nth-child(5){transform:translateX(0) scale(1);opacity:.07;transition-delay:.36s}
-#about .c-rings.rs circle:nth-child(6){transform:translateX(0) scale(1);opacity:.06;transition-delay:.45s}
-/* 4. PRICE — bottom-left, alternating odd/even */
+#services .c-rings circle{transform:scale(0)}
+#services .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02;transition-delay:.00s}
+#services .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03;transition-delay:.07s}
+#services .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04;transition-delay:.14s}
+#services .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05;transition-delay:.21s}
+#services .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.28s}
+#services .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08;transition-delay:.35s}
+#services .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10;transition-delay:.42s}
+/* 3. ABOUT — bottom-right, 一斉スケールイン */
+#about .c-rings{bottom:0;right:0}
+#about .c-rings circle{transform:scale(0)}
+#about .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02}
+#about .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03}
+#about .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04}
+#about .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05}
+#about .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06}
+#about .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08}
+#about .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10}
+/* 4. PRICE — bottom-left, 内→外スタガー */
 #price .c-rings{bottom:0;left:0}
 #price .c-rings circle{transform:scale(0)}
-#price .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.11;transition-delay:0s}
-#price .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.09;transition-delay:.20s}
-#price .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.10;transition-delay:.06s}
-#price .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.08;transition-delay:.26s}
-#price .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.09;transition-delay:.12s}
-#price .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.07;transition-delay:.32s}
-/* 5. FLOW — top center, ripple white */
-#flow .c-rings{top:0;left:50%}
-#flow .c-rings circle{stroke:rgba(255,255,255,1);transform:scale(0);transition:transform .7s ease-out,opacity .6s ease,stroke-dashoffset 1.4s cubic-bezier(.25,.46,.45,.94)}
-#flow .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.20;transition-delay:0s}
-#flow .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.16;transition-delay:.12s}
-#flow .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.13;transition-delay:.24s}
-#flow .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.10;transition-delay:.36s}
-#flow .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.07;transition-delay:.48s}
-#flow .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.05;transition-delay:.60s}
-/* 6. VOICE — top-right, zoom out (scale 2.5→1) */
-#voice .c-rings{top:0;right:0}
+#price .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10;transition-delay:.00s}
+#price .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08;transition-delay:.07s}
+#price .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.14s}
+#price .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05;transition-delay:.21s}
+#price .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04;transition-delay:.28s}
+#price .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03;transition-delay:.35s}
+#price .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02;transition-delay:.42s}
+/* 5. FLOW — bottom-left, 白・外→内 */
+#flow .c-rings{bottom:0;left:0}
+#flow .c-rings circle{transform:scale(0);transition:transform .9s ease-out,opacity .8s ease}
+#flow .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.04;transition-delay:.00s}
+#flow .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.07;transition-delay:.08s}
+#flow .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.10;transition-delay:.16s}
+#flow .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.13;transition-delay:.24s}
+#flow .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.16;transition-delay:.32s}
+#flow .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.20;transition-delay:.40s}
+#flow .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.25;transition-delay:.48s}
+/* 6. VOICE — top-left, ズームアウト(scale 2.5→1) */
+#voice .c-rings{top:0;left:0}
 #voice .c-rings circle{transform:scale(2.5)}
-#voice .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.11;transition-delay:0s}
-#voice .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.10;transition-delay:.10s}
-#voice .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.09;transition-delay:.20s}
-#voice .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.08;transition-delay:.30s}
-#voice .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.07;transition-delay:.40s}
-#voice .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.06;transition-delay:.50s}
-/* 7. FAQ — bottom-right, stroke-dashoffset draw */
+#voice .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02;transition-delay:.00s}
+#voice .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03;transition-delay:.07s}
+#voice .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04;transition-delay:.14s}
+#voice .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05;transition-delay:.21s}
+#voice .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.28s}
+#voice .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08;transition-delay:.35s}
+#voice .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10;transition-delay:.42s}
+/* 7. FAQ — bottom-right, スロー展開 */
 #faq .c-rings{bottom:0;right:0}
-#faq .c-rings circle{stroke-dasharray:var(--circ);stroke-dashoffset:var(--circ);transform:scale(1)}
-#faq .c-rings.rs circle:nth-child(1){opacity:.11;stroke-dashoffset:0;transition-delay:0s}
-#faq .c-rings.rs circle:nth-child(2){opacity:.10;stroke-dashoffset:0;transition-delay:.10s}
-#faq .c-rings.rs circle:nth-child(3){opacity:.09;stroke-dashoffset:0;transition-delay:.20s}
-#faq .c-rings.rs circle:nth-child(4){opacity:.08;stroke-dashoffset:0;transition-delay:.30s}
-#faq .c-rings.rs circle:nth-child(5){opacity:.07;stroke-dashoffset:0;transition-delay:.40s}
-#faq .c-rings.rs circle:nth-child(6){opacity:.06;stroke-dashoffset:0;transition-delay:.50s}
+#faq .c-rings circle{transform:scale(0);transition:transform 1.8s cubic-bezier(.25,.46,.45,.94),opacity 1.4s ease}
+#faq .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10;transition-delay:.00s}
+#faq .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08;transition-delay:.12s}
+#faq .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.24s}
+#faq .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05;transition-delay:.36s}
+#faq .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04;transition-delay:.48s}
+#faq .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03;transition-delay:.60s}
+#faq .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02;transition-delay:.72s}
 
 /* CONTACT */
 #contact{background:var(--black);color:var(--white);text-align:center;padding:14rem 5rem;position:relative;overflow:hidden}
@@ -665,7 +674,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- WORKS -->
 <section id="works">
-  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="60"/><circle r="120"/><circle r="180"/><circle r="240"/><circle r="300"/><circle r="360"/></svg>
+  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
   <div class="s-label rv">Works</div>
   <h2 class="s-title rv d1">制作<em>実績</em></h2>
   <div class="works-grid">
@@ -737,7 +746,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- SERVICES -->
 <section id="services">
-  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="60"/><circle r="120"/><circle r="180"/><circle r="240"/><circle r="300"/><circle r="360"/></svg>
+  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
   <div class="s-label rv">Services</div>
   <h2 class="s-title rv d1">提供<em>サービス</em></h2>
   <div class="svc-list">
@@ -777,7 +786,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- ABOUT -->
 <section id="about">
-  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="60"/><circle r="120"/><circle r="180"/><circle r="240"/><circle r="300"/><circle r="360"/></svg>
+  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
   <div class="s-label rv">About</div>
   <h2 class="s-title rv d1">メンバー<em>紹介</em></h2>
   <div class="about-members">
@@ -829,7 +838,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- PRICE -->
 <section id="price">
-  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="60"/><circle r="120"/><circle r="180"/><circle r="240"/><circle r="300"/><circle r="360"/></svg>
+  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
   <div class="s-label rv">Price</div>
   <h2 class="s-title rv d1">料金<em>プラン</em></h2>
   <div class="price-grid">
@@ -877,7 +886,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- FLOW -->
 <section id="flow">
-  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="60"/><circle r="120"/><circle r="180"/><circle r="240"/><circle r="300"/><circle r="360"/></svg>
+  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
   <div class="s-label rv">Flow</div>
   <h2 class="s-title rv d1">制作の<em>流れ</em></h2>
   <div class="flow-list">
@@ -918,7 +927,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- VOICE -->
 <section id="voice">
-  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="60"/><circle r="120"/><circle r="180"/><circle r="240"/><circle r="300"/><circle r="360"/></svg>
+  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
   <div class="s-label rv">Voice</div>
   <h2 class="s-title rv d1">お客様の<em>声</em></h2>
   <div class="voice-grid">
@@ -957,7 +966,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- FAQ -->
 <section id="faq">
-  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="60" style="--circ:377"/><circle r="120" style="--circ:754"/><circle r="180" style="--circ:1131"/><circle r="240" style="--circ:1508"/><circle r="300" style="--circ:1885"/><circle r="360" style="--circ:2262"/></svg>
+  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
   <div class="s-label rv">FAQ</div>
   <h2 class="s-title rv d1">よくある<em>質問</em></h2>
   <div class="faq-list rv d2">
