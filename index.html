@@ -958,7 +958,18 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <span>無料相談</span>
 </a>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+
 <script>
+// LENIS + GSAP 初期化
+gsap.registerPlugin(ScrollTrigger);
+const lenis = new Lenis({ lerp: 0.12 });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+
 // CURSOR
 const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
 document.addEventListener('mousemove',e=>{
@@ -985,7 +996,7 @@ window.addEventListener('load',()=>setTimeout(()=>{document.getElementById('load
 
 // HEADER
 const hdr=document.getElementById('hdr');
-window.addEventListener('scroll',()=>hdr.classList.toggle('on',scrollY>80),{passive:true});
+lenis.on('scroll',({scroll})=>hdr.classList.toggle('on',scroll>80));
 
 // REVEAL
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:.08,rootMargin:'0px 0px -50px 0px'});
@@ -1029,37 +1040,20 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   });
 })();
 
-// HERO スクロールスクラブ文字退場（growin.jp完全コピー：sticky + 200vh方式）
-const _heroTitle=document.querySelector('.h-title');
-const _heroTag=document.querySelector('.h-tag');
-const _heroSub=document.querySelector('.h-sub');
+// HERO 背景テキストパララックス + テキスト退場（GSAP ScrollTrigger scrub）
+gsap.to('.hero-bg-txt',{
+  x:'8vw', ease:'none',
+  scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}
+});
 
-window.addEventListener('scroll',()=>{
-  const bg=document.querySelector('.hero-bg-txt');
-  if(bg)bg.style.transform='translateX('+scrollY*.1+'px)';
-
-  const p=Math.min(1,scrollY/window.innerHeight);
-
-  // h-tag: p=0~0.2でフェード
-  if(_heroTag)_heroTag.style.opacity=String(Math.max(0,1-p/0.2));
-
-  // 行ごとにスタガー：行i → p=(i*0.12)~(0.45+i*0.12)でフェードアウト＋上スライド
-  if(_heroTitle){
-    [..._heroTitle.querySelectorAll('.line')].forEach((line,i)=>{
-      const s=i*0.12,e=0.45+i*0.12;
-      const lp=Math.max(0,Math.min(1,(p-s)/(e-s)));
-      line.style.opacity=String(1-lp);
-      line.style.transform='translateY('+(lp*-70)+'px)';
-    });
-  }
-
-  // h-sub: p=0.35~0.7でフェード
-  if(_heroSub){
-    const sp=Math.max(0,Math.min(1,(p-0.35)/0.35));
-    _heroSub.style.opacity=String(1-sp);
-    _heroSub.style.transform='translateY('+(sp*-20)+'px)';
-  }
-},{passive:true});
+const _heroTl=gsap.timeline({
+  scrollTrigger:{trigger:'#hero',start:'top top',end:'center top',scrub:true}
+});
+_heroTl.to('.h-tag',{opacity:0,duration:0.2,ease:'none'},0);
+document.querySelectorAll('.h-title .line').forEach((line,i)=>{
+  _heroTl.to(line,{opacity:0,y:-70,ease:'none',duration:0.5},i*0.15);
+});
+_heroTl.to('.h-sub',{opacity:0,y:-20,ease:'none',duration:0.4},0.35);
 
 // SECTION TITLE SPLIT
 document.querySelectorAll('.s-title').forEach(el=>{
@@ -1100,10 +1094,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     pgOv.classList.remove('out');
     pgOv.classList.add('in');
     setTimeout(()=>{
-      document.documentElement.style.scrollBehavior='auto';
       const target=document.querySelector(t);
-      window.scrollTo(0,target.offsetTop-70);
-      document.documentElement.style.scrollBehavior='';
+      lenis.scrollTo(target,{offset:-70,immediate:true});
       setTimeout(()=>{
         pgOv.classList.remove('in');
         pgOv.classList.add('out');
