@@ -1151,6 +1151,7 @@ const mascotEl=document.getElementById('mascot-cta');
 if(mascotEl){
   lenis.on('scroll',({scroll})=>{
     if(scroll>window.innerHeight*0.7)mascotEl.classList.add('show');
+    else mascotEl.classList.remove('show');
   });
 }
 
