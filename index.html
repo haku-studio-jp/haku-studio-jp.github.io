@@ -1054,16 +1054,17 @@ gsap.to('.hero-bg-txt',{
 });
 
 // HERO テキスト退場アニメーション（growin.jp方式）
-// iOS Safariはtouchmoveだけでは止まらない。body position:fixed で完全停止
-let _lockY=0;
+// body:fixedはposition:stickyを壊す。html{overflow:hidden}+touchmoveで止める
+let _scrollLock=false;
+window.addEventListener('touchmove',e=>{if(_scrollLock)e.preventDefault();},{passive:false});
 function _lockScroll(){
+  _scrollLock=true;
   lenis.stop();
-  _lockY=window.scrollY;
-  document.body.style.cssText='overflow:hidden;position:fixed;top:-'+_lockY+'px;left:0;right:0;width:100%';
+  document.documentElement.style.overflowY='hidden';
 }
 function _unlockScroll(){
-  document.body.style.cssText='';
-  window.scrollTo(0,_lockY);
+  _scrollLock=false;
+  document.documentElement.style.overflowY='';
   lenis.start();
 }
 
