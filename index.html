@@ -108,16 +108,21 @@ nav a:hover{color:var(--black)}
 .hero-lines span:nth-child(4){left:80%;animation-delay:.55s}
 @keyframes line-in{to{transform:scaleY(1)}}
 
-/* BRAND SHAPE (growin.jpスタイル・HAKU版) */
+/* BRAND SHAPE (growin.jpスタイル・太いリボン帯) */
 #brand-shape{
-  position:fixed;width:min(780px,70vw);height:min(980px,90vh);
-  border-radius:55% 45% 62% 38%/48% 52% 48% 52%;
-  background:#A08060;opacity:.09;pointer-events:none;z-index:0;
-  right:-22%;bottom:-18%;will-change:transform;
+  position:fixed;
+  width:220vw;
+  height:260px;
+  border-radius:130px;
+  background:#A08060;
+  opacity:.2;
+  pointer-events:none;
+  z-index:0;
+  left:-60vw;
+  top:calc(50% - 130px);
+  will-change:transform;
   transition:opacity .6s ease;
 }
-#brand-shape::before{content:'';position:absolute;inset:-70px;border-radius:inherit;background:rgba(160,128,96,.035);}
-#brand-shape::after{content:'';position:absolute;inset:-150px;border-radius:inherit;background:rgba(160,128,96,.018);}
 
 /* HERO BRAND REVEAL（テキスト退場後の一瞬） */
 #hero-brand{
@@ -554,7 +559,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     animation:mascot-rise .9s cubic-bezier(.34,1.56,.64,1) forwards, mascot-float 3s ease-in-out 1s infinite;
     pointer-events:auto;
   }
-  #brand-shape{width:min(400px,85vw);height:min(520px,65vh);right:-35%;bottom:-28%;}
+  #brand-shape{height:160px;border-radius:80px;opacity:.15;}
   #hero-brand{font-size:clamp(3.5rem,18vw,8rem);letter-spacing:.4em;padding-left:.4em;}
 }
 </style>
@@ -1077,17 +1082,34 @@ gsap.to('.hero-bg-txt',{
   scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}
 });
 
-// BRAND SHAPE スクロールアニメーション
+// BRAND SHAPE：セクションごとにリボンが回転・移動
 (function(){
   const bs=document.getElementById('brand-shape');
   if(!bs)return;
-  lenis.on('scroll',({scroll,limit})=>{
-    const p=limit>0?Math.min(scroll/limit,1):0;
-    const x=Math.sin(p*Math.PI*2)*0.22*window.innerWidth;
-    const y=-p*0.68*window.innerHeight;
-    const r=-12+p*55;
-    const s=1-p*0.22;
-    bs.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;
+  // 初期位置をGSAPで設定
+  gsap.set(bs,{rotation:-32,x:0,y:0});
+  // セクションごとのリボン位置定義
+  const poses=[
+    {trigger:'#works',  rot:-18, tx: 0.20, ty: 0.10},
+    {trigger:'#about',  rot: 14, tx:-0.15, ty: 0.05},
+    {trigger:'#price',  rot:-24, tx: 0.10, ty:-0.08},
+    {trigger:'#flow',   rot: 20, tx:-0.22, ty: 0.12},
+    {trigger:'#voice',  rot:-14, tx: 0.18, ty: 0.00},
+    {trigger:'#faq',    rot: 28, tx:-0.08, ty:-0.10},
+    {trigger:'#contact',rot: -8, tx: 0.05, ty: 0.08},
+  ];
+  const anim=(pos)=>gsap.to(bs,{
+    rotation:pos.rot,
+    x:pos.tx*window.innerWidth,
+    y:pos.ty*window.innerHeight,
+    duration:1.6,ease:'power2.inOut'
+  });
+  poses.forEach(pos=>{
+    if(!document.querySelector(pos.trigger))return;
+    ScrollTrigger.create({
+      trigger:pos.trigger,start:'top 65%',
+      onEnter:()=>anim(pos),onEnterBack:()=>anim(pos)
+    });
   });
 })();
 
