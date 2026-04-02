@@ -152,7 +152,6 @@ nav a:hover{color:var(--black)}
 .h-title .line{display:block;white-space:nowrap}
 .h-title .char{display:inline-block;opacity:0;transform:translateY(110%);animation:char-up .75s cubic-bezier(.77,0,.175,1) forwards}
 .h-title em{font-style:italic;letter-spacing:-0.07em}
-.h-title em.char{background:linear-gradient(transparent 54%,rgba(175,95,28,.28) 54%);padding-bottom:.05em}
 
 .h-sub{font-size:.88rem;line-height:2.1;color:var(--gray-400);max-width:30em;margin-bottom:2rem;opacity:0;transform:translateY(20px);animation:fu .8s 1.5s forwards}
 .sp-br{display:none}
@@ -561,7 +560,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     animation:mascot-rise .9s cubic-bezier(.34,1.56,.64,1) forwards, mascot-float 3s ease-in-out 1s infinite;
     pointer-events:auto;
   }
-  #brand-shape{height:160px;border-radius:80px;opacity:.25;}
+  #brand-shape{height:160px;border-radius:80px;opacity:.38;}
   #hero-brand{font-size:clamp(3.5rem,18vw,8rem);letter-spacing:.4em;padding-left:.4em;}
 }
 </style>
@@ -1082,6 +1081,15 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 gsap.to('.hero-bg-txt',{
   x:'8vw', ease:'none',
   scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}
+});
+
+// BRAND SHAPE：ヒーロースクロール中にグルンと回転・移動（growin.jp風）
+gsap.to('#brand-shape',{
+  rotation:-32+55,
+  x:'22vw',
+  y:'30vh',
+  ease:'none',
+  scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:1.2}
 });
 
 // BRAND SHAPE：セクションごとにリボンが回転・移動
