@@ -100,6 +100,8 @@ nav a:hover{color:var(--black)}
 .hero-panels{position:fixed;inset:0;z-index:8500;display:flex;pointer-events:none}
 .hero-panel{flex:1;background:var(--black);transform-origin:top;transition:transform .8s cubic-bezier(.77,0,.175,1)}
 .hero-panel.out{transform:scaleY(0)}
+/* HERO CANVAS マーカーライン */
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .hero-lines{position:absolute;inset:0;pointer-events:none;z-index:1}
 .hero-lines span{position:absolute;top:0;bottom:0;width:1px;background:var(--line);transform:scaleY(0);transform-origin:top;animation:line-in 1.6s cubic-bezier(.77,0,.175,1) forwards}
 .hero-lines span:nth-child(1){left:20%;animation-delay:.1s}
@@ -107,22 +109,6 @@ nav a:hover{color:var(--black)}
 .hero-lines span:nth-child(3){left:60%;animation-delay:.4s}
 .hero-lines span:nth-child(4){left:80%;animation-delay:.55s}
 @keyframes line-in{to{transform:scaleY(1)}}
-
-/* BRAND SHAPE (growin.jpスタイル・太いリボン帯) */
-#brand-shape{
-  position:fixed;
-  width:220vw;
-  height:260px;
-  border-radius:130px;
-  background:#A08060;
-  opacity:.38;
-  pointer-events:none;
-  z-index:1;
-  left:-60vw;
-  top:calc(50% - 130px);
-  will-change:transform;
-  transform:rotate(-32deg);
-}
 
 /* HERO BRAND REVEAL（テキスト退場後の一瞬） */
 #hero-brand{
@@ -560,7 +546,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     animation:mascot-rise .9s cubic-bezier(.34,1.56,.64,1) forwards, mascot-float 3s ease-in-out 1s infinite;
     pointer-events:auto;
   }
-  #brand-shape{height:160px;border-radius:80px;opacity:.38;}
   #hero-brand{font-size:clamp(3.5rem,18vw,8rem);letter-spacing:.4em;padding-left:.4em;}
 }
 </style>
@@ -569,7 +554,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
-<div id="brand-shape" aria-hidden="true"></div>
 <div id="hero-brand" aria-hidden="true">HAKU</div>
 <div class="hero-panels"><div class="hero-panel" id="p1"></div><div class="hero-panel" id="p2"></div><div class="hero-panel" id="p3"></div><div class="hero-panel" id="p4"></div></div>
 
@@ -598,6 +582,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 <!-- HERO -->
 <section id="hero">
   <div class="hero-sticky">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-lines"><span></span><span></span><span></span><span></span></div>
     <div class="hero-bg-txt">HAKU</div>
     <div class="hero-l">
@@ -1077,51 +1062,141 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   });
 })();
 
+// HERO CANVAS マーカーライン（growin.jp方式・色はhakaパレット）
+(function(){
+  const isSP = window.innerWidth <= 767;
+  const BASE_W = isSP ? 375 : 1440;
+  const BASE_H = isSP ? 812 : 810;
+
+  const canvas = document.getElementById('hero-canvas');
+  canvas.width  = BASE_W;
+  canvas.height = BASE_H;
+  const ctx = canvas.getContext('2d');
+
+  // fitScale: canvasのCSS表示サイズ → BASE座標系へのマッピング
+  let fitScale = 1, fitOX = 0, fitOY = 0;
+  function calcFit(){
+    const dw = canvas.offsetWidth  || window.innerWidth;
+    const dh = canvas.offsetHeight || window.innerHeight;
+    const sx = dw / BASE_W, sy = dh / BASE_H;
+    fitScale = Math.max(sx, sy);
+    fitOX = (dw - BASE_W * fitScale) / 2;
+    fitOY = (dh - BASE_H * fitScale) / 2;
+  }
+  window.addEventListener('resize', calcFit);
+  calcFit();
+
+  // ベジェカーブ定義
+  const pcPaths = [
+    { d:'M-150,680 C250,480 620,310 920,415 C1160,500 1380,155 1650,195', dir:'horizontal' },
+    { d:'M1650,-55 C1240,200 790,360 540,275 C290,210 40,530 -150,645',  dir:'horizontal' },
+    { d:'M860,-80 C700,210 1010,390 770,615 C570,810 850,925 730,1060',  dir:'vertical'   }
+  ];
+  const spPaths = [
+    { d:'M-80,650 C80,450 185,275 280,375 C345,440 400,195 480,218',    dir:'horizontal' },
+    { d:'M480,-30 C355,150 200,285 120,235 C55,195 -25,405 -80,505',    dir:'horizontal' },
+    { d:'M225,-60 C160,185 325,320 200,525 C120,665 265,785 180,955',   dir:'vertical'   }
+  ];
+  const defs = isSP ? spPaths : pcPaths;
+
+  const pathData = defs.map(({ d, dir }) => {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    el.setAttribute('d', d);
+    return { path2d: new Path2D(d), length: el.getTotalLength(), dashOffset: 1, dir };
+  });
+
+  function resetDash(){
+    pathData.forEach(p => {
+      const ratio = (isSP ? 150 : 200) / fitScale;
+      p.dashOffset = 1 + ratio / p.length;
+    });
+  }
+
+  // -- 描画 --
+  let lineAlpha = 0;
+
+  function draw(){
+    ctx.clearRect(0, 0, BASE_W, BASE_H);
+    if(lineAlpha <= 0) return;
+
+    const n  = fitScale;
+    const lw = (isSP ? 80 : 100) / n; // BASE座標での線幅 → 表示で約100px
+
+    ctx.save();
+    ctx.translate(fitOX, fitOY);
+    ctx.scale(n, n);
+    ctx.globalAlpha = lineAlpha;
+    ctx.lineCap = ctx.lineJoin = 'round';
+    ctx.lineWidth = lw;
+
+    pathData.forEach(p => {
+      if(p.dashOffset <= -0.99 || p.dashOffset >= 1) return;
+      const scaledLen = p.length * n;
+
+      // タウプ色グラデーション（--white:#fafaf8 を汚さない透明→暖色）
+      const grad = p.dir === 'vertical'
+        ? ctx.createLinearGradient(0, 0, 0, BASE_H * n)
+        : ctx.createLinearGradient(0, 0, BASE_W * n, 0);
+      grad.addColorStop(0,   'rgba(160,128,96,0)');
+      grad.addColorStop(0.5, 'rgba(160,128,96,0.45)');
+      grad.addColorStop(1,   'rgba(160,128,96,0.62)');
+
+      ctx.save();
+      ctx.setLineDash([scaledLen]);
+      ctx.lineDashOffset = scaledLen * p.dashOffset;
+      ctx.strokeStyle = grad;
+      ctx.stroke(p.path2d);
+      ctx.restore();
+    });
+
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  gsap.ticker.add(draw);
+
+  // -- アニメーションタイムライン --
+  let lineTl = null;
+  const alphaProxy = { v: 0 };
+
+  function startLines(){
+    resetDash();
+    lineTl = gsap.timeline({ repeat: -1 });
+    pathData.forEach((p, i) => {
+      const next = pathData[(i + 1) % pathData.length];
+      const ratio = (isSP ? 150 : 200) / fitScale;
+      lineTl
+        .to(p, { dashOffset: 0,  duration: 2, ease: 'power2.inOut' })
+        .to(p, { dashOffset: -1, duration: 2, ease: 'power2.inOut' })
+        .set(next, { dashOffset: 1 + ratio / next.length }, '+=0');
+    });
+  }
+
+  // ローダー消えた直後（2500ms）にフェードイン → ライン開始
+  setTimeout(() => {
+    gsap.to(alphaProxy, {
+      v: 1, duration: 1, ease: 'power2.out',
+      onUpdate:   () => { lineAlpha = alphaProxy.v; },
+      onComplete: startLines
+    });
+  }, 2500);
+
+  // ヒーロー退場 → フェードアウト / 戻り → フェードイン
+  ScrollTrigger.create({
+    trigger: '#hero',
+    start: 'top+=100 top',
+    onEnter:     () => gsap.to(alphaProxy, { v: 0, duration: 0.5, ease: 'power2.out',
+                                onUpdate: () => { lineAlpha = alphaProxy.v; } }),
+    onLeaveBack: () => gsap.to(alphaProxy, { v: 1, duration: 0.6, ease: 'power2.out',
+                                onUpdate: () => { lineAlpha = alphaProxy.v; } })
+  });
+})();
+
 // HERO 背景テキストパララックス
 gsap.to('.hero-bg-txt',{
   x:'8vw', ease:'none',
   scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}
 });
-
-// BRAND SHAPE：ヒーロースクロール中にグルンと回転・移動（growin.jp風）
-gsap.to('#brand-shape',{
-  rotation:-32+55,
-  x:'22vw',
-  y:'30vh',
-  ease:'none',
-  scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:1.2}
-});
-
-// BRAND SHAPE：セクションごとにリボンが回転・移動
-(function(){
-  const bs=document.getElementById('brand-shape');
-  if(!bs)return;
-  // 初期位置をGSAPで設定
-  gsap.set(bs,{rotation:-32,x:0,y:0});
-  // セクションごとのリボン位置定義
-  const poses=[
-    {trigger:'#works',  rot:-18, tx: 0.20, ty: 0.10},
-    {trigger:'#about',  rot: 14, tx:-0.15, ty: 0.05},
-    {trigger:'#price',  rot:-24, tx: 0.10, ty:-0.08},
-    {trigger:'#flow',   rot: 20, tx:-0.22, ty: 0.12},
-    {trigger:'#voice',  rot:-14, tx: 0.18, ty: 0.00},
-    {trigger:'#faq',    rot: 28, tx:-0.08, ty:-0.10},
-    {trigger:'#contact',rot: -8, tx: 0.05, ty: 0.08},
-  ];
-  const anim=(pos)=>gsap.to(bs,{
-    rotation:pos.rot,
-    x:pos.tx*window.innerWidth,
-    y:pos.ty*window.innerHeight,
-    duration:1.6,ease:'power2.inOut'
-  });
-  poses.forEach(pos=>{
-    if(!document.querySelector(pos.trigger))return;
-    ScrollTrigger.create({
-      trigger:pos.trigger,start:'top 65%',
-      onEnter:()=>anim(pos),onEnterBack:()=>anim(pos)
-    });
-  });
-})();
 
 // HERO テキスト退場アニメーション（growin.jp方式）
 // wheel/touchmoveを直接インターセプト→スクロール発生前にpreventDefault
