@@ -1054,13 +1054,23 @@ gsap.to('.hero-bg-txt',{
 });
 
 // HERO テキスト退場アニメーション（growin.jp方式）
-// lenis.on('scroll')内で直接検知 → 同フレーム内でlenis.stop()が確実に効く
+// lenis.stop()はdesktopのみ有効。mobileはtouchmove preventDefaultで止める
+const _noScroll=e=>e.preventDefault();
+function _lockScroll(){
+  lenis.stop();
+  window.addEventListener('touchmove',_noScroll,{passive:false});
+}
+function _unlockScroll(){
+  lenis.start();
+  window.removeEventListener('touchmove',_noScroll);
+}
+
 let _heroExited=false, _heroAnimating=false;
 lenis.on('scroll',({scroll})=>{
   if(!_heroExited&&!_heroAnimating&&scroll>=100){
     _heroAnimating=true;
-    lenis.stop();
-    gsap.timeline({onComplete:()=>{_heroExited=true;_heroAnimating=false;lenis.start();}})
+    _lockScroll();
+    gsap.timeline({onComplete:()=>{_heroExited=true;_heroAnimating=false;_unlockScroll();}})
       .to('.h-title .line-wrap:nth-child(1) .line',{y:'120%',duration:.5,ease:'power3.out'},0)
       .to('.h-title .line-wrap:nth-child(2) .line',{y:'-120%',duration:.5,ease:'power3.out'},0)
       .to('.h-title .line-wrap:nth-child(3) .line',{y:'-120%',duration:.5,ease:'power3.out'},0)
@@ -1069,8 +1079,8 @@ lenis.on('scroll',({scroll})=>{
       .to('.h-btns',{autoAlpha:0,duration:.4,ease:'power3.out'},0);
   } else if(_heroExited&&!_heroAnimating&&scroll<50){
     _heroAnimating=true;
-    lenis.stop();
-    gsap.timeline({onComplete:()=>{_heroExited=false;_heroAnimating=false;lenis.start();}})
+    _lockScroll();
+    gsap.timeline({onComplete:()=>{_heroExited=false;_heroAnimating=false;_unlockScroll();}})
       .to('.h-title .line',{y:'0%',duration:.6,ease:'power4.out'},0)
       .to('.h-tag',{autoAlpha:1,duration:.5,ease:'power4.out'},0)
       .to('.h-sub',{autoAlpha:1,duration:.5,ease:'power4.out'},0)
