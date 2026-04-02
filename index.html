@@ -110,13 +110,6 @@ nav a:hover{color:var(--black)}
 .hero-lines span:nth-child(4){left:80%;animation-delay:.55s}
 @keyframes line-in{to{transform:scaleY(1)}}
 
-/* HERO BRAND REVEAL（テキスト退場後の一瞬） */
-#hero-brand{
-  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,17vw,13.5rem);
-  font-weight:300;letter-spacing:.6em;padding-left:.6em;
-  color:var(--black);opacity:0;visibility:hidden;pointer-events:none;z-index:5;
-}
 
 
 .hero-scroll-line{position:fixed;right:2.5rem;bottom:3rem;display:flex;flex-direction:column;align-items:center;gap:1rem;z-index:10}
@@ -608,7 +601,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     animation:mascot-rise .9s cubic-bezier(.34,1.56,.64,1) forwards, mascot-float 3s ease-in-out 1s infinite;
     pointer-events:auto;
   }
-  #hero-brand{font-size:clamp(3.5rem,18vw,8rem);letter-spacing:.4em;padding-left:.4em;}
 }
 </style>
 </head>
@@ -616,7 +608,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
-<div id="hero-brand" aria-hidden="true">HAKU</div>
 <div class="hero-panels"><div class="hero-panel" id="p1"></div><div class="hero-panel" id="p2"></div><div class="hero-panel" id="p3"></div><div class="hero-panel" id="p4"></div></div>
 
 <!-- LOADER -->
@@ -1277,17 +1268,14 @@ function _exitAnim(){
     .to('.h-title .line-wrap:nth-child(2) .line',{y:'-120%',duration:.5,ease:'power3.out'},0)
     .to('.h-title .line-wrap:nth-child(3) .line',{y:'-120%',duration:.5,ease:'power3.out'},0)
     .to('.h-tag',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
-    .to('.h-sub',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
-    .to('#hero-brand',{autoAlpha:1,duration:.35,ease:'power2.out'},.25)
-    .to('#hero-brand',{autoAlpha:0,duration:.42,ease:'power2.in'},.72);
+    .to('.h-sub',{autoAlpha:0,duration:.4,ease:'power3.out'},0);
   if(window.innerWidth>960)tl.to('.h-btns',{autoAlpha:0,duration:.4,ease:'power3.out'},0);
 }
 function _enterAnim(){
   _heroAnimating=true;
   lenis.stop();
   const tl=gsap.timeline({onComplete:()=>{_heroExited=false;_heroAnimating=false;lenis.start();}});
-  tl.to('#hero-brand',{autoAlpha:0,duration:.2,ease:'power3.out'},0)
-    .to('.h-title .line',{y:'0%',duration:.6,ease:'power4.out'},.1)
+  tl.to('.h-title .line',{y:'0%',duration:.6,ease:'power4.out'},0)
     .to('.h-tag',{autoAlpha:1,duration:.5,ease:'power4.out'},.1)
     .to('.h-sub',{autoAlpha:1,duration:.5,ease:'power4.out'},.1);
   if(window.innerWidth>960)tl.to('.h-btns',{autoAlpha:1,duration:.5,ease:'power4.out'},.1);
