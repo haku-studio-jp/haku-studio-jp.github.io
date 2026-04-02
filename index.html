@@ -1041,26 +1041,37 @@ function _runHeroExit(){
   document.documentElement.style.overflow='hidden';
   document.body.style.overflow='hidden';
   const ease='cubic-bezier(0.16,1,0.3,1)';
-  if(_heroTitle){
-    _heroTitle.style.transition='opacity .6s '+ease+',transform .6s '+ease;
-    _heroTitle.style.opacity='0';
-    _heroTitle.style.transform='translateY(-60px)';
-  }
+
+  // 行ごとにスタガーで上スライド＋フェードアウト（growin.jp方式）
+  const lines=_heroTitle?[..._heroTitle.querySelectorAll('.line')]:[];
+  lines.forEach((line,i)=>{
+    line.style.transition='opacity .45s '+ease+',transform .45s '+ease;
+    line.style.transitionDelay=(i*80)+'ms';
+    line.style.opacity='0';
+    line.style.transform='translateY(-70px)';
+  });
+
   if(_heroTag){
-    _heroTag.style.transition='opacity .4s ease';
+    _heroTag.style.transition='opacity .35s ease';
+    _heroTag.style.transitionDelay='0ms';
     _heroTag.style.opacity='0';
   }
   if(_heroSub){
-    _heroSub.style.transition='opacity .5s '+ease+',transform .5s '+ease;
+    const subDelay=lines.length*80+40;
+    _heroSub.style.transition='opacity .4s '+ease+',transform .4s '+ease;
+    _heroSub.style.transitionDelay=subDelay+'ms';
     _heroSub.style.opacity='0';
-    _heroSub.style.transform='translateY(-30px)';
+    _heroSub.style.transform='translateY(-20px)';
   }
+
+  // 最後の行のdelay + transitionDuration + バッファ
+  const total=lines.length*80+450+120;
   setTimeout(()=>{
     document.documentElement.style.overflow='';
     document.body.style.overflow='';
     _heroExitDone=true;
     _heroAnimating=false;
-  },750);
+  },total);
 }
 
 window.addEventListener('wheel',(e)=>{
