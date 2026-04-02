@@ -1054,16 +1054,11 @@ gsap.to('.hero-bg-txt',{
 });
 
 // HERO テキスト退場アニメーション（growin.jp方式）
-// lenis.stop()はdesktopのみ有効。mobileはtouchmove preventDefaultで止める
-const _noScroll=e=>e.preventDefault();
-function _lockScroll(){
-  lenis.stop();
-  window.addEventListener('touchmove',_noScroll,{passive:false});
-}
-function _unlockScroll(){
-  lenis.start();
-  window.removeEventListener('touchmove',_noScroll);
-}
+// touchmoveはページロード時に一度だけ登録→フラグで制御（動的追加だとスワイプ中に間に合わない）
+let _scrollLockActive=false;
+window.addEventListener('touchmove',e=>{if(_scrollLockActive)e.preventDefault();},{passive:false});
+function _lockScroll(){_scrollLockActive=true;lenis.stop();}
+function _unlockScroll(){_scrollLockActive=false;lenis.start();}
 
 let _heroExited=false, _heroAnimating=false;
 lenis.on('scroll',({scroll})=>{
