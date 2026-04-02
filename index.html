@@ -115,13 +115,13 @@ nav a:hover{color:var(--black)}
   height:260px;
   border-radius:130px;
   background:#A08060;
-  opacity:.2;
+  opacity:.38;
   pointer-events:none;
-  z-index:0;
+  z-index:1;
   left:-60vw;
   top:calc(50% - 130px);
   will-change:transform;
-  transition:opacity .6s ease;
+  transform:rotate(-32deg);
 }
 
 /* HERO BRAND REVEAL（テキスト退場後の一瞬） */
@@ -559,7 +559,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     animation:mascot-rise .9s cubic-bezier(.34,1.56,.64,1) forwards, mascot-float 3s ease-in-out 1s infinite;
     pointer-events:auto;
   }
-  #brand-shape{height:160px;border-radius:80px;opacity:.15;}
+  #brand-shape{height:160px;border-radius:80px;opacity:.25;}
   #hero-brand{font-size:clamp(3.5rem,18vw,8rem);letter-spacing:.4em;padding-left:.4em;}
 }
 </style>
@@ -1129,9 +1129,7 @@ function _exitAnim(){
     .to('.h-sub',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
     .to('.h-btns',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
     .to('#hero-brand',{autoAlpha:1,duration:.35,ease:'power2.out'},.25)
-    .to('#brand-shape',{opacity:.22,duration:.35,ease:'power2.out'},.25)
-    .to('#hero-brand',{autoAlpha:0,duration:.42,ease:'power2.in'},.72)
-    .to('#brand-shape',{opacity:.09,duration:.5,ease:'power2.out'},.72);
+    .to('#hero-brand',{autoAlpha:0,duration:.42,ease:'power2.in'},.72);
 }
 function _enterAnim(){
   _heroAnimating=true;
