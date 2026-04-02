@@ -307,81 +307,81 @@ section{padding:10rem 5rem}
 .fq-a-in{font-size:.82rem;color:var(--gray-400);line-height:2.2;padding-bottom:2rem}
 
 /* SECTION DECORATIVE RINGS — growin.jp style filled circles */
-/* nth-child(1)=r450(外側・薄), nth-child(7)=r75(内側・濃) の順で重なる */
+/* nth-child(1)=r450(外側・薄), nth-child(7)=r65(内側・濃) — 全セクション見出しテキスト付近に配置 */
 #works,#services,#about,#price,#flow,#voice,#faq{position:relative;overflow:hidden}
 .c-rings{position:absolute;pointer-events:none;z-index:0;overflow:visible;width:1px;height:1px}
 .c-rings circle{fill:rgba(160,128,96,1);stroke:none;opacity:0;transform-origin:0 0;transition:transform 1.2s cubic-bezier(.34,1.3,.64,1),opacity 1s ease}
 #flow .c-rings circle{fill:rgba(255,255,255,1)}
-/* 1. WORKS — top-right, 内→外スタガー */
-#works .c-rings{top:0;right:0}
+/* 1. WORKS — 内→外スタガー */
+#works .c-rings{top:10rem;left:0}
 #works .c-rings circle{transform:scale(0)}
-#works .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10;transition-delay:.00s}
-#works .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08;transition-delay:.06s}
-#works .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.12s}
-#works .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05;transition-delay:.18s}
-#works .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04;transition-delay:.24s}
-#works .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03;transition-delay:.30s}
-#works .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02;transition-delay:.36s}
-/* 2. SERVICES — top-left, 外→内スタガー */
-#services .c-rings{top:0;left:0}
+#works .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.55;transition-delay:.00s}
+#works .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.38;transition-delay:.06s}
+#works .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.25;transition-delay:.12s}
+#works .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.16;transition-delay:.18s}
+#works .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.10;transition-delay:.24s}
+#works .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.06;transition-delay:.30s}
+#works .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.03;transition-delay:.36s}
+/* 2. SERVICES — 外→内スタガー */
+#services .c-rings{top:10rem;left:0}
 #services .c-rings circle{transform:scale(0)}
-#services .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02;transition-delay:.00s}
-#services .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03;transition-delay:.07s}
-#services .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04;transition-delay:.14s}
-#services .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05;transition-delay:.21s}
-#services .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.28s}
-#services .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08;transition-delay:.35s}
-#services .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10;transition-delay:.42s}
-/* 3. ABOUT — bottom-right, 一斉スケールイン */
-#about .c-rings{bottom:0;right:0}
+#services .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.03;transition-delay:.00s}
+#services .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.06;transition-delay:.07s}
+#services .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.10;transition-delay:.14s}
+#services .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.16;transition-delay:.21s}
+#services .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.25;transition-delay:.28s}
+#services .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.38;transition-delay:.35s}
+#services .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.55;transition-delay:.42s}
+/* 3. ABOUT — 一斉スケールイン */
+#about .c-rings{top:10rem;left:0}
 #about .c-rings circle{transform:scale(0)}
-#about .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02}
-#about .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03}
-#about .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04}
-#about .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05}
-#about .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06}
-#about .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08}
-#about .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10}
-/* 4. PRICE — bottom-left, 内→外スタガー */
-#price .c-rings{bottom:0;left:0}
+#about .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.03}
+#about .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.06}
+#about .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.10}
+#about .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.16}
+#about .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.25}
+#about .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.38}
+#about .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.55}
+/* 4. PRICE — 内→外スタガー */
+#price .c-rings{top:10rem;left:0}
 #price .c-rings circle{transform:scale(0)}
-#price .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10;transition-delay:.00s}
-#price .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08;transition-delay:.07s}
-#price .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.14s}
-#price .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05;transition-delay:.21s}
-#price .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04;transition-delay:.28s}
-#price .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03;transition-delay:.35s}
-#price .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02;transition-delay:.42s}
-/* 5. FLOW — bottom-left, 白・外→内 */
-#flow .c-rings{bottom:0;left:0}
+#price .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.55;transition-delay:.00s}
+#price .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.38;transition-delay:.07s}
+#price .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.25;transition-delay:.14s}
+#price .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.16;transition-delay:.21s}
+#price .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.10;transition-delay:.28s}
+#price .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.06;transition-delay:.35s}
+#price .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.03;transition-delay:.42s}
+/* 5. FLOW — 白・外→内 */
+#flow .c-rings{top:10rem;left:0}
 #flow .c-rings circle{transform:scale(0);transition:transform .9s ease-out,opacity .8s ease}
 #flow .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.04;transition-delay:.00s}
-#flow .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.07;transition-delay:.08s}
-#flow .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.10;transition-delay:.16s}
-#flow .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.13;transition-delay:.24s}
-#flow .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.16;transition-delay:.32s}
-#flow .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.20;transition-delay:.40s}
-#flow .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.25;transition-delay:.48s}
-/* 6. VOICE — top-left, ズームアウト(scale 2.5→1) */
-#voice .c-rings{top:0;left:0}
+#flow .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.08;transition-delay:.08s}
+#flow .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.13;transition-delay:.16s}
+#flow .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.20;transition-delay:.24s}
+#flow .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.28;transition-delay:.32s}
+#flow .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.38;transition-delay:.40s}
+#flow .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.50;transition-delay:.48s}
+/* 6. VOICE — ズームアウト(scale 2.5→1) */
+#voice .c-rings{top:10rem;left:0}
 #voice .c-rings circle{transform:scale(2.5)}
-#voice .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02;transition-delay:.00s}
-#voice .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03;transition-delay:.07s}
-#voice .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04;transition-delay:.14s}
-#voice .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05;transition-delay:.21s}
-#voice .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.28s}
-#voice .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08;transition-delay:.35s}
-#voice .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10;transition-delay:.42s}
-/* 7. FAQ — bottom-right, スロー展開 */
-#faq .c-rings{bottom:0;right:0}
+#voice .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.03;transition-delay:.00s}
+#voice .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.06;transition-delay:.07s}
+#voice .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.10;transition-delay:.14s}
+#voice .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.16;transition-delay:.21s}
+#voice .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.25;transition-delay:.28s}
+#voice .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.38;transition-delay:.35s}
+#voice .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.55;transition-delay:.42s}
+/* 7. FAQ — スロー展開 */
+#faq .c-rings{top:10rem;left:0}
 #faq .c-rings circle{transform:scale(0);transition:transform 1.8s cubic-bezier(.25,.46,.45,.94),opacity 1.4s ease}
-#faq .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.10;transition-delay:.00s}
-#faq .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.08;transition-delay:.12s}
-#faq .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.06;transition-delay:.24s}
-#faq .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.05;transition-delay:.36s}
-#faq .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.04;transition-delay:.48s}
-#faq .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.03;transition-delay:.60s}
-#faq .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.02;transition-delay:.72s}
+#faq .c-rings.rs circle:nth-child(7){transform:scale(1);opacity:.55;transition-delay:.00s}
+#faq .c-rings.rs circle:nth-child(6){transform:scale(1);opacity:.38;transition-delay:.12s}
+#faq .c-rings.rs circle:nth-child(5){transform:scale(1);opacity:.25;transition-delay:.24s}
+#faq .c-rings.rs circle:nth-child(4){transform:scale(1);opacity:.16;transition-delay:.36s}
+#faq .c-rings.rs circle:nth-child(3){transform:scale(1);opacity:.10;transition-delay:.48s}
+#faq .c-rings.rs circle:nth-child(2){transform:scale(1);opacity:.06;transition-delay:.60s}
+#faq .c-rings.rs circle:nth-child(1){transform:scale(1);opacity:.03;transition-delay:.72s}
 
 /* CONTACT */
 #contact{background:var(--black);color:var(--white);text-align:center;padding:14rem 5rem;position:relative;overflow:hidden}
