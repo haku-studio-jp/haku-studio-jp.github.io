@@ -462,7 +462,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .ct-info-item{text-align:center}
   .f-item{grid-template-columns:55px 1fr;gap:1.2rem}
   .hero-sticky{justify-content:space-between !important}
-  .hero-l{display:flex;flex-direction:column;flex:1;padding:0 0 5.5rem;text-align:center;min-height:calc(100vh - 80px)}
+  .hero-l{display:flex;flex-direction:column;flex:1;padding:0 0 5.5rem;text-align:center;min-height:calc(100vh - 80px);justify-content:flex-start}
   .hero-scroll-line{display:none}
   .h-btns{flex-direction:column;align-items:center;gap:1rem}
   .ct-btns{flex-direction:column;align-items:center;width:100%}
@@ -470,7 +470,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .hero-bg-txt{font-size:clamp(7rem,28vw,14rem);right:-0.5rem;bottom:1rem}
   .h-title{font-size:clamp(2.5rem, 12vw, 6rem) !important;text-align:center;width:100%;line-height:1.8;margin-top:3rem}
   .h-tag{font-size:0.65rem}
-  .h-sub{font-size:.72rem;line-height:2;max-width:30em;margin-top:0;margin-left:auto;margin-right:auto;word-break:keep-all;overflow-wrap:break-word;line-break:strict;text-align:center;margin-bottom:4rem}
+  .h-sub{font-size:.72rem;line-height:2;max-width:30em;margin-top:auto;margin-left:auto;margin-right:auto;word-break:keep-all;overflow-wrap:break-word;line-break:strict;text-align:center;margin-bottom:4rem}
   .sp-br{display:inline}
   .pc-br{display:none}
   .h-btns{display:none}
@@ -1054,42 +1054,46 @@ gsap.to('.hero-bg-txt',{
 });
 
 // HERO テキスト退場アニメーション（growin.jp方式）
-// body:fixedはposition:stickyを壊す。html{overflow:hidden}+touchmoveで止める
-let _scrollLock=false;
-window.addEventListener('touchmove',e=>{if(_scrollLock)e.preventDefault();},{passive:false});
-function _lockScroll(){
-  _scrollLock=true;
+// wheel/touchmoveを直接インターセプト→スクロール発生前にpreventDefault
+// lenis.on('scroll')は「動いた後」なので使わない
+let _heroExited=false,_heroAnimating=false,_tStartY=0;
+
+function _exitAnim(){
+  _heroAnimating=true;
   lenis.stop();
-  document.documentElement.style.overflowY='hidden';
+  gsap.timeline({onComplete:()=>{_heroExited=true;_heroAnimating=false;lenis.start();}})
+    .to('.h-title .line-wrap:nth-child(1) .line',{y:'120%',duration:.5,ease:'power3.out'},0)
+    .to('.h-title .line-wrap:nth-child(2) .line',{y:'-120%',duration:.5,ease:'power3.out'},0)
+    .to('.h-title .line-wrap:nth-child(3) .line',{y:'-120%',duration:.5,ease:'power3.out'},0)
+    .to('.h-tag',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
+    .to('.h-sub',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
+    .to('.h-btns',{autoAlpha:0,duration:.4,ease:'power3.out'},0);
 }
-function _unlockScroll(){
-  _scrollLock=false;
-  document.documentElement.style.overflowY='';
-  lenis.start();
+function _enterAnim(){
+  _heroAnimating=true;
+  lenis.stop();
+  gsap.timeline({onComplete:()=>{_heroExited=false;_heroAnimating=false;lenis.start();}})
+    .to('.h-title .line',{y:'0%',duration:.6,ease:'power4.out'},0)
+    .to('.h-tag',{autoAlpha:1,duration:.5,ease:'power4.out'},0)
+    .to('.h-sub',{autoAlpha:1,duration:.5,ease:'power4.out'},0)
+    .to('.h-btns',{autoAlpha:1,duration:.5,ease:'power4.out'},0);
 }
 
-let _heroExited=false, _heroAnimating=false;
-lenis.on('scroll',({scroll})=>{
-  if(!_heroExited&&!_heroAnimating&&scroll>=100){
-    _heroAnimating=true;
-    _lockScroll();
-    gsap.timeline({onComplete:()=>{_heroExited=true;_heroAnimating=false;_unlockScroll();}})
-      .to('.h-title .line-wrap:nth-child(1) .line',{y:'120%',duration:.5,ease:'power3.out'},0)
-      .to('.h-title .line-wrap:nth-child(2) .line',{y:'-120%',duration:.5,ease:'power3.out'},0)
-      .to('.h-title .line-wrap:nth-child(3) .line',{y:'-120%',duration:.5,ease:'power3.out'},0)
-      .to('.h-tag',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
-      .to('.h-sub',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
-      .to('.h-btns',{autoAlpha:0,duration:.4,ease:'power3.out'},0);
-  } else if(_heroExited&&!_heroAnimating&&scroll<50){
-    _heroAnimating=true;
-    _lockScroll();
-    gsap.timeline({onComplete:()=>{_heroExited=false;_heroAnimating=false;_unlockScroll();}})
-      .to('.h-title .line',{y:'0%',duration:.6,ease:'power4.out'},0)
-      .to('.h-tag',{autoAlpha:1,duration:.5,ease:'power4.out'},0)
-      .to('.h-sub',{autoAlpha:1,duration:.5,ease:'power4.out'},0)
-      .to('.h-btns',{autoAlpha:1,duration:.5,ease:'power4.out'},0);
-  }
-});
+// desktop: wheelイベントをスクロール発生前にインターセプト
+window.addEventListener('wheel',e=>{
+  if(_heroAnimating){e.preventDefault();return;}
+  if(!_heroExited&&e.deltaY>0){e.preventDefault();_exitAnim();}
+  else if(_heroExited&&window.scrollY<50&&e.deltaY<0){e.preventDefault();_enterAnim();}
+},{passive:false});
+
+// mobile: touchmoveをスクロール発生前にインターセプト
+window.addEventListener('touchstart',e=>{_tStartY=e.touches[0].clientY;},{passive:true});
+window.addEventListener('touchmove',e=>{
+  if(_heroAnimating){e.preventDefault();return;}
+  const delta=_tStartY-e.touches[0].clientY;
+  if(!_heroExited&&delta>8){e.preventDefault();_tStartY=e.touches[0].clientY;_exitAnim();}
+  else if(_heroExited&&window.scrollY<50&&delta<-8){e.preventDefault();_tStartY=e.touches[0].clientY;_enterAnim();}
+},{passive:false});
 
 
 // SECTION TITLE SPLIT
