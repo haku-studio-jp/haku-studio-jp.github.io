@@ -148,7 +148,7 @@ nav a:hover{color:var(--black)}
 
 /* タイトル文字アニメ */
 .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,10vw,7.5rem);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:2rem}
-.line-wrap{display:block;overflow:hidden;clip-path:inset(-.1em -.5em 0 0);padding-top:.3em;margin-right:-1em}
+.line-wrap{display:block;overflow:hidden;clip-path:inset(-.1em -.5em 0 0);padding-top:.15em;margin-right:-1em}
 .h-title .line{display:block;white-space:nowrap}
 .h-title .char{display:inline-block;opacity:0;transform:translateY(110%);animation:char-up .75s cubic-bezier(.77,0,.175,1) forwards}
 .h-title em{font-style:italic;letter-spacing:-0.07em}
@@ -485,8 +485,9 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .ct-info{gap:1.5rem;flex-direction:column;align-items:center;text-align:center}
   .ct-info-item{text-align:center}
   .f-item{grid-template-columns:55px 1fr;gap:1.2rem}
+  #hero{padding:0}
   .hero-sticky{justify-content:space-between !important}
-  .hero-l{display:flex;flex-direction:column;flex:1;justify-content:flex-start;padding:2rem 0 5.5rem;text-align:center;min-height:calc(100vh - 80px)}
+  .hero-l{display:flex;flex-direction:column;flex:1;justify-content:flex-start;padding:2rem 1.8rem 5.5rem;text-align:center;min-height:calc(100vh - 80px)}
   .hero-scroll-line{display:none}
   .h-btns{flex-direction:column;align-items:center;gap:1rem}
   .ct-btns{flex-direction:column;align-items:center;width:100%}
@@ -499,7 +500,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .sp-br{display:inline}
   .pc-br{display:none}
   .h-btns{display:none}
-  .h-btns.hero-visible{opacity:1;transform:translateY(0)}
+  .h-btns.hero-visible{display:flex;opacity:1;transform:translateY(0)}
   .works-grid .w-card.rv{transform:translateY(30px)}
   .works-grid .w-card.rv.on{transform:translateY(0)}
   .w-body{padding:1.8rem 1.5rem}
@@ -1121,25 +1122,25 @@ let _heroExited=false,_heroAnimating=false,_tStartY=0;
 function _exitAnim(){
   _heroAnimating=true;
   lenis.stop();
-  gsap.timeline({onComplete:()=>{_heroExited=true;_heroAnimating=false;lenis.start();}})
-    .to('.h-title .line-wrap:nth-child(1) .line',{y:'120%',duration:.5,ease:'power3.out'},0)
+  const tl=gsap.timeline({onComplete:()=>{_heroExited=true;_heroAnimating=false;lenis.start();}});
+  tl.to('.h-title .line-wrap:nth-child(1) .line',{y:'120%',duration:.5,ease:'power3.out'},0)
     .to('.h-title .line-wrap:nth-child(2) .line',{y:'-120%',duration:.5,ease:'power3.out'},0)
     .to('.h-title .line-wrap:nth-child(3) .line',{y:'-120%',duration:.5,ease:'power3.out'},0)
     .to('.h-tag',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
     .to('.h-sub',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
-    .to('.h-btns',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
     .to('#hero-brand',{autoAlpha:1,duration:.35,ease:'power2.out'},.25)
     .to('#hero-brand',{autoAlpha:0,duration:.42,ease:'power2.in'},.72);
+  if(window.innerWidth>960)tl.to('.h-btns',{autoAlpha:0,duration:.4,ease:'power3.out'},0);
 }
 function _enterAnim(){
   _heroAnimating=true;
   lenis.stop();
-  gsap.timeline({onComplete:()=>{_heroExited=false;_heroAnimating=false;lenis.start();}})
-    .to('#hero-brand',{autoAlpha:0,duration:.2,ease:'power3.out'},0)
+  const tl=gsap.timeline({onComplete:()=>{_heroExited=false;_heroAnimating=false;lenis.start();}});
+  tl.to('#hero-brand',{autoAlpha:0,duration:.2,ease:'power3.out'},0)
     .to('.h-title .line',{y:'0%',duration:.6,ease:'power4.out'},.1)
     .to('.h-tag',{autoAlpha:1,duration:.5,ease:'power4.out'},.1)
-    .to('.h-sub',{autoAlpha:1,duration:.5,ease:'power4.out'},.1)
-    .to('.h-btns',{autoAlpha:1,duration:.5,ease:'power4.out'},.1);
+    .to('.h-sub',{autoAlpha:1,duration:.5,ease:'power4.out'},.1);
+  if(window.innerWidth>960)tl.to('.h-btns',{autoAlpha:1,duration:.5,ease:'power4.out'},.1);
 }
 
 // desktop: wheelイベントをスクロール発生前にインターセプト
