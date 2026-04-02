@@ -503,7 +503,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     border-radius:20px;
     padding:10px 14px 12px;
     box-shadow:0 2px 16px rgba(255,255,255,0.2),inset 0 1px 0 rgba(255,255,255,0.4);
-    animation:mascot-rise .9s cubic-bezier(.34,1.56,.64,1) .5s both, mascot-float 3s ease-in-out 1.4s infinite;
+    opacity:0;pointer-events:none;
   }
   #mascot-cta img{
     width:64px;height:64px;border-radius:0;object-fit:contain;
@@ -528,6 +528,10 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   @keyframes mascot-float{
     0%,100%{transform:translateY(0)}
     50%{transform:translateY(-7px)}
+  }
+  #mascot-cta.show{
+    animation:mascot-rise .9s cubic-bezier(.34,1.56,.64,1) forwards, mascot-float 3s ease-in-out 1s infinite;
+    pointer-events:auto;
   }
 }
 </style>
@@ -1104,6 +1108,14 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     },560);
   });
 });
+
+// MASCOT CTA: h-sub通過後に表示
+const mascotEl=document.getElementById('mascot-cta');
+if(mascotEl){
+  lenis.on('scroll',({scroll})=>{
+    if(scroll>window.innerHeight*0.7)mascotEl.classList.add('show');
+  });
+}
 
 // MOBILE: ヒーローCTAをスクロールで表示
 if(window.innerWidth<=960){
