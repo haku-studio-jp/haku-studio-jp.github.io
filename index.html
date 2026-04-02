@@ -139,12 +139,6 @@ nav a:hover{color:var(--black)}
 
 .h-sub{font-size:.88rem;line-height:2.1;color:var(--gray-400);max-width:30em;margin-bottom:2rem;opacity:0;transform:translateY(20px);animation:fu .8s 1.5s forwards}
 .sp-br{display:none}
-.h-btns{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;opacity:0;animation:fu .8s 1.7s forwards}
-.h-btn{display:inline-flex;align-items:center;gap:1.2rem;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--black);white-space:nowrap}
-.h-btn-line{width:44px;height:1px;background:var(--black);transition:width .4s}
-.h-btn:hover .h-btn-line{width:72px}
-.h-btn-ghost{border:1px solid var(--gray-200);padding:.85rem 2rem;color:var(--gray-400);transition:all .3s}
-.h-btn-ghost:hover{border-color:var(--black);color:var(--black)}
 @keyframes fu{to{opacity:1;transform:translateY(0)}}
 @keyframes char-up{to{opacity:1;transform:translateY(0)}}
 
@@ -548,7 +542,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .hero-l{display:flex;flex-direction:column;flex:1;justify-content:flex-start;padding:5rem 1.8rem 5.5rem;text-align:center;min-height:calc(100vh - 80px)}
   .hero-scroll-line{display:none}
   #hero-brand{font-size:clamp(3.5rem,18vw,8rem);letter-spacing:.4em;padding-left:.4em;}
-  .h-btns{flex-direction:column;align-items:center;gap:1rem}
   .ct-btns{flex-direction:column;align-items:center;width:100%}
   .ct-line-btn,.ct-mail-btn{width:100%;max-width:300px;padding:1.3rem 2rem}
 
@@ -558,8 +551,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .h-sub{font-size:.72rem;line-height:2;max-width:30em;margin-top:3rem;margin-left:auto;margin-right:auto;word-break:keep-all;overflow-wrap:break-word;line-break:strict;text-align:center;margin-bottom:3rem}
   .sp-br{display:inline}
   .pc-br{display:none}
-  .h-btns{display:none}
-  .h-btns.hero-visible{display:flex;opacity:1;transform:translateY(0)}
   .works-grid .w-card.rv{transform:translateY(30px)}
   .works-grid .w-card.rv.on{transform:translateY(0)}
   .w-body{padding:1.8rem 1.5rem}
@@ -660,10 +651,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       <div class="h-tag">Web Design Studio · Ibaraki</div>
       <h1 class="h-title" id="heroTitle"></h1>
       <p class="h-sub">茨城県日立市を拠点に、飲食店・店舗・中小企業の<br class="pc-br"><br class="sp-br">ホームページ制作を手がけるWebデザインスタジオです。<br class="pc-br"><br class="sp-br">シンプルで美しく、伝わるデザインを提供します。</p>
-      <div class="h-btns">
-        <a href="#works" class="h-btn"><div class="h-btn-line"></div>制作実績を見る</a>
-        <a href="#contact" class="h-btn h-btn-ghost">お問い合わせ</a>
-      </div>
     </div>
     <div class="hero-scroll-line">
       <div class="hero-scroll-txt">Scroll</div>
@@ -1290,7 +1277,6 @@ function _exitAnim(){
     .to('.h-sub',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
     .to('#hero-brand',{autoAlpha:1,duration:.35,ease:'power2.out'},.25)
     .to('#hero-brand',{autoAlpha:0,duration:.42,ease:'power2.in'},.72);
-  if(window.innerWidth>960)tl.to('.h-btns',{autoAlpha:0,duration:.4,ease:'power3.out'},0);
 }
 function _enterAnim(){
   _heroAnimating=true;
@@ -1300,7 +1286,6 @@ function _enterAnim(){
     .to('.h-title .line',{y:'0%',duration:.6,ease:'power4.out'},.1)
     .to('.h-tag',{autoAlpha:1,duration:.5,ease:'power4.out'},.1)
     .to('.h-sub',{autoAlpha:1,duration:.5,ease:'power4.out'},.1);
-  if(window.innerWidth>960)tl.to('.h-btns',{autoAlpha:1,duration:.5,ease:'power4.out'},.1);
 }
 
 // desktop: wheelイベントをスクロール発生前にインターセプト
@@ -1378,12 +1363,6 @@ if(mascotEl){
   });
 }
 
-// MOBILE: ヒーローCTAをスクロールで表示
-if(window.innerWidth<=960){
-  const hBtns=document.querySelector('.h-btns');
-  const showBtns=()=>{if(scrollY>60){hBtns.classList.add('hero-visible');window.removeEventListener('scroll',showBtns);}};
-  window.addEventListener('scroll',showBtns,{passive:true});
-}
 
 // NUMBER COUNTER
 const numObs=new IntersectionObserver(es=>es.forEach(e=>{
