@@ -92,7 +92,8 @@ nav a{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:
 nav a:hover{color:var(--black)}
 
 /* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;background:var(--white)}
+#hero{position:relative;height:200vh;background:var(--white)}
+.hero-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
 .hero-l{display:flex;flex-direction:column;justify-content:flex-end;padding:0 5rem 9rem 5rem;position:relative;z-index:2;max-width:900px}
 
 /* 背景装飾ライン */
@@ -459,7 +460,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .ct-info{gap:1.5rem;flex-direction:column;align-items:center;text-align:center}
   .ct-info-item{text-align:center}
   .f-item{grid-template-columns:55px 1fr;gap:1.2rem}
-  #hero{justify-content:space-between !important}
+  .hero-sticky{justify-content:space-between !important}
   .hero-l{display:flex;flex-direction:column;flex:1;padding:0 0 5.5rem;text-align:center;min-height:calc(100vh - 80px)}
   .hero-scroll-line{display:none}
   .h-btns{flex-direction:column;align-items:center;gap:1rem}
@@ -561,20 +562,22 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-lines"><span></span><span></span><span></span><span></span></div>
-  <div class="hero-bg-txt">HAKU</div>
-  <div class="hero-l">
-    <div class="h-tag">Web Design Studio · Ibaraki</div>
-    <h1 class="h-title" id="heroTitle"></h1>
-    <p class="h-sub">茨城県日立市を拠点に、飲食店・店舗・中小企業の<br class="sp-br">ホームページ制作を手がけるWebデザインスタジオです。<br class="sp-br">シンプルで美しく、伝わるデザインを提供します。</p>
-    <div class="h-btns">
-      <a href="#works" class="h-btn"><div class="h-btn-line"></div>制作実績を見る</a>
-      <a href="#contact" class="h-btn h-btn-ghost">お問い合わせ</a>
+  <div class="hero-sticky">
+    <div class="hero-lines"><span></span><span></span><span></span><span></span></div>
+    <div class="hero-bg-txt">HAKU</div>
+    <div class="hero-l">
+      <div class="h-tag">Web Design Studio · Ibaraki</div>
+      <h1 class="h-title" id="heroTitle"></h1>
+      <p class="h-sub">茨城県日立市を拠点に、飲食店・店舗・中小企業の<br class="sp-br">ホームページ制作を手がけるWebデザインスタジオです。<br class="sp-br">シンプルで美しく、伝わるデザインを提供します。</p>
+      <div class="h-btns">
+        <a href="#works" class="h-btn"><div class="h-btn-line"></div>制作実績を見る</a>
+        <a href="#contact" class="h-btn h-btn-ghost">お問い合わせ</a>
+      </div>
     </div>
-  </div>
-  <div class="hero-scroll-line">
-    <div class="hero-scroll-txt">Scroll</div>
-    <div class="hero-scroll-bar"></div>
+    <div class="hero-scroll-line">
+      <div class="hero-scroll-txt">Scroll</div>
+      <div class="hero-scroll-bar"></div>
+    </div>
   </div>
 </section>
 
@@ -1026,70 +1029,36 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   });
 })();
 
-// HERO スクロールロック文字退場アニメーション（growin.jp方式）
-const _heroEl=document.getElementById('hero');
+// HERO スクロールスクラブ文字退場（growin.jp完全コピー：sticky + 200vh方式）
 const _heroTitle=document.querySelector('.h-title');
 const _heroTag=document.querySelector('.h-tag');
 const _heroSub=document.querySelector('.h-sub');
 
-let _heroExitDone=scrollY>50;
-let _heroAnimating=false;
-
-function _runHeroExit(){
-  if(_heroAnimating||_heroExitDone)return;
-  _heroAnimating=true;
-  document.documentElement.style.overflow='hidden';
-  document.body.style.overflow='hidden';
-  const ease='cubic-bezier(0.16,1,0.3,1)';
-
-  // 行ごとにスタガーで上スライド＋フェードアウト（growin.jp方式）
-  const lines=_heroTitle?[..._heroTitle.querySelectorAll('.line')]:[];
-  lines.forEach((line,i)=>{
-    line.style.transition='opacity .45s '+ease+',transform .45s '+ease;
-    line.style.transitionDelay=(i*80)+'ms';
-    line.style.opacity='0';
-    line.style.transform='translateY(-70px)';
-  });
-
-  if(_heroTag){
-    _heroTag.style.transition='opacity .35s ease';
-    _heroTag.style.transitionDelay='0ms';
-    _heroTag.style.opacity='0';
-  }
-  if(_heroSub){
-    const subDelay=lines.length*80+40;
-    _heroSub.style.transition='opacity .4s '+ease+',transform .4s '+ease;
-    _heroSub.style.transitionDelay=subDelay+'ms';
-    _heroSub.style.opacity='0';
-    _heroSub.style.transform='translateY(-20px)';
-  }
-
-  // 最後の行のdelay + transitionDuration + バッファ
-  const total=lines.length*80+450+120;
-  setTimeout(()=>{
-    document.documentElement.style.overflow='';
-    document.body.style.overflow='';
-    _heroExitDone=true;
-    _heroAnimating=false;
-  },total);
-}
-
-window.addEventListener('wheel',(e)=>{
-  if(_heroExitDone||_heroAnimating||scrollY>5||e.deltaY<=0)return;
-  e.preventDefault();
-  _runHeroExit();
-},{passive:false});
-
-let _touchStartY=0;
-window.addEventListener('touchstart',(e)=>{_touchStartY=e.touches[0].clientY;},{passive:true});
-window.addEventListener('touchmove',(e)=>{
-  if(_heroExitDone||_heroAnimating||scrollY>5)return;
-  if(_touchStartY-e.touches[0].clientY>8){e.preventDefault();_runHeroExit();}
-},{passive:false});
-
 window.addEventListener('scroll',()=>{
   const bg=document.querySelector('.hero-bg-txt');
   if(bg)bg.style.transform='translateX('+scrollY*.1+'px)';
+
+  const p=Math.min(1,scrollY/window.innerHeight);
+
+  // h-tag: p=0~0.2でフェード
+  if(_heroTag)_heroTag.style.opacity=String(Math.max(0,1-p/0.2));
+
+  // 行ごとにスタガー：行i → p=(i*0.12)~(0.45+i*0.12)でフェードアウト＋上スライド
+  if(_heroTitle){
+    [..._heroTitle.querySelectorAll('.line')].forEach((line,i)=>{
+      const s=i*0.12,e=0.45+i*0.12;
+      const lp=Math.max(0,Math.min(1,(p-s)/(e-s)));
+      line.style.opacity=String(1-lp);
+      line.style.transform='translateY('+(lp*-70)+'px)';
+    });
+  }
+
+  // h-sub: p=0.35~0.7でフェード
+  if(_heroSub){
+    const sp=Math.max(0,Math.min(1,(p-0.35)/0.35));
+    _heroSub.style.opacity=String(1-sp);
+    _heroSub.style.transform='translateY('+(sp*-20)+'px)';
+  }
 },{passive:true});
 
 // SECTION TITLE SPLIT
