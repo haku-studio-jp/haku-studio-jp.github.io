@@ -1054,11 +1054,18 @@ gsap.to('.hero-bg-txt',{
 });
 
 // HERO テキスト退場アニメーション（growin.jp方式）
-// touchmoveはページロード時に一度だけ登録→フラグで制御（動的追加だとスワイプ中に間に合わない）
-let _scrollLockActive=false;
-window.addEventListener('touchmove',e=>{if(_scrollLockActive)e.preventDefault();},{passive:false});
-function _lockScroll(){_scrollLockActive=true;lenis.stop();}
-function _unlockScroll(){_scrollLockActive=false;lenis.start();}
+// iOS Safariはtouchmoveだけでは止まらない。body position:fixed で完全停止
+let _lockY=0;
+function _lockScroll(){
+  lenis.stop();
+  _lockY=window.scrollY;
+  document.body.style.cssText='overflow:hidden;position:fixed;top:-'+_lockY+'px;left:0;right:0;width:100%';
+}
+function _unlockScroll(){
+  document.body.style.cssText='';
+  window.scrollTo(0,_lockY);
+  lenis.start();
+}
 
 let _heroExited=false, _heroAnimating=false;
 lenis.on('scroll',({scroll})=>{
