@@ -123,7 +123,7 @@ nav a:hover{color:var(--black)}
 @keyframes slide-r{to{opacity:1;transform:translateX(0)}}
 
 /* タイトル文字アニメ */
-.h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,10vw,7.5rem);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:3rem}
+.h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,10vw,7.5rem);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:3rem;overflow:hidden}
 .h-title .line{display:block;white-space:nowrap}
 .h-title .char{display:inline-block;opacity:0;transform:translateY(110%);animation:char-up .75s cubic-bezier(.77,0,.175,1) forwards}
 .h-title em{font-style:italic;letter-spacing:-0.07em}
@@ -1044,10 +1044,33 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   });
 })();
 
-// HERO 背景テキストパララックス + テキスト退場（GSAP ScrollTrigger scrub）
+// HERO 背景テキストパララックス
 gsap.to('.hero-bg-txt',{
   x:'8vw', ease:'none',
   scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}
+});
+
+// HERO テキスト退場アニメーション（growin.jp方式）
+// スクロール100pxでワンショット発火、戻すと逆再生
+ScrollTrigger.create({
+  trigger:'#hero',
+  start:'top+=100 top',
+  onEnter:()=>{
+    gsap.timeline()
+      .to('.h-title .line:nth-child(1)',{y:'120%',duration:.5,ease:'power3.out'},0)
+      .to('.h-title .line:nth-child(2)',{y:'-120%',duration:.5,ease:'power3.out'},0)
+      .to('.h-title .line:nth-child(3)',{y:'-120%',duration:.5,ease:'power3.out'},0)
+      .to('.h-tag',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
+      .to('.h-sub',{autoAlpha:0,duration:.4,ease:'power3.out'},0)
+      .to('.h-btns',{autoAlpha:0,duration:.4,ease:'power3.out'},0);
+  },
+  onLeaveBack:()=>{
+    gsap.timeline()
+      .to('.h-title .line',{y:'0%',duration:.6,ease:'power4.out'},0)
+      .to('.h-tag',{autoAlpha:1,duration:.5,ease:'power4.out'},0)
+      .to('.h-sub',{autoAlpha:1,duration:.5,ease:'power4.out'},0)
+      .to('.h-btns',{autoAlpha:1,duration:.5,ease:'power4.out'},0);
+  }
 });
 
 
