@@ -137,11 +137,11 @@ nav a:hover{color:var(--black)}
 .h-title .char{display:inline-block;opacity:0;transform:translateY(110%);animation:char-up .75s cubic-bezier(.77,0,.175,1) forwards}
 .h-title em{font-style:italic;letter-spacing:-0.07em}
 
-.h-sub{font-size:.88rem;line-height:2.1;color:var(--gray-400);max-width:30em;margin-bottom:2rem;opacity:0;transform:translateY(20px);animation:fu .8s 1.5s forwards}
+.h-sub{font-size:.88rem;line-height:2.1;color:var(--gray-400);max-width:30em;margin-bottom:0 !important;opacity:0;transform:translateY(20px);animation:fu .8s 1.5s forwards}
 .sp-br{display:none}
 @keyframes fu{to{opacity:1;transform:translateY(0)}}
 /* HERO CTA */
-.hero-btns{margin-top:2rem;opacity:0;transform:translateY(20px);animation:fu .8s 1.9s forwards}
+.hero-btns{margin-top:1.5rem !important;opacity:0;transform:translateY(20px);animation:fu .8s 1.9s forwards}
 .hero-cta{display:inline-flex;align-items:center;gap:1.8rem;background:var(--black);color:var(--white);padding:1.1rem 2.8rem;font-family:'DM Mono',monospace;font-size:.63rem;letter-spacing:.28em;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;transition:color .4s cubic-bezier(.25,.46,.45,.94)}
 .hero-cta::before{content:'';position:absolute;inset:0;background:var(--gray-600);transform:scaleX(0);transform-origin:right;transition:transform .45s cubic-bezier(.25,.46,.45,.94)}
 .hero-cta:hover::before{transform:scaleX(1);transform-origin:left}
