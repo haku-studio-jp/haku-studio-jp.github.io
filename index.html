@@ -638,7 +638,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .sec-label{font-family:'Cormorant Garamond',serif;font-size:10px;font-weight:400;color:var(--value-purple);text-transform:uppercase;margin-bottom:36px;display:block}
 .sec-headline{font-family:'Noto Serif JP',serif;font-size:clamp(24px,6vw,30px);font-weight:700;line-height:1.75;margin-bottom:36px;letter-spacing:.02em}
 .sec-body{font-size:13px;line-height:2.2;color:var(--value-gray);margin-bottom:72px;letter-spacing:.05em}
-.cycle-svg-wrap{width:100%;opacity:0;transition:opacity .6s ease}
+.cycle-svg-wrap{width:100%;opacity:0;transition:opacity .6s ease;display:block !important;position:relative !important}
 .cycle-svg-wrap.is-show{opacity:1}
 .cycle-svg-wrap svg{width:100%;height:auto;overflow:visible}
 .arc-line{stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1)}
@@ -729,27 +729,27 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <h2 class="sec-headline js-fade d1">Web制作で、<br>ビジネスの成長サイクルを<br>回し続けるサポートを。</h2>
   <p class="sec-body js-fade d2">お客さまのビジネスを丁寧に理解し、<br>集客から顧客満足、売上向上まで、<br>Webが起点となる好循環をつくる。<br>それがHAKU STUDIOの仕事です。</p>
   <div class="cycle-svg-wrap">
-    <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg">
-      <path class="arc-line d1" d="M 255 88 Q 320 180 215 268" fill="none" stroke="#4A3270" stroke-width="1.5" stroke-linecap="round"/>
-      <path class="arc-line d2" d="M 148 270 Q 40 210 96 96" fill="none" stroke="#4A3270" stroke-width="1.5" stroke-linecap="round"/>
-      <path class="arc-line d3" d="M 136 66 Q 190 18 236 64" fill="none" stroke="#4A3270" stroke-width="1.5" stroke-linecap="round"/>
-      <polygon points="215,268 204,252 222,254" fill="#4A3270" opacity="0.8"/>
-      <polygon points="96,96 104,113 87,110" fill="#4A3270" opacity="0.8"/>
-      <polygon points="236,64 221,70 228,54" fill="#4A3270" opacity="0.8"/>
-      <g class="c-node d1" transform="translate(252, 82)">
-        <circle cx="0" cy="0" r="58" fill="#4A3270"/>
-        <text x="0" y="-9" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="15" font-weight="700" fill="white">集客UP</text>
-        <text x="0" y="11" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10" fill="rgba(255,255,255,0.55)" letter-spacing="2">TRAFFIC</text>
+    <svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;overflow:visible;">
+      <path class="arc-line d1" d="M 238 76 Q 298 165 200 252" fill="none" stroke="#4A3270" stroke-width="1.5" stroke-linecap="round"/>
+      <path class="arc-line d2" d="M 140 254 Q 42 195 98 84" fill="none" stroke="#4A3270" stroke-width="1.5" stroke-linecap="round"/>
+      <path class="arc-line d3" d="M 130 60 Q 170 16 222 58" fill="none" stroke="#4A3270" stroke-width="1.5" stroke-linecap="round"/>
+      <polygon points="200,252 190,237 208,239" fill="#4A3270"/>
+      <polygon points="98,84 107,100 90,97" fill="#4A3270"/>
+      <polygon points="222,58 208,65 214,50" fill="#4A3270"/>
+      <g class="c-node d1" transform="translate(238,76)">
+        <circle cx="0" cy="0" r="52" fill="#4A3270"/>
+        <text x="0" y="-7" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="14" font-weight="700" fill="white">集客UP</text>
+        <text x="0" y="10" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="2">TRAFFIC</text>
       </g>
-      <g class="c-node d2" transform="translate(180, 272)">
-        <circle cx="0" cy="0" r="50" fill="#A8834A"/>
-        <text x="0" y="-9" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="13" font-weight="700" fill="white">顧客満足</text>
-        <text x="0" y="10" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="rgba(255,255,255,0.65)" letter-spacing="1.5">SATISFACTION</text>
+      <g class="c-node d2" transform="translate(170,258)">
+        <circle cx="0" cy="0" r="46" fill="#A8834A"/>
+        <text x="0" y="-7" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="12" font-weight="700" fill="white">顧客満足</text>
+        <text x="0" y="9" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="8" fill="rgba(255,255,255,0.6)" letter-spacing="1">SATISFACTION</text>
       </g>
-      <g class="c-node d3" transform="translate(100, 82)">
-        <circle cx="0" cy="0" r="54" fill="#2A7A6F"/>
-        <text x="0" y="-9" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="14" font-weight="700" fill="white">売上向上</text>
-        <text x="0" y="11" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10" fill="rgba(255,255,255,0.55)" letter-spacing="2">REVENUE</text>
+      <g class="c-node d3" transform="translate(102,76)">
+        <circle cx="0" cy="0" r="50" fill="#2A7A6F"/>
+        <text x="0" y="-7" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="13" font-weight="700" fill="white">売上向上</text>
+        <text x="0" y="10" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="rgba(255,255,255,0.6)" letter-spacing="2">REVENUE</text>
       </g>
     </svg>
   </div>
