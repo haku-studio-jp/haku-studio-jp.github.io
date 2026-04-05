@@ -1552,18 +1552,14 @@ document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
     valueIO.observe(el);
   });
 
-  // cycle wrap: IOではなくlenisスクロール毎にBCRで確認（Lenisとの互換性のため）
-  const _cw = document.querySelector('.hv-cycle-wrap');
-  let _cwDone = false;
-  lenis.on('scroll', () => {
-    if (_cwDone || !_cw) return;
-    const r = _cw.getBoundingClientRect();
-    if (r.top < window.innerHeight * 0.82 && r.bottom > 0) {
-      _cwDone = true;
-      requestAnimationFrame(() => {
-        _cw.classList.add('is-show');
-        _cw.classList.add('on');
-      });
+  // cycle wrap: GSAPのScrollTrigger経由（LenisとScrollTriggerは既に連携済み）
+  ScrollTrigger.create({
+    trigger: '.hv-cycle-wrap',
+    start: 'top 80%',
+    once: true,
+    onEnter: () => {
+      const cw = document.querySelector('.hv-cycle-wrap');
+      if (cw) { cw.classList.add('is-show'); cw.classList.add('on'); }
     }
   });
 })();
