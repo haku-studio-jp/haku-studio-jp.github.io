@@ -655,18 +655,19 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .prob-item{display:flex;align-items:center;gap:20px;padding:22px 28px;border-bottom:1px solid var(--line);opacity:0;transform:translateX(-16px);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1),background .25s ease}
 .prob-item:last-child{border-bottom:none}
 .prob-item.is-show{opacity:1;transform:translateX(0)}
-.prob-icon{flex-shrink:0;width:68px;height:68px;background:var(--black);border-radius:10px;display:flex;align-items:center;justify-content:center}
-.prob-icon svg{width:32px;height:32px;fill:var(--white)}
-.prob-icon.teal{background:var(--gray-600)}
+.prob-icon{flex-shrink:0;width:68px;height:68px;background:var(--gray-100);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.prob-icon svg{width:32px;height:32px;fill:var(--gray-600)}
+.prob-icon.teal{background:var(--gray-100)}
 .prob-text{font-size:13px;line-height:1.95;letter-spacing:.03em;color:var(--gray-600)}
 .sec-support{max-width:520px;margin:0 auto;padding:0 32px 100px}
-.support-inner{background:var(--black);padding:48px 36px 48px 56px;position:relative;overflow:hidden}
-.support-vertical{position:absolute;left:18px;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;font-family:'Cormorant Garamond',serif;font-size:9px;letter-spacing:.3em;color:rgba(255,255,255,.15);text-transform:uppercase;white-space:nowrap}
+.support-inner{background:var(--gray-100);border:1px solid var(--line);padding:48px 36px 48px 56px;position:relative;overflow:hidden}
+.support-vertical{position:absolute;left:18px;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;font-family:'Cormorant Garamond',serif;font-size:9px;letter-spacing:.3em;color:rgba(10,10,10,.08);text-transform:uppercase;white-space:nowrap}
 .support-item{display:flex;align-items:flex-start;gap:16px;margin-bottom:26px;opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
 .support-item:last-child{margin-bottom:0}
 .support-item.is-show{opacity:1;transform:translateY(0)}
-.support-bullet{flex-shrink:0;width:16px;height:16px;border:1px solid rgba(255,255,255,.4);border-radius:50%;margin-top:4px}
-.support-text{font-family:'Noto Serif JP',serif;font-size:13px;color:rgba(255,255,255,.85);line-height:1.95;letter-spacing:.04em}
+.support-bullet{flex-shrink:0;width:16px;height:16px;border:1px solid var(--gray-400);border-radius:50%;margin-top:4px}
+.support-text{font-family:'Noto Serif JP',serif;font-size:13px;color:var(--gray-600);line-height:1.95;letter-spacing:.04em}
+.support-text strong{color:var(--black)}
 .support-text strong{color:#fff;font-weight:400}
 .support-text strong{color:#fff;font-weight:700}
 </style>
@@ -734,19 +735,19 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       <path class="arc-line d2" d="M 148 270 Q 40 210 96 96" fill="none" stroke="var(--gray-200)" stroke-width="1.5" stroke-linecap="round"/>
       <path class="arc-line d3" d="M 136 66 Q 190 18 236 64" fill="none" stroke="var(--gray-200)" stroke-width="1.5" stroke-linecap="round"/>
       <g class="c-node d1" transform="translate(252,82)">
-        <circle cx="0" cy="0" r="58" fill="#0a0a0a"/>
-        <text x="0" y="-5" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="14" font-weight="400" fill="white">集客UP</text>
-        <text x="0" y="13" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="rgba(255,255,255,.5)" letter-spacing="2">Traffic</text>
+        <circle cx="0" cy="0" r="58" fill="#f5f5f3" stroke="#0a0a0a" stroke-width="1"/>
+        <text x="0" y="-5" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="14" font-weight="400" fill="#0a0a0a">集客UP</text>
+        <text x="0" y="13" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="rgba(10,10,10,.4)" letter-spacing="2">Traffic</text>
       </g>
       <g class="c-node d2" transform="translate(180,272)">
-        <circle cx="0" cy="0" r="50" fill="#3a3a36"/>
+        <circle cx="0" cy="0" r="50" fill="#0a0a0a"/>
         <text x="0" y="-5" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="13" font-weight="400" fill="white">顧客満足</text>
         <text x="0" y="12" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="8.5" fill="rgba(255,255,255,.5)" letter-spacing="2">Satisfaction</text>
       </g>
       <g class="c-node d3" transform="translate(100,82)">
-        <circle cx="0" cy="0" r="54" fill="#8c8c84"/>
-        <text x="0" y="-5" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="14" font-weight="400" fill="white">売上向上</text>
-        <text x="0" y="13" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="rgba(255,255,255,.5)" letter-spacing="2">Revenue</text>
+        <circle cx="0" cy="0" r="54" fill="#d8d8d2" stroke="#0a0a0a" stroke-width="1"/>
+        <text x="0" y="-5" text-anchor="middle" font-family="'Noto Serif JP',serif" font-size="14" font-weight="400" fill="#0a0a0a">売上向上</text>
+        <text x="0" y="13" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="rgba(10,10,10,.45)" letter-spacing="2">Revenue</text>
       </g>
     </svg>
   </div>
