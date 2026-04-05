@@ -634,18 +634,9 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .sec-label{font-family:'Cormorant Garamond',serif;font-size:10px;font-weight:400;color:var(--gray-400);text-transform:uppercase;margin-bottom:36px;display:block}
 .sec-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,6vw,36px);font-weight:300;line-height:1.75;margin-bottom:36px;letter-spacing:.02em}
 .sec-body{font-size:13px;line-height:2.2;color:var(--gray-400);margin-bottom:72px;letter-spacing:.05em}
-@keyframes arcIn{from{stroke-dashoffset:500}to{stroke-dashoffset:0}}
-@keyframes nodeIn{from{opacity:0;transform:scale(.65)}to{opacity:1;transform:scale(1)}}
-.hv-cycle-wrap{width:100%;opacity:0;transition:opacity .6s ease}
-.hv-cycle-wrap.is-show{opacity:1}
+.hv-cycle-wrap{width:100%;opacity:0}
 .arc-line{stroke-dasharray:500;stroke-dashoffset:500}
-.hv-cycle-wrap.is-show .arc-line.d1{animation:arcIn 1.4s cubic-bezier(.4,0,.2,1) .1s both}
-.hv-cycle-wrap.is-show .arc-line.d2{animation:arcIn 1.4s cubic-bezier(.4,0,.2,1) .35s both}
-.hv-cycle-wrap.is-show .arc-line.d3{animation:arcIn 1.4s cubic-bezier(.4,0,.2,1) .6s both}
-.c-node{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.65)}
-.hv-cycle-wrap.is-show .c-node.d1{animation:nodeIn .5s cubic-bezier(.34,1.56,.64,1) .5s both}
-.hv-cycle-wrap.is-show .c-node.d2{animation:nodeIn .5s cubic-bezier(.34,1.56,.64,1) .75s both}
-.hv-cycle-wrap.is-show .c-node.d3{animation:nodeIn .5s cubic-bezier(.34,1.56,.64,1) 1s both}
+.c-node{opacity:0}
 .sec-divider{width:1px;height:60px;background:var(--line);margin:0 auto}
 .sec-problems{max-width:520px;margin:0 auto;padding:60px 32px 80px}
 .problems-box{border:1px solid var(--line)}
@@ -787,13 +778,13 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 <section class="sec-support">
   <div class="support-inner">
     <span class="support-vertical">Support Area</span>
-    <div class="support-item d1"><div class="support-bullet"></div><p class="support-text"><strong>検索でお客さんに見つけてもらえる</strong>ホームページ制作</p></div>
-    <div class="support-item d2"><div class="support-bullet"></div><p class="support-text"><strong>InstagramやLINEが集客につながる</strong>SNS運用サポート</p></div>
-    <div class="support-item d3"><div class="support-bullet"></div><p class="support-text"><strong>「近くのお店」でGoogleマップ上位に出る</strong>MEO対策</p></div>
-    <div class="support-item d4"><div class="support-bullet"></div><p class="support-text"><strong>繰り返し作業を自動化して本業に集中できる</strong>AI活用サポート</p></div>
-    <div class="support-item d5"><div class="support-bullet"></div><p class="support-text"><strong>作ったあとも安心して任せられる</strong>月額保守・更新プラン</p></div>
-    <div class="support-item d6"><div class="support-bullet"></div><p class="support-text"><strong>茨城の飲食・美容・整骨院の現場を知っている</strong>実績と提案力</p></div>
-    <div class="support-item d7"><div class="support-bullet"></div><p class="support-text"><strong>頭の中が整理されて経営が楽になる</strong>Notion仕組みづくり</p></div>
+    <div class="support-item d1"><div class="support-bullet"></div><p class="support-text"><strong>検索で見つけてもらえる</strong>ホームページ制作</p></div>
+    <div class="support-item d2"><div class="support-bullet"></div><p class="support-text"><strong>SNSが集客につながる</strong>Instagram・LINE運用サポート</p></div>
+    <div class="support-item d3"><div class="support-bullet"></div><p class="support-text"><strong>Googleマップ上位に出る</strong>MEO対策</p></div>
+    <div class="support-item d4"><div class="support-bullet"></div><p class="support-text"><strong>作業を自動化して本業に集中</strong>AI活用サポート</p></div>
+    <div class="support-item d5"><div class="support-bullet"></div><p class="support-text"><strong>制作後もずっと安心</strong>月額保守・更新プラン</p></div>
+    <div class="support-item d6"><div class="support-bullet"></div><p class="support-text"><strong>茨城の現場を知っている</strong>飲食・美容・整骨院への実績と提案力</p></div>
+    <div class="support-item d7"><div class="support-bullet"></div><p class="support-text"><strong>経営が整理されて楽になる</strong>Notion仕組みづくり</p></div>
   </div>
 </section>
 
@@ -1552,14 +1543,24 @@ document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
     valueIO.observe(el);
   });
 
-  // cycle wrap: GSAPのScrollTrigger経由（LenisとScrollTriggerは既に連携済み）
+  // cycle wrap: GSAPで直接アニメーション（CSS keyframes廃止）
   ScrollTrigger.create({
     trigger: '.hv-cycle-wrap',
     start: 'top 80%',
     once: true,
     onEnter: () => {
       const cw = document.querySelector('.hv-cycle-wrap');
-      if (cw) { cw.classList.add('is-show'); cw.classList.add('on'); }
+      if (!cw) return;
+      gsap.to(cw, { opacity: 1, duration: 0.6, ease: 'power2.out' });
+      cw.querySelectorAll('.arc-line').forEach((arc, i) => {
+        gsap.to(arc, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut', delay: 0.1 + i * 0.25 });
+      });
+      cw.querySelectorAll('.c-node').forEach((node, i) => {
+        gsap.fromTo(node,
+          { opacity: 0, scale: 0.6, transformOrigin: 'center center' },
+          { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.5)', delay: 0.5 + i * 0.25 }
+        );
+      });
     }
   });
 })();
