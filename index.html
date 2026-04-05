@@ -1542,7 +1542,7 @@ document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
       }
     });
   }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
-  document.querySelectorAll('.js-fade, .js-fade-label, .hv-cycle-wrap, .sec-divider').forEach(el => valueIO.observe(el));
+  document.querySelectorAll('.js-fade, .js-fade-label, .sec-divider').forEach(el => valueIO.observe(el));
   document.querySelectorAll('.prob-item').forEach((el, i) => {
     el.style.transitionDelay = (0.1 + i * 0.1) + 's';
     valueIO.observe(el);
@@ -1550,6 +1550,21 @@ document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
   document.querySelectorAll('.support-item').forEach((el, i) => {
     el.style.transitionDelay = (0.05 + i * 0.08) + 's';
     valueIO.observe(el);
+  });
+
+  // cycle wrap: IOではなくlenisスクロール毎にBCRで確認（Lenisとの互換性のため）
+  const _cw = document.querySelector('.hv-cycle-wrap');
+  let _cwDone = false;
+  lenis.on('scroll', () => {
+    if (_cwDone || !_cw) return;
+    const r = _cw.getBoundingClientRect();
+    if (r.top < window.innerHeight * 0.82 && r.bottom > 0) {
+      _cwDone = true;
+      requestAnimationFrame(() => {
+        _cw.classList.add('is-show');
+        _cw.classList.add('on');
+      });
+    }
   });
 })();
 </script>
