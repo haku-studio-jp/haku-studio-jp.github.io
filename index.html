@@ -531,8 +531,11 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 /* RESPONSIVE */
 @media(max-width:960px){
   .about-members{grid-template-columns:1fr}
-  .about-grid{grid-template-columns:90px 1fr;gap:1.5rem}
-  .about-nums{grid-template-columns:repeat(2,1fr);gap:1.2rem}
+  .about-member{text-align:center}
+  .about-grid{grid-template-columns:90px 1fr;gap:1.5rem;justify-content:center}
+  .about-skills{justify-content:center}
+  .about-nums{grid-template-columns:repeat(2,1fr);gap:1.2rem;justify-items:center}
+  .a-num{text-align:center}
   .works-grid{grid-template-columns:1fr}
   .price-grid{grid-template-columns:1fr}
   .voice-grid{grid-template-columns:1fr}
