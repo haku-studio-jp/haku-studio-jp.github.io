@@ -152,9 +152,9 @@ nav a:hover{color:var(--black)}
 
 /* SHARED */
 section{padding:10rem 5rem}
-.s-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.45em;color:var(--gray-400);text-transform:uppercase;display:flex;align-items:center;gap:1.5rem;margin-bottom:4.5rem}
+.s-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.45em;color:var(--gray-400);text-transform:uppercase;display:flex;align-items:center;gap:1.5rem;margin-bottom:4.5rem;position:relative;z-index:1}
 .s-label::before{content:'';width:7px;height:7px;border-radius:50%;background:#A08060;flex-shrink:0}
-.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.1;color:#222222}
+.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.1;color:#222222;position:relative;z-index:1}
 .s-title em{font-style:italic}
 .rv{opacity:0;transform:translateY(36px);transition:opacity .9s cubic-bezier(.25,.46,.45,.94),transform .9s cubic-bezier(.25,.46,.45,.94)}
 .rv.on{opacity:1;transform:translateY(0)}
