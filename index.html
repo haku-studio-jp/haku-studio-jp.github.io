@@ -684,6 +684,14 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .benefit-text{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:400;line-height:1.7;color:var(--black);padding-top:.3rem}
 /* ⑤ 解決策 — サイクル埋め込みエリア */
 .sec-cycle-embed{max-width:520px;margin:0 auto;padding:80px 32px 40px}
+/* よくある失敗例 */
+.sec-failure{max-width:520px;margin:0 auto;padding:80px 32px}
+.failure-list{border:1px solid var(--line);margin-top:40px}
+.failure-item{display:flex;align-items:flex-start;gap:20px;padding:24px 28px;border-bottom:1px solid var(--line)}
+.failure-item:last-child{border-bottom:none}
+.failure-mark{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--gray-200);flex-shrink:0;margin-top:2px}
+.failure-title{font-family:'Noto Serif JP',serif;font-size:13px;font-weight:400;color:var(--black);margin-bottom:6px;letter-spacing:.03em}
+.failure-desc{font-size:12px;color:var(--gray-400);line-height:1.9;letter-spacing:.03em}
 </style>
 </head>
 <body>
@@ -814,6 +822,35 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     <div class="support-item d5"><div class="support-bullet"></div><p class="support-text"><strong>制作後もずっと安心</strong>月額保守・更新プラン</p></div>
     <div class="support-item d6"><div class="support-bullet"></div><p class="support-text"><strong>茨城の現場を知っている</strong>飲食・美容・整骨院への実績と提案力</p></div>
     <div class="support-item d7"><div class="support-bullet"></div><p class="support-text"><strong>経営が整理されて楽になる</strong>Notion仕組みづくり</p></div>
+  </div>
+</section>
+
+<!-- よくある失敗例 -->
+<section class="sec-failure">
+  <span class="sec-label js-fade-label">Common Mistakes</span>
+  <h2 class="sec-headline js-fade d1">集客できないサイトには、<br>共通の失敗があります。</h2>
+  <div class="failure-list js-fade d2">
+    <div class="failure-item">
+      <div class="failure-mark">✕</div>
+      <div>
+        <p class="failure-title">見た目だけのサイト</p>
+        <p class="failure-desc">デザインは良いのに問い合わせが来ない。「きれい」と「伝わる」は別物です。</p>
+      </div>
+    </div>
+    <div class="failure-item">
+      <div class="failure-mark">✕</div>
+      <div>
+        <p class="failure-title">導線が設計されていない</p>
+        <p class="failure-desc">せっかく見てもらえても、次に何をすればいいかわからず離脱してしまいます。</p>
+      </div>
+    </div>
+    <div class="failure-item">
+      <div class="failure-mark">✕</div>
+      <div>
+        <p class="failure-title">ターゲットが曖昧</p>
+        <p class="failure-desc">「みんなに向けたサイト」は、誰にも刺さりません。</p>
+      </div>
+    </div>
   </div>
 </section>
 
