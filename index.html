@@ -686,6 +686,13 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .sec-cycle-embed{max-width:520px;margin:0 auto;padding:80px 32px 40px}
 /* よくある失敗例 */
 .sec-failure{max-width:520px;margin:0 auto;padding:80px 32px}
+/* ⑯ クロージング */
+.sec-closing{background:var(--black);padding:8rem 5rem;text-align:center}
+.closing-inner{max-width:560px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
+.closing-note{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.3em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:2.5rem}
+.closing-headline{font-family:'Noto Serif JP',serif;font-size:clamp(1.05rem,3vw,1.4rem);font-weight:300;line-height:2.1;color:var(--white);margin-bottom:1.5rem;letter-spacing:.04em}
+.closing-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:300;font-style:italic;color:rgba(255,255,255,.5);margin-bottom:3rem;letter-spacing:.03em}
+@media(max-width:960px){.sec-closing{padding:5rem 1.8rem}}
 .failure-list{border:1px solid var(--line);margin-top:40px}
 .failure-item{display:flex;align-items:flex-start;gap:20px;padding:24px 28px;border-bottom:1px solid var(--line)}
 .failure-item:last-child{border-bottom:none}
@@ -1178,10 +1185,17 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   </div>
 </section>
 
-<div style="display:flex;flex-direction:column;align-items:center;padding:3rem 1.5rem;background:var(--black)">
-  <p style="color:var(--white);font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,4vw,2rem);margin-bottom:1.5rem;">まずはお気軽にご相談ください</p>
-  <a href="https://line.me/R/ti/p/@131gmndm" class="ct-line-btn">無料で相談する</a>
-</div>
+<!-- ⑯ クロージング -->
+<section class="sec-closing rv">
+  <div class="closing-inner">
+    <p class="closing-note">Limited Availability</p>
+    <h2 class="closing-headline">後回しにすると、本来取れるはずの<br>予約・問い合わせを逃し続ける<br>可能性があります。</h2>
+    <p class="closing-sub">現在、制作枠に限りがあります。<br>まずは無料でご相談ください。</p>
+    <a href="https://line.me/R/ti/p/@131gmndm" target="_blank" rel="noopener" class="ct-line-btn">
+      <span>💬</span><span>LINEで無料相談する</span>
+    </a>
+  </div>
+</section>
 
 <!-- CONTACT -->
 <section id="contact">
