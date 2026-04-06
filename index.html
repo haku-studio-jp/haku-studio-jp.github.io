@@ -642,15 +642,15 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 @keyframes hv-ctr3{0%{transform:rotate(-240deg) scale(.8)}33%{transform:rotate(-358.8deg)}66%{transform:rotate(-477.6deg) scale(.65)}to{transform:rotate(-600deg) scale(.8)}}
 .hv-cycle-wrap{position:relative;width:280px;height:280px;margin:0 auto}
 .hv-cycle-ring{position:absolute;inset:45px;border:1px solid var(--gray-200);border-radius:50%}
-.hv-arm{position:absolute;top:50%;left:50%;width:0;height:0;animation-play-state:paused}
-.hv-arm.a1{animation:hv-orb1 9s linear infinite}
-.hv-arm.a2{animation:hv-orb2 9s linear infinite}
-.hv-arm.a3{animation:hv-orb3 9s linear infinite}
+.hv-arm{position:absolute;top:50%;left:50%;width:0;height:0}
+.hv-arm.a1{animation:hv-orb1 9s linear infinite;animation-play-state:paused}
+.hv-arm.a2{animation:hv-orb2 9s linear infinite;animation-play-state:paused}
+.hv-arm.a3{animation:hv-orb3 9s linear infinite;animation-play-state:paused}
 .hv-cycle-wrap.is-active .hv-arm,.hv-cycle-wrap.is-active .hv-ball{animation-play-state:running}
-.hv-ball{position:absolute;width:86px;height:86px;top:-138px;left:-43px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;animation-play-state:paused}
-.hv-arm.a1 .hv-ball{animation:hv-ctr1 9s linear infinite;background:var(--black)}
-.hv-arm.a2 .hv-ball{animation:hv-ctr2 9s linear infinite;background:var(--gray-600)}
-.hv-arm.a3 .hv-ball{animation:hv-ctr3 9s linear infinite;background:var(--gray-400)}
+.hv-ball{position:absolute;width:86px;height:86px;top:-138px;left:-43px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.hv-arm.a1 .hv-ball{animation:hv-ctr1 9s linear infinite;animation-play-state:paused;background:var(--black)}
+.hv-arm.a2 .hv-ball{animation:hv-ctr2 9s linear infinite;animation-play-state:paused;background:var(--gray-600)}
+.hv-arm.a3 .hv-ball{animation:hv-ctr3 9s linear infinite;animation-play-state:paused;background:var(--gray-400)}
 .hv-nd-ja{font-family:'Noto Serif JP',serif;font-size:12px;font-weight:400;color:#fff;pointer-events:none}
 .hv-nd-en{font-family:'Cormorant Garamond',serif;font-size:8px;color:rgba(255,255,255,.5);letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
 .sec-divider{width:1px;height:60px;background:var(--line);margin:0 auto}
