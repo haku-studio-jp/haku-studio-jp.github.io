@@ -1761,14 +1761,6 @@ const numObs=new IntersectionObserver(es=>es.forEach(e=>{
 }),{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
 
-// 固定CTAバー: スクロール70%超で表示（旧チワワCTAと同じトリガー）
-const ctaBarEl=document.getElementById('fixed-cta-bar');
-if(ctaBarEl){
-  lenis.on('scroll',({scroll})=>{
-    if(scroll>window.innerHeight*0.7)ctaBarEl.classList.add('show');
-    else ctaBarEl.classList.remove('show');
-  });
-}
 </script>
 
 
@@ -1825,6 +1817,19 @@ if(ctaBarEl){
     </span>
   </a>
 </div>
+<script>
+// 固定CTAバー: スクロール70%超で表示（旧チワワCTAと同じトリガー）
+// ※ DOM生成後に実行するためHTMLの直後に配置
+(function(){
+  const ctaBarEl=document.getElementById('fixed-cta-bar');
+  if(ctaBarEl){
+    lenis.on('scroll',({scroll})=>{
+      if(scroll>window.innerHeight*0.7)ctaBarEl.classList.add('show');
+      else ctaBarEl.classList.remove('show');
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
