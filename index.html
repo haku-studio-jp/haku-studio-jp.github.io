@@ -67,7 +67,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 a{color:inherit;text-decoration:none}
 html{scroll-behavior:auto}
-body{background:var(--white);color:var(--black);font-family:'Noto Serif JP',serif;font-weight:300;cursor:none;overflow-x:hidden;padding-bottom:72px;word-break:keep-all;overflow-wrap:anywhere}
+body{background:var(--white);color:var(--black);font-family:'Noto Serif JP',serif;font-weight:300;cursor:none;overflow-x:hidden;padding-bottom:90px;word-break:keep-all;overflow-wrap:anywhere}
 
 /* CURSOR */
 #cursor{position:fixed;width:8px;height:8px;background:var(--black);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
@@ -486,7 +486,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   from{opacity:0;transform:translateX(-50%) translateY(32px) scale(0.94)}
   to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
 }
-#mascot-cta{display:none}
 .bn-item{
   position:relative;
   display:flex;align-items:center;justify-content:center;
@@ -584,46 +583,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   }
   .bn-item{flex:1;padding:10px 0;font-size:.65rem;}
   #bottom-nav{display:none}
-  #mascot-cta{
-    display:flex;flex-direction:column;align-items:center;gap:.6rem;
-    position:fixed;bottom:1.8rem;right:1.2rem;z-index:200;
-    text-decoration:none;
-    background:rgba(255,255,255,0.06);
-    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-    border:1px solid rgba(255,255,255,0.35);
-    border-radius:20px;
-    padding:10px 14px 12px;
-    box-shadow:0 2px 16px rgba(255,255,255,0.2),inset 0 1px 0 rgba(255,255,255,0.4);
-    opacity:0;pointer-events:none;
-  }
-  #mascot-cta img{
-    width:64px;height:64px;border-radius:0;object-fit:contain;
-    mix-blend-mode:multiply;
-  }
-  #mascot-cta span{
-    font-family:'Noto Serif JP',serif;font-size:.65rem;font-weight:300;
-    letter-spacing:.25em;color:transparent;white-space:nowrap;
-    background:linear-gradient(90deg,var(--black) 0%,#C9A96E 50%,var(--black) 100%);
-    background-size:200% auto;
-    -webkit-background-clip:text;background-clip:text;
-    animation:text-shimmer 3s linear 1.4s infinite;
-  }
-  @keyframes text-shimmer{
-    from{background-position:200% center}
-    to{background-position:-200% center}
-  }
-  @keyframes mascot-rise{
-    from{opacity:0;transform:translateY(24px) scale(0.9)}
-    to{opacity:1;transform:translateY(0) scale(1)}
-  }
-  @keyframes mascot-float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-7px)}
-  }
-  #mascot-cta.show{
-    animation:mascot-rise .9s cubic-bezier(.34,1.56,.64,1) forwards, mascot-float 3s ease-in-out 1s infinite;
-    pointer-events:auto;
-  }
 }
 
 /* ── VALUE SECTION ── */
@@ -749,6 +708,56 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .failure-mark{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--gray-200);flex-shrink:0;margin-top:2px}
 .failure-title{font-family:'Noto Serif JP',serif;font-size:13px;font-weight:400;color:var(--black);margin-bottom:6px;letter-spacing:.03em}
 .failure-desc{font-size:12px;color:var(--gray-400);line-height:1.9;letter-spacing:.03em}
+/* 固定下部CTAバー */
+#fixed-cta-bar{
+  position:fixed;bottom:0;left:0;width:100%;
+  background:#fce8f8;
+  z-index:400;
+  display:flex;flex-direction:column;align-items:center;
+  padding:7px 16px 12px;
+  word-break:keep-all;overflow-wrap:anywhere;
+}
+.fcb-label{
+  color:#8b5cf6;
+  font-family:'Noto Serif JP',serif;
+  font-size:.72rem;font-weight:400;
+  letter-spacing:.05em;
+  margin:0 0 6px;
+}
+.fcb-btn{
+  position:relative;
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(90deg,#ff4e9e,#c44fd8,#8b5cf6);
+  border-radius:100px;
+  padding:11px 44px 11px 18px;
+  color:#fff;
+  text-decoration:none;
+  font-family:'Noto Serif JP',serif;
+  font-size:.88rem;font-weight:500;
+  letter-spacing:.04em;
+  white-space:nowrap;
+}
+.fcb-line-icon{
+  width:24px;height:24px;
+  background:#06c755;
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.fcb-arrow{
+  font-size:1.1rem;line-height:1;
+}
+.fcb-hand{
+  position:absolute;
+  right:-16px;top:50%;
+  transform:translateY(-50%);
+  pointer-events:none;
+  animation:fcb-tap 1.4s ease-in-out infinite;
+}
+@keyframes fcb-tap{
+  0%,100%{transform:translateY(-50%) rotate(0deg) scale(1)}
+  50%{transform:translateY(-50%) rotate(-22deg) scale(1.12)}
+}
 </style>
 </head>
 <body>
@@ -790,10 +799,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       <h1 class="h-title" id="heroTitle"></h1>
       <p class="h-sub">広告もSNSも続けているのに、予約・問い合わせが来ない。<br class="pc-br"><br class="sp-br">その原因は、ほぼサイトの構成にあります。<br class="pc-br"><br class="sp-br">飲食・美容・整体院に特化した、成果重視のLP制作スタジオです。</p>
       <div class="hero-btns">
-        <a href="https://line.me/R/ti/p/@131gmndm" class="hero-cta" target="_blank" rel="noopener">
-          <span class="hero-cta-txt">無料で相談する</span>
-          <span class="hero-cta-arr">→</span>
-        </a>
         <a href="#works" class="hero-cta-ghost">制作事例を見る →</a>
       </div>
     </div>
@@ -1050,9 +1055,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     </a>
 
   </div>
-  <div style="display:flex;justify-content:center;padding:2rem 0 0">
-    <a href="https://line.me/R/ti/p/@131gmndm" class="ct-line-btn">無料で相談する</a>
-  </div>
+
 </section>
 
 <!-- ⑨ CTA② 実績後 -->
@@ -1060,9 +1063,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <div class="cta-mid-inner">
     <p class="cta-mid-label">Free Consultation</p>
     <h2 class="cta-mid-headline">制作事例を見て、<br>気になったら相談してみてください。</h2>
-    <a href="https://line.me/R/ti/p/@131gmndm" target="_blank" rel="noopener" class="ct-line-btn">
-      <span>💬</span><span>LINEで無料相談する</span>
-    </a>
   </div>
 </section>
 
@@ -1361,9 +1361,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     <p class="closing-note">Limited Availability</p>
     <h2 class="closing-headline">後回しにすると、本来取れるはずの<br>予約・問い合わせを逃し続ける<br>可能性があります。</h2>
     <p class="closing-sub">現在、制作枠に限りがあります。まずは無料でご相談ください。</p>
-    <a href="https://line.me/R/ti/p/@131gmndm" target="_blank" rel="noopener" class="ct-line-btn">
-      <span>💬</span><span>LINEで無料相談する</span>
-    </a>
   </div>
 </section>
 
@@ -1424,11 +1421,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <a href="#contact" class="bn-item">無料相談</a>
 </nav>
 
-<!-- MASCOT CTA -->
-<a href="#contact" id="mascot-cta">
-  <img src="haku-mascot.jpg" alt="HAKU STUDIO">
-  <span>無料相談</span>
-</a>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
@@ -1749,14 +1741,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 
-// MASCOT CTA: h-sub通過後に表示
-const mascotEl=document.getElementById('mascot-cta');
-if(mascotEl){
-  lenis.on('scroll',({scroll})=>{
-    if(scroll>window.innerHeight*0.7)mascotEl.classList.add('show');
-    else mascotEl.classList.remove('show');
-  });
-}
 
 
 // NUMBER COUNTER
@@ -1807,6 +1791,25 @@ document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
   <span>💬</span>
   <span class="fixed-cta-txt">無料相談</span>
 </a>
+
+<!-- 固定下部CTAバー -->
+<div id="fixed-cta-bar">
+  <p class="fcb-label">＼24時間受付中！／</p>
+  <a href="https://line.me/R/ti/p/@131gmndm" class="fcb-btn" target="_blank" rel="noopener">
+    <span class="fcb-line-icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+        <path d="M20 10.5c0-4.14-4.03-7.5-9-7.5S2 6.36 2 10.5c0 3.71 3.19 6.82 7.5 7.38.29.06.69.19.79.44.09.22.06.57.03.8l-.13.77c-.04.22-.17.87.74.47.91-.4 4.93-2.98 6.72-5.1C18.93 13.77 20 12.24 20 10.5z"/>
+      </svg>
+    </span>
+    <span class="fcb-text">LINEで無料相談する</span>
+    <span class="fcb-arrow">›</span>
+    <span class="fcb-hand" aria-hidden="true">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text y="24" font-size="24" font-family="serif">👆</text>
+      </svg>
+    </span>
+  </a>
+</div>
 
 </body>
 </html>
