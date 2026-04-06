@@ -590,13 +590,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .diff-title{font-family:'Noto Serif JP',serif;font-size:13px;font-weight:400;color:var(--black);margin-bottom:6px;letter-spacing:.03em}
 .diff-desc{font-size:12px;color:var(--gray-400);line-height:1.9;letter-spacing:.03em}
 /* ⑦ なぜできるか */
-.sec-reason{max-width:520px;margin:0 auto;padding:80px 32px}
-.reason-flow{display:flex;flex-direction:column;margin-top:40px;border:1px solid var(--line)}
-.reason-step{display:flex;align-items:flex-start;gap:20px;padding:24px 28px}
-.reason-sep{text-align:center;color:var(--gray-200);border-top:1px solid var(--line);padding:10px 0;font-family:'Cormorant Garamond',serif;font-size:.6rem;letter-spacing:.2em}
-.reason-step-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--gray-200);flex-shrink:0;width:2rem;line-height:1}
-.reason-step-title{font-family:'Noto Serif JP',serif;font-size:13px;font-weight:400;color:var(--black);margin-bottom:6px;letter-spacing:.03em}
-.reason-step-desc{font-size:12px;color:var(--gray-400);line-height:1.9;letter-spacing:.03em}
 /* ⑨⑮ 中間CTA */
 .sec-cta-mid{background:var(--gray-100);padding:6rem 5rem;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .cta-mid-inner{max-width:520px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
@@ -617,7 +610,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .ba-after .ba-list li::before{background:var(--black)}
 .ba-arrow{display:flex;align-items:center;font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--gray-200);flex-shrink:0}
 @media(max-width:960px){.ba-wrap{flex-direction:column}.ba-arrow{justify-content:center;transform:rotate(90deg)}}
-@media(max-width:960px){.sec-benefit,.sec-empathy,.sec-diff,.sec-reason,.sec-ba,.sec-failure{padding:4rem 1.8rem}}
+@media(max-width:960px){.sec-benefit,.sec-empathy,.sec-diff,.sec-ba,.sec-failure{padding:4rem 1.8rem}}
 @media(max-width:960px){.sec-support{padding:0 1.8rem 5rem}.support-inner{padding:2.5rem 1.5rem 2.5rem 2.5rem}}
 @media(max-width:960px){.sec-problems{padding:3rem 1.8rem 5rem}}
 @media(max-width:960px){.sec-bridge{padding:2.5rem 1.8rem 1.5rem}.bridge-copy{font-size:1.05rem}}
@@ -900,37 +893,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   </div>
 </section>
 
-<!-- ⑦ なぜできるか -->
-<section class="sec-reason">
-  <span class="sec-label js-fade-label">Our Approach</span>
-  <h2 class="sec-headline js-fade d1">成果が出る理由は、<br>プロセスにあります。</h2>
-  <div class="reason-flow js-fade d2">
-    <div class="reason-step">
-      <div class="reason-step-num">1</div>
-      <div>
-        <p class="reason-step-title">分析</p>
-        <p class="reason-step-desc">業種・ターゲット・競合を調査し、訴求ポイントを特定します。</p>
-      </div>
-    </div>
-    <div class="reason-sep">↓</div>
-    <div class="reason-step">
-      <div class="reason-step-num">2</div>
-      <div>
-        <p class="reason-step-title">設計</p>
-        <p class="reason-step-desc">ユーザー心理に基づいた構成と導線を設計します。</p>
-      </div>
-    </div>
-    <div class="reason-sep">↓</div>
-    <div class="reason-step">
-      <div class="reason-step-num">3</div>
-      <div>
-        <p class="reason-step-title">改善</p>
-        <p class="reason-step-desc">公開後も数値を見ながら継続的にブラッシュアップします。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- WORKS -->
 <section id="works">
   <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
@@ -1047,7 +1009,10 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 <section class="sec-cta-mid">
   <div class="cta-mid-inner">
     <p class="cta-mid-label">Free Consultation</p>
-    <h2 class="cta-mid-headline">制作事例を見て、<br>気になったら相談してみてください。</h2>
+    <h2 class="cta-mid-headline">気になった実績があれば、<br>まずはお気軽にご相談ください。</h2>
+    <a href="https://line.me/R/ti/p/@131gmndm" target="_blank" rel="noopener" class="ct-line-btn">
+      <span>💬</span><span>LINEで無料相談する</span>
+    </a>
   </div>
 </section>
 
