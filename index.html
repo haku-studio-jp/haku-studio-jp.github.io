@@ -716,6 +716,13 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   display:flex;flex-direction:column;align-items:center;
   padding:7px 16px 12px;
   word-break:keep-all;overflow-wrap:anywhere;
+  opacity:0;pointer-events:none;
+  transform:translateY(20px);
+  transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+#fixed-cta-bar.show{
+  opacity:1;pointer-events:auto;
+  transform:translateY(0);
 }
 .fcb-label{
   color:#ff4e9e;
@@ -1753,6 +1760,15 @@ const numObs=new IntersectionObserver(es=>es.forEach(e=>{
   numObs.unobserve(el);
 }),{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
+
+// 固定CTAバー: スクロール70%超で表示（旧チワワCTAと同じトリガー）
+const ctaBarEl=document.getElementById('fixed-cta-bar');
+if(ctaBarEl){
+  lenis.on('scroll',({scroll})=>{
+    if(scroll>window.innerHeight*0.7)ctaBarEl.classList.add('show');
+    else ctaBarEl.classList.remove('show');
+  });
+}
 </script>
 
 
