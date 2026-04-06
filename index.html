@@ -685,7 +685,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .benefit-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--gray-200);line-height:1;flex-shrink:0;width:2.5rem}
 .benefit-text{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:400;line-height:1.7;color:var(--black);padding-top:.3rem}
 /* ⑤ 解決策 — サイクル埋め込みエリア */
-.sec-cycle-embed{max-width:520px;margin:0 auto;padding:80px 32px 40px}
+.sec-cycle-embed{max-width:520px;margin:0 auto;padding:80px 0 40px}
 /* よくある失敗例 */
 .sec-failure{max-width:520px;margin:0 auto;padding:80px 32px}
 /* ③ 共感 */
@@ -728,6 +728,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .ba-after .ba-list li::before{background:var(--black)}
 .ba-arrow{display:flex;align-items:center;font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--gray-200);flex-shrink:0}
 @media(max-width:960px){.ba-wrap{flex-direction:column}.ba-arrow{justify-content:center;transform:rotate(90deg)}}
+@media(max-width:960px){.sec-benefit,.sec-empathy,.sec-diff,.sec-reason,.sec-ba,.sec-failure{padding:4rem 1.8rem}}
 /* 固定CTA（PC） */
 #fixed-cta{position:fixed;bottom:2rem;right:2rem;z-index:200;display:flex;align-items:center;gap:.6rem;background:var(--black);color:var(--white);padding:.9rem 1.6rem;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,.15);transition:background .3s,transform .3s ease;animation:fixed-cta-rise .9s cubic-bezier(.34,1.56,.64,1) both;animation-delay:.6s}
 @keyframes fixed-cta-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -801,32 +802,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   </div>
 </section>
 
-<!-- ④ ベネフィット -->
-<section class="sec-benefit">
-  <span class="sec-label js-fade-label">What Changes</span>
-  <h2 class="sec-headline js-fade d1">サイトが変わると、<br>こんな変化が起きます。</h2>
-  <div class="benefit-list">
-    <div class="benefit-item js-fade d1">
-      <div class="benefit-num">01</div>
-      <p class="benefit-text">新規予約が安定して入るようになる</p>
-    </div>
-    <div class="benefit-item js-fade d2">
-      <div class="benefit-num">02</div>
-      <p class="benefit-text">広告に頼らなくても集客できる</p>
-    </div>
-    <div class="benefit-item js-fade d3">
-      <div class="benefit-num">03</div>
-      <p class="benefit-text">営業しなくても問い合わせが来る</p>
-    </div>
-    <div class="benefit-item js-fade d4">
-      <div class="benefit-num">04</div>
-      <p class="benefit-text">売上の波が減り、経営が安定する</p>
-    </div>
-  </div>
-</section>
-
-<div class="sec-divider js-fade"></div>
-
 <section class="sec-problems">
   <div class="problems-box">
     <div class="problems-head js-fade">
@@ -862,6 +837,32 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <h2 class="sec-headline js-fade d1">その悩みには、<br>理由があります。</h2>
   <p class="sec-empathy-body js-fade d2">集客できないサイトの原因のほとんどは、<br>デザインではなく「構成と導線」にあります。<br>見た目がよくても、ユーザーが動きやすく<br>設計されていなければ、問い合わせには繋がりません。</p>
   <p class="sec-empathy-accent js-fade d3">だから、HAKU STUDIOは<br>構成から一緒に考えます。</p>
+</section>
+
+<div class="sec-divider js-fade"></div>
+
+<!-- ④ ベネフィット -->
+<section class="sec-benefit">
+  <span class="sec-label js-fade-label">What Changes</span>
+  <h2 class="sec-headline js-fade d1">サイトが変わると、<br>こんな変化が起きます。</h2>
+  <div class="benefit-list">
+    <div class="benefit-item js-fade d1">
+      <div class="benefit-num">01</div>
+      <p class="benefit-text">新規予約が安定して入るようになる</p>
+    </div>
+    <div class="benefit-item js-fade d2">
+      <div class="benefit-num">02</div>
+      <p class="benefit-text">広告に頼らなくても集客できる</p>
+    </div>
+    <div class="benefit-item js-fade d3">
+      <div class="benefit-num">03</div>
+      <p class="benefit-text">営業しなくても問い合わせが来る</p>
+    </div>
+    <div class="benefit-item js-fade d4">
+      <div class="benefit-num">04</div>
+      <p class="benefit-text">売上の波が減り、経営が安定する</p>
+    </div>
+  </div>
 </section>
 
 <section class="sec-support">
