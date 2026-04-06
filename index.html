@@ -729,7 +729,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .ba-arrow{display:flex;align-items:center;font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--gray-200);flex-shrink:0}
 @media(max-width:960px){.ba-wrap{flex-direction:column}.ba-arrow{justify-content:center;transform:rotate(90deg)}}
 /* 固定CTA（PC） */
-#fixed-cta{position:fixed;bottom:2rem;right:2rem;z-index:200;display:flex;align-items:center;gap:.6rem;background:var(--black);color:var(--white);padding:.9rem 1.6rem;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,.15);transition:background .3s,transform .3s ease;animation:bn-rise .9s cubic-bezier(.34,1.56,.64,1) both;animation-delay:.6s}
+#fixed-cta{position:fixed;bottom:2rem;right:2rem;z-index:200;display:flex;align-items:center;gap:.6rem;background:var(--black);color:var(--white);padding:.9rem 1.6rem;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,.15);transition:background .3s,transform .3s ease;animation:fixed-cta-rise .9s cubic-bezier(.34,1.56,.64,1) both;animation-delay:.6s}
+@keyframes fixed-cta-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 #fixed-cta:hover{background:var(--gray-600);transform:translateY(-2px)}
 @media(max-width:960px){#fixed-cta{display:none}}
 /* ⑯ クロージング */
