@@ -745,13 +745,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   letter-spacing:.04em;
   white-space:nowrap;
 }
-.fcb-line-icon{
-  width:24px;height:24px;
-  background:#06c755;
-  border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
 .fcb-arrow{
   font-size:1.1rem;line-height:1;
 }
@@ -1802,12 +1795,7 @@ document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
 <div id="fixed-cta-bar">
   <p class="fcb-label">＼24時間受付中！／</p>
   <a href="https://line.me/R/ti/p/@131gmndm" class="fcb-btn" target="_blank" rel="noopener">
-    <span class="fcb-line-icon">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="24" height="24" rx="6" fill="#06c755"/>
-        <path d="M3 7.5C3 5.6 4.6 4 6.5 4H17.5C19.4 4 21 5.6 21 7.5V13.5C21 15.4 19.4 17 17.5 17H11L7 21V17H6.5C4.6 17 3 15.4 3 13.5V7.5Z" fill="white"/>
-      </svg>
-    </span>
+    <img src="line-icon.svg" width="34" height="34" style="border-radius:8px;" alt="LINE">
     <span class="fcb-text">LINEで無料相談する</span>
     <span class="fcb-arrow">›</span>
     <span class="fcb-hand" aria-hidden="true">
