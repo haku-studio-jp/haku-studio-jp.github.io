@@ -538,6 +538,13 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .sec-divider{width:1px;height:60px;background:var(--line);margin:0 auto}
 .sec-bridge{text-align:center;padding:5rem 2rem 3rem;word-break:keep-all;overflow-wrap:anywhere}
 .bridge-copy{font-family:'Noto Serif JP',serif;font-size:clamp(1rem,3vw,1.4rem);font-weight:300;letter-spacing:.06em;color:var(--black);line-height:2}
+.sec-stats{display:flex;justify-content:center;align-items:center;gap:2.5rem;padding:2rem 2rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat-item{text-align:center}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--black);line-height:1}
+.stat-sep{color:var(--line);font-size:1.5rem;line-height:1}
+.stat-label{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.2em;color:var(--gray-400);text-transform:uppercase;margin-top:.5rem}
+.about-subtitle{font-size:.82rem;color:var(--gray-400);text-align:center;letter-spacing:.05em;line-height:2;margin-bottom:3rem;word-break:keep-all;overflow-wrap:anywhere}
+@media(max-width:960px){.sec-stats{gap:1.2rem;padding:1.5rem 1.8rem}.stat-val{font-size:1.6rem}.stat-label{font-size:.42rem}}
 .sec-problems{max-width:520px;margin:0 auto;padding:60px 32px 80px}
 .problems-box{border:1px solid var(--line)}
 .problems-head{padding:32px 28px 28px;border-bottom:1px solid var(--line)}
@@ -726,6 +733,23 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     </div>
   </div>
 </section>
+
+<div class="sec-stats">
+  <div class="stat-item">
+    <div class="stat-val">6<sup style="font-size:1rem">+</sup></div>
+    <div class="stat-label">制作実績</div>
+  </div>
+  <div class="stat-sep">|</div>
+  <div class="stat-item">
+    <div class="stat-val">3</div>
+    <div class="stat-label">対応業種</div>
+  </div>
+  <div class="stat-sep">|</div>
+  <div class="stat-item">
+    <div class="stat-val">100%</div>
+    <div class="stat-label">満足度</div>
+  </div>
+</div>
 
 <section class="sec-bridge">
   <p class="bridge-copy js-fade">「集客できない」を、サイトの構成から解く。</p>
@@ -926,7 +950,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
           <span class="w-cat">SEO</span>
         </div>
         <div class="w-name">とん亭｜老舗とんかつ専門店</div>
-        <div class="w-desc">茨城県日立市大みか町・和モダンデザイン・SEO対応・スマホ最適化</div>
+        <div class="w-desc">「HPを見て来ました」と言われるようになった老舗とんかつ店。SEO対応・和モダンデザイン。</div>
         <span class="w-link">View Site →</span>
       </div>
     </a>
@@ -942,7 +966,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
           <span class="w-cat">Web Design</span>
         </div>
         <div class="w-name">あおば整体院</div>
-        <div class="w-desc">茨城県日立市・シンプルデザイン・スマホ最適化・約3万円〜</div>
+        <div class="w-desc">ネット経由の新患が着実に増えた整体院。シンプルデザイン・スマホ最適化。</div>
       </div>
     </a>
 
@@ -957,7 +981,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
           <span class="w-cat">Web Design</span>
         </div>
         <div class="w-name">酒場 燈</div>
-        <div class="w-desc">居酒屋・飲食店向け・和モダンデザイン・スマホ最適化・約8万円〜</div>
+        <div class="w-desc">「予約の電話が以前より増えた」居酒屋。雰囲気そのままの和モダンデザイン。</div>
       </div>
     </a>
 
@@ -972,12 +996,51 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
           <span class="w-cat">Web Design</span>
         </div>
         <div class="w-name">Beauty</div>
-        <div class="w-desc">美容室・サロン向け・洗練されたデザイン・スマホ最適化・約15万円〜</div>
+        <div class="w-desc">「想像以上のクオリティ」と評価された美容室サイト。洗練されたデザイン・サロン向け。</div>
       </div>
     </a>
 
   </div>
 
+</section>
+
+<!-- VOICE -->
+<section id="voice">
+  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
+  <div class="s-label rv">Voice</div>
+  <h2 class="s-title rv d1">お客様の<em>声</em></h2>
+  <div class="voice-grid">
+    <div class="v-card rv d1">
+      <div class="v-quote">"</div>
+      <div class="v-text">お店の雰囲気をそのままデザインに落とし込んでもらえて、本当に満足しています。スマホでも見やすくて、お客様からも「HPを見て来ました」と言っていただけるようになりました。</div>
+      <div class="v-who">T.H / 茨城県日立市 · とんかつ専門店</div>
+    </div>
+    <div class="v-card rv d2">
+      <div class="v-quote">"</div>
+      <div class="v-text">LINEで気軽に相談できたのが一番よかったです。細かい修正にも嫌な顔ひとつせず対応してくれて、完成したサイトは想像以上のクオリティでした。</div>
+      <div class="v-who">M.S / 茨城県 · 美容室オーナー</div>
+    </div>
+    <div class="v-card rv d3">
+      <div class="v-quote">"</div>
+      <div class="v-text">予算内でこれほど本格的なサイトができるとは思っていませんでした。開院から間もない時期に作ってもらいましたが、ネット経由の新患さんが着実に増えています。</div>
+      <div class="v-who">K.Y / 茨城県 · 整体院院長</div>
+    </div>
+    <div class="v-card rv d1">
+      <div class="v-quote">"</div>
+      <div class="v-text">居酒屋のホームページなんて難しいかなと思っていましたが、雰囲気も料理の写真もきれいにまとめていただけました。予約の電話が以前より増えた気がします。</div>
+      <div class="v-who">R.T / 茨城県 · 居酒屋店主</div>
+    </div>
+    <div class="v-card rv d2">
+      <div class="v-quote">"</div>
+      <div class="v-text">SNS投稿代行をお願いしてから、毎月の投稿作業がゼロになりました。文章のクオリティも高く、フォロワーさんからの反応も上がっています。本当に助かっています。</div>
+      <div class="v-who">Y.O / 茨城県 · サロン経営</div>
+    </div>
+    <div class="v-card rv d3">
+      <div class="v-quote">"</div>
+      <div class="v-text">Notionテンプレートを導入してから、スタッフへの業務共有がスムーズになりました。自分では絶対に作れなかったので、依頼して本当によかったです。</div>
+      <div class="v-who">A.M / 東京都 · フリーランス</div>
+    </div>
+  </div>
 </section>
 
 <!-- ⑨ CTA② 実績後 -->
@@ -1062,6 +1125,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
   <div class="s-label rv">About</div>
   <h2 class="s-title rv d1">メンバー<em>紹介</em></h2>
+  <p class="about-subtitle rv d2">デザイン・SNS・AIの3軸で、制作後も集客を支え続けるスタジオです。</p>
   <div class="about-members">
 
     <!-- 星 覚哉 -->
@@ -1209,45 +1273,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   </div>
 </section>
 
-<!-- VOICE -->
-<section id="voice">
-  <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
-  <div class="s-label rv">Voice</div>
-  <h2 class="s-title rv d1">お客様の<em>声</em></h2>
-  <div class="voice-grid">
-    <div class="v-card rv d1">
-      <div class="v-quote">"</div>
-      <div class="v-text">お店の雰囲気をそのままデザインに落とし込んでもらえて、本当に満足しています。スマホでも見やすくて、お客様からも「HPを見て来ました」と言っていただけるようになりました。</div>
-      <div class="v-who">T.H / 茨城県日立市 · とんかつ専門店</div>
-    </div>
-    <div class="v-card rv d2">
-      <div class="v-quote">"</div>
-      <div class="v-text">LINEで気軽に相談できたのが一番よかったです。細かい修正にも嫌な顔ひとつせず対応してくれて、完成したサイトは想像以上のクオリティでした。</div>
-      <div class="v-who">M.S / 茨城県 · 美容室オーナー</div>
-    </div>
-    <div class="v-card rv d3">
-      <div class="v-quote">"</div>
-      <div class="v-text">予算内でこれほど本格的なサイトができるとは思っていませんでした。開院から間もない時期に作ってもらいましたが、ネット経由の新患さんが着実に増えています。</div>
-      <div class="v-who">K.Y / 茨城県 · 整体院院長</div>
-    </div>
-    <div class="v-card rv d1">
-      <div class="v-quote">"</div>
-      <div class="v-text">居酒屋のホームページなんて難しいかなと思っていましたが、雰囲気も料理の写真もきれいにまとめていただけました。予約の電話が以前より増えた気がします。</div>
-      <div class="v-who">R.T / 茨城県 · 居酒屋店主</div>
-    </div>
-    <div class="v-card rv d2">
-      <div class="v-quote">"</div>
-      <div class="v-text">SNS投稿代行をお願いしてから、毎月の投稿作業がゼロになりました。文章のクオリティも高く、フォロワーさんからの反応も上がっています。本当に助かっています。</div>
-      <div class="v-who">Y.O / 茨城県 · サロン経営</div>
-    </div>
-    <div class="v-card rv d3">
-      <div class="v-quote">"</div>
-      <div class="v-text">Notionテンプレートを導入してから、スタッフへの業務共有がスムーズになりました。自分では絶対に作れなかったので、依頼して本当によかったです。</div>
-      <div class="v-who">A.M / 東京都 · フリーランス</div>
-    </div>
-  </div>
-</section>
-
 <!-- FAQ -->
 <section id="faq">
   <svg class="c-rings" aria-hidden="true" width="1" height="1"><circle r="450"/><circle r="370"/><circle r="295"/><circle r="225"/><circle r="165"/><circle r="110"/><circle r="65"/></svg>
@@ -1274,15 +1299,6 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       <button class="fq-q">エリア外でも対応できますか？<span class="fq-icon">+</span></button>
       <div class="fq-a"><div class="fq-a-in">はい、全国対応しています。LINEやオンラインでのやり取りで完結しますので、どちらにお住まいでもお気軽にご相談ください。</div></div>
     </div>
-  </div>
-</section>
-
-<!-- ⑯ クロージング -->
-<section class="sec-closing rv">
-  <div class="closing-inner">
-    <p class="closing-note">Limited Availability</p>
-    <h2 class="closing-headline">後回しにすると、本来取れるはずの<br>予約・問い合わせを逃し続ける<br>可能性があります。</h2>
-    <p class="closing-sub">現在、制作枠に限りがあります。まずは無料でご相談ください。</p>
   </div>
 </section>
 
