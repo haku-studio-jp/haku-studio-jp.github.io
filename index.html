@@ -711,18 +711,19 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 /* 固定下部CTAバー */
 #fixed-cta-bar{
   position:fixed;bottom:0;left:0;width:100%;
-  background:#fce8f8;
+  background:transparent;
   z-index:400;
   display:flex;flex-direction:column;align-items:center;
   padding:7px 16px 12px;
   word-break:keep-all;overflow-wrap:anywhere;
 }
 .fcb-label{
-  color:#8b5cf6;
+  color:#ff4e9e;
   font-family:'Noto Serif JP',serif;
-  font-size:.72rem;font-weight:400;
+  font-size:.72rem;font-weight:700;
   letter-spacing:.05em;
   margin:0 0 6px;
+  text-shadow:0 1px 6px rgba(255,255,255,0.95),0 0 12px rgba(255,255,255,0.8);
 }
 .fcb-btn{
   position:relative;
@@ -1794,15 +1795,16 @@ document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
   <p class="fcb-label">＼24時間受付中！／</p>
   <a href="https://line.me/R/ti/p/@131gmndm" class="fcb-btn" target="_blank" rel="noopener">
     <span class="fcb-line-icon">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-        <path d="M20 10.5c0-4.14-4.03-7.5-9-7.5S2 6.36 2 10.5c0 3.71 3.19 6.82 7.5 7.38.29.06.69.19.79.44.09.22.06.57.03.8l-.13.77c-.04.22-.17.87.74.47.91-.4 4.93-2.98 6.72-5.1C18.93 13.77 20 12.24 20 10.5z"/>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#06c755"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 4C7.58 4 4 7.02 4 10.75c0 3.36 2.9 6.17 6.83 6.68l-.56 2.1c-.09.33.12.32.25.24.1-.07 1.63-1.11 2.29-1.56.39.05.79.07 1.19.07 4.42 0 8-3.02 8-6.75C22 7.02 16.42 4 12 4Zm-3.4 8.6H7.2V8.2h1.4v4.4Zm2.2 0H9.4V8.2h1.35l2.4 2.92V8.2h1.35v4.4h-1.3l-2.5-3.02v3.02Zm4.6 0h-1.4V8.2h1.4v4.4Zm2.8 0h-3.7V8.2h1.4v3.2h2.3v1.2Z" fill="white"/>
       </svg>
     </span>
     <span class="fcb-text">LINEで無料相談する</span>
     <span class="fcb-arrow">›</span>
     <span class="fcb-hand" aria-hidden="true">
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <text y="24" font-size="24" font-family="serif">👆</text>
+      <svg width="38" height="40" viewBox="0 0 57 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 4 C18 1.8 19.8 0 22 0 C24.2 0 26 1.8 26 4 L26 24 C27 22.5 28.5 21.5 30.5 21.5 C32.5 21.5 34 22.5 34.5 24 C35.5 22.5 37 21.5 39 21.5 C41 21.5 42.5 22.8 43 24.5 C44 23.2 45.5 22.5 47 22.5 C49.5 22.5 51 24.5 51 27 L51 40 C51 50 44 57 34 57 L28 57 C22 57 17 53 14 47 L6 32 C5 30 5.5 27.5 7.5 26.5 C9.5 25.5 12 26.5 13 28.5 L18 38 Z" fill="white" stroke="#222" stroke-width="2.2"/>
       </svg>
     </span>
   </a>
