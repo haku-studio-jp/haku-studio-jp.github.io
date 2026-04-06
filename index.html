@@ -675,6 +675,15 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .support-bullet{flex-shrink:0;width:16px;height:16px;border:1px solid var(--gray-400);border-radius:50%;margin-top:4px}
 .support-text{font-family:'Noto Serif JP',serif;font-size:13px;color:var(--gray-600);line-height:1.95;letter-spacing:.04em}
 .support-text strong{display:block;width:fit-content;color:#1a4f6e;background:#cce8f5;padding:.15em .5em .2em;border-radius:2px;font-weight:400;margin-bottom:3px}
+/* ④ ベネフィット */
+.sec-benefit{max-width:520px;margin:0 auto;padding:80px 32px}
+.benefit-list{display:flex;flex-direction:column}
+.benefit-item{display:flex;align-items:flex-start;gap:20px;padding:28px 0;border-bottom:1px solid var(--line)}
+.benefit-item:first-child{border-top:1px solid var(--line)}
+.benefit-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--gray-200);line-height:1;flex-shrink:0;width:2.5rem}
+.benefit-text{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:400;line-height:1.7;color:var(--black);padding-top:.3rem}
+/* ⑤ 解決策 — サイクル埋め込みエリア */
+.sec-cycle-embed{max-width:520px;margin:0 auto;padding:80px 32px 40px}
 </style>
 </head>
 <body>
@@ -729,16 +738,27 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   </div>
 </section>
 
-<!-- VALUE SECTION -->
-<section class="sec-cycle value-wrap">
-  <span class="sec-label js-fade-label">Value Cycle Management</span>
-  <h2 class="sec-headline js-fade d1">Web制作で、<br>ビジネスの成長サイクルを<br>回し続けるサポートを。</h2>
-  <p class="sec-body js-fade d2">お客さまのビジネスを丁寧に理解し、<br>集客から顧客満足、売上向上まで、<br>Webが起点となる好循環をつくる。<br>それがHAKU STUDIOの仕事です。</p>
-  <div class="hv-cycle-wrap">
-    <div class="hv-cycle-ring"></div>
-    <div class="hv-arm a1"><div class="hv-ball"><span class="hv-nd-ja">集客UP</span><span class="hv-nd-en">Traffic</span></div></div>
-    <div class="hv-arm a2"><div class="hv-ball"><span class="hv-nd-ja">顧客満足</span><span class="hv-nd-en">Satisfaction</span></div></div>
-    <div class="hv-arm a3"><div class="hv-ball"><span class="hv-nd-ja">売上向上</span><span class="hv-nd-en">Revenue</span></div></div>
+<!-- ④ ベネフィット -->
+<section class="sec-benefit">
+  <span class="sec-label js-fade-label">What Changes</span>
+  <h2 class="sec-headline js-fade d1">サイトが変わると、<br>こんな変化が起きます。</h2>
+  <div class="benefit-list">
+    <div class="benefit-item js-fade d1">
+      <div class="benefit-num">01</div>
+      <p class="benefit-text">新規予約が安定して入るようになる</p>
+    </div>
+    <div class="benefit-item js-fade d2">
+      <div class="benefit-num">02</div>
+      <p class="benefit-text">広告に頼らなくても集客できる</p>
+    </div>
+    <div class="benefit-item js-fade d3">
+      <div class="benefit-num">03</div>
+      <p class="benefit-text">営業しなくても問い合わせが来る</p>
+    </div>
+    <div class="benefit-item js-fade d4">
+      <div class="benefit-num">04</div>
+      <p class="benefit-text">売上の波が減り、経営が安定する</p>
+    </div>
   </div>
 </section>
 
@@ -774,6 +794,17 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 </section>
 
 <section class="sec-support">
+  <div class="sec-cycle-embed">
+    <span class="sec-label js-fade-label">Value Cycle Management</span>
+    <h2 class="sec-headline js-fade d1">Web制作で、<br>ビジネスの成長サイクルを<br>回し続けるサポートを。</h2>
+    <p class="sec-body js-fade d2">お客さまのビジネスを丁寧に理解し、<br>集客から顧客満足、売上向上まで、<br>Webが起点となる好循環をつくる。<br>それがHAKU STUDIOの仕事です。</p>
+    <div class="hv-cycle-wrap">
+      <div class="hv-cycle-ring"></div>
+      <div class="hv-arm a1"><div class="hv-ball"><span class="hv-nd-ja">集客UP</span><span class="hv-nd-en">Traffic</span></div></div>
+      <div class="hv-arm a2"><div class="hv-ball"><span class="hv-nd-ja">顧客満足</span><span class="hv-nd-en">Satisfaction</span></div></div>
+      <div class="hv-arm a3"><div class="hv-ball"><span class="hv-nd-ja">売上向上</span><span class="hv-nd-en">Revenue</span></div></div>
+    </div>
+  </div>
   <div class="support-inner">
     <span class="support-vertical">Support Area</span>
     <div class="support-item d1"><div class="support-bullet"></div><p class="support-text"><strong>検索で見つけてもらえる</strong>ホームページ制作</p></div>
