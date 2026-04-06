@@ -536,8 +536,9 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .hv-nd-ja{font-family:'Noto Serif JP',serif;font-size:12px;font-weight:400;color:#fff;pointer-events:none}
 .hv-nd-en{font-family:'Cormorant Garamond',serif;font-size:8px;color:rgba(255,255,255,.5);letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
 .sec-divider{width:1px;height:60px;background:var(--line);margin:0 auto}
-.sec-bridge{text-align:center;padding:5rem 2rem 3rem;word-break:keep-all;overflow-wrap:anywhere}
-.bridge-copy{font-family:'Noto Serif JP',serif;font-size:clamp(1.2rem,3.5vw,1.8rem);font-weight:400;letter-spacing:.04em;color:var(--black);line-height:1.9}
+.problems{padding:80px 24px;background:#fafafa}
+.problems-inner{max-width:640px;margin:0 auto}
+.problems-label{font-size:.75rem;letter-spacing:.15em;color:#999;text-transform:uppercase;margin-bottom:8px}
 .sec-stats{display:flex;justify-content:center;align-items:center;gap:2.5rem;padding:2rem 2rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .stat-item{text-align:center}
 .stat-val{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--black);line-height:1}
@@ -545,18 +546,11 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .stat-label{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.2em;color:var(--gray-400);text-transform:uppercase;margin-top:.5rem}
 .about-subtitle{font-size:.82rem;color:var(--gray-400);text-align:center;letter-spacing:.05em;line-height:2;margin-bottom:3rem;word-break:keep-all;overflow-wrap:anywhere}
 @media(max-width:960px){.sec-stats{gap:1.2rem;padding:1.5rem 1.8rem}.stat-val{font-size:1.6rem}.stat-label{font-size:.42rem}}
-.sec-problems{max-width:520px;margin:0 auto;padding:60px 32px 80px}
-.problems-box{border:1px solid var(--line)}
-.problems-head{padding:32px 28px 28px;border-bottom:1px solid var(--line)}
-.problems-head-label{font-family:'Cormorant Garamond',serif;font-size:10px;color:var(--gray-400);text-transform:uppercase;letter-spacing:.25em;margin-bottom:14px;display:block}
-.problems-head h2{font-family:'Noto Serif JP',serif;font-size:17px;font-weight:400;line-height:1.85;letter-spacing:.03em}
-.prob-item{display:flex;align-items:center;gap:20px;padding:22px 28px;border-bottom:1px solid var(--line);opacity:0;transform:translateX(-16px);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1),background .25s ease}
-.prob-item:last-child{border-bottom:none}
-.prob-item.is-show{opacity:1;transform:translateX(0)}
-.prob-icon{flex-shrink:0;width:68px;height:68px;background:var(--gray-100);border-radius:10px;display:flex;align-items:center;justify-content:center}
-.prob-icon svg{width:32px;height:32px;fill:var(--gray-600)}
-.prob-icon.teal{background:var(--gray-100)}
-.prob-text{font-size:13px;line-height:1.95;letter-spacing:.03em;color:var(--gray-600)}
+.problems-catch{font-size:clamp(1.4rem,4vw,2rem);font-weight:700;margin:8px 0 4px;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
+.problems-sub{font-size:1rem;color:#666;margin-bottom:40px;word-break:keep-all;overflow-wrap:anywhere}
+.problems-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column}
+.problems-list li{display:flex;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid #ececec;font-size:.97rem;color:#222;word-break:keep-all;overflow-wrap:anywhere}
+.prob-icon{flex-shrink:0;width:40px;height:40px;border-radius:50%;background:#f3f0ff;color:#7c5cfc;display:flex;align-items:center;justify-content:center}
 .sec-support{max-width:520px;margin:0 auto;padding:0 32px 100px}
 .support-inner{background:var(--gray-100);border:1px solid var(--line);padding:48px 36px 48px 56px;position:relative;overflow:hidden}
 .support-vertical{position:absolute;left:18px;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;font-family:'Cormorant Garamond',serif;font-size:9px;letter-spacing:.3em;color:rgba(10,10,10,.08);text-transform:uppercase;white-space:nowrap}
@@ -612,9 +606,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 @media(max-width:960px){.ba-wrap{flex-direction:column}.ba-arrow{justify-content:center;transform:rotate(90deg)}}
 @media(max-width:960px){.sec-benefit,.sec-empathy,.sec-diff,.sec-ba,.sec-failure{padding:4rem 1.8rem}}
 @media(max-width:960px){.sec-support{padding:0 1.8rem 5rem}.support-inner{padding:2.5rem 1.5rem 2.5rem 2.5rem}}
-@media(max-width:960px){.sec-problems{padding:3rem 1.8rem 5rem}}
-@media(max-width:960px){.sec-bridge{padding:2.5rem 1.8rem 1.5rem}.bridge-copy{font-size:1.05rem}}
-@media(max-width:960px){.problems-head h2{font-size:14px}}
+@media(max-width:960px){.problems{padding:3rem 1.8rem 5rem}}
 /* ⑯ クロージング */
 .sec-closing{background:var(--black);padding:8rem 5rem;text-align:center}
 .closing-inner{max-width:560px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
@@ -744,36 +736,33 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   </div>
 </div>
 
-<section class="sec-bridge">
-  <p class="bridge-copy js-fade">「集客できない」を、サイトの構成から解く。</p>
-</section>
-
-<section class="sec-problems">
-  <div class="problems-box">
-    <div class="problems-head js-fade">
-      <span class="problems-head-label">For local businesses</span>
-      <h2>それ、HPのせいかもしれません。</h2>
-    </div>
-    <div class="prob-item d1">
-      <div class="prob-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
-      <p class="prob-text">ネットで検索されているのに、自分のお店が上に出てこない</p>
-    </div>
-    <div class="prob-item d2">
-      <div class="prob-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
-      <p class="prob-text">ホームページはあるけど、お問い合わせが全然こない</p>
-    </div>
-    <div class="prob-item d3">
-      <div class="prob-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
-      <p class="prob-text">Instagramは投稿しているが、集客につながっている実感がない</p>
-    </div>
-    <div class="prob-item d4">
-      <div class="prob-icon"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg></div>
-      <p class="prob-text">Web制作を誰に頼めばいいかわからない</p>
-    </div>
-    <div class="prob-item d5">
-      <div class="prob-icon teal"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg></div>
-      <p class="prob-text">他社に頼んだら高額で、更新もできない状態になった</p>
-    </div>
+<section class="problems" id="problems">
+  <div class="problems-inner">
+    <p class="problems-label">FOR LOCAL BUSINESSES</p>
+    <h2 class="problems-catch">「集客できない」を、<br>サイトの構成から解く。</h2>
+    <p class="problems-sub">それ、HPのせいかもしれません。</p>
+    <ul class="problems-list">
+      <li>
+        <span class="prob-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <span>検索されているのに、上に出てこない</span>
+      </li>
+      <li>
+        <span class="prob-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+        <span>ホームページがあるのに、問い合わせが来ない</span>
+      </li>
+      <li>
+        <span class="prob-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-linecap="round" stroke-width="2"/></svg></span>
+        <span>Instagramを頑張っても、予約につながらない</span>
+      </li>
+      <li>
+        <span class="prob-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/></svg></span>
+        <span>何から改善すればいいのか分からない</span>
+      </li>
+      <li>
+        <span class="prob-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>このままだと、ずっと集客できない気がしている</span>
+      </li>
+    </ul>
   </div>
 </section>
 
