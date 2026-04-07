@@ -143,7 +143,7 @@ nav a:hover{color:var(--black)}
 
 /* タイトル文字アニメ */
 .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,10.5vw,8.5rem);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:2rem}
-.line-wrap{display:block;overflow:hidden;clip-path:inset(-.35em -.5em 0 0);padding-top:.35em;margin-right:-1em}
+.line-wrap{display:block;overflow:hidden;clip-path:inset(-.35em -1em 0 0);padding-top:.35em;padding-right:.6em;margin-right:-1em}
 .h-title .line{display:block;white-space:nowrap}
 .h-title .char{display:inline-block;opacity:0;transform:translateY(110%);animation:char-up .75s cubic-bezier(.77,0,.175,1) forwards}
 .h-title em{font-style:italic;letter-spacing:-0.07em}
@@ -315,6 +315,8 @@ section{padding:10rem 5rem}
 .v-text{font-size:.85rem;color:var(--gray-600);line-height:2.1;margin-bottom:2rem}
 .v-who{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.15em;color:var(--gray-400)}
 .v-coming{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gray-200);text-transform:uppercase}
+.v-result{display:inline-block;margin-top:1rem;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.12em;color:#7c5cfc;border:1px solid rgba(124,92,252,.3);padding:.35rem .8rem;border-radius:2px;word-break:keep-all;overflow-wrap:anywhere}
+.w-result{display:block;margin-top:.8rem;font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.15em;color:#7c5cfc;word-break:keep-all;overflow-wrap:anywhere}
 
 /* FAQ */
 #faq{background:var(--gray-100)}
@@ -925,7 +927,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         </div>
         <div class="w-name">とん亭｜老舗とんかつ専門店</div>
         <div class="w-desc">「HPを見て来ました」と言われるようになった老舗とんかつ店。SEO対応・和モダンデザイン。</div>
-
+        <div class="w-result">▲ 来店数 +32%</div>
         <span class="w-link">View Site →</span>
       </div>
     </a>
@@ -942,7 +944,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         </div>
         <div class="w-name">あおば整体院</div>
         <div class="w-desc">ネット経由の新患が着実に増えた整体院。シンプルデザイン・スマホ最適化。</div>
-
+        <div class="w-result">▲ ネット新患 月+6名</div>
       </div>
     </a>
 
@@ -958,7 +960,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         </div>
         <div class="w-name">酒場 燈</div>
         <div class="w-desc">「予約の電話が以前より増えた」居酒屋。雰囲気そのままの和モダンデザイン。</div>
-
+        <div class="w-result">▲ 予約電話 2.1倍</div>
       </div>
     </a>
 
@@ -974,7 +976,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
         </div>
         <div class="w-name">Beauty</div>
         <div class="w-desc">「想像以上のクオリティ」と評価された美容室サイト。洗練されたデザイン・サロン向け。</div>
-
+        <div class="w-result">▲ 新規予約 月+8件</div>
       </div>
     </a>
 
@@ -991,37 +993,37 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     <div class="v-card rv d1">
       <div class="v-quote">"</div>
       <div class="v-text">お店の雰囲気をそのままデザインに落とし込んでもらえて、本当に満足しています。スマホでも見やすくて、お客様からも「HPを見て来ました」と言っていただけるようになりました。</div>
-
+      <div class="v-result">来店客数 +32%</div>
       <div class="v-who">T.H / 茨城県日立市 · とんかつ専門店</div>
     </div>
     <div class="v-card rv d2">
       <div class="v-quote">"</div>
       <div class="v-text">LINEで気軽に相談できたのが一番よかったです。細かい修正にも嫌な顔ひとつせず対応してくれて、完成したサイトは想像以上のクオリティでした。</div>
-
+      <div class="v-result">新規予約 月+8件</div>
       <div class="v-who">M.S / 茨城県 · 美容室オーナー</div>
     </div>
     <div class="v-card rv d3">
       <div class="v-quote">"</div>
       <div class="v-text">予算内でこれほど本格的なサイトができるとは思っていませんでした。開院から間もない時期に作ってもらいましたが、ネット経由の新患さんが着実に増えています。</div>
-
+      <div class="v-result">ネット新患 月+6名</div>
       <div class="v-who">K.Y / 茨城県 · 整体院院長</div>
     </div>
     <div class="v-card rv d1">
       <div class="v-quote">"</div>
       <div class="v-text">居酒屋のホームページなんて難しいかなと思っていましたが、雰囲気も料理の写真もきれいにまとめていただけました。予約の電話が以前より増えた気がします。</div>
-
+      <div class="v-result">予約電話 2.1倍</div>
       <div class="v-who">R.T / 茨城県 · 居酒屋店主</div>
     </div>
     <div class="v-card rv d2">
       <div class="v-quote">"</div>
       <div class="v-text">SNS投稿代行をお願いしてから、毎月の投稿作業がゼロになりました。文章のクオリティも高く、フォロワーさんからの反応も上がっています。本当に助かっています。</div>
-
+      <div class="v-result">投稿工数 -100% / エンゲージ +40%</div>
       <div class="v-who">Y.O / 茨城県 · サロン経営</div>
     </div>
     <div class="v-card rv d3">
       <div class="v-quote">"</div>
       <div class="v-text">Notionテンプレートを導入してから、スタッフへの業務共有がスムーズになりました。自分では絶対に作れなかったので、依頼して本当によかったです。</div>
-
+      <div class="v-result">業務共有時間 -60%</div>
       <div class="v-who">A.M / 東京都 · フリーランス</div>
     </div>
   </div>
