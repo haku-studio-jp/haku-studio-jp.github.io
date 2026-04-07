@@ -91,11 +91,17 @@ nav{display:flex;gap:2.8rem}
 #sp-menu-btn.open span:nth-child(2){opacity:0}
 #sp-menu-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 /* SP DRAWER */
-#sp-drawer{position:fixed;top:0;right:0;width:280px;height:100%;background:var(--black);z-index:9500;transform:translateX(100%);transition:transform .45s cubic-bezier(.77,0,.175,1);padding:5rem 2.5rem 3rem;display:flex;flex-direction:column}
+#sp-drawer{position:fixed;top:0;right:0;width:300px;height:100%;background:var(--black);z-index:9500;transform:translateX(100%);transition:transform .45s cubic-bezier(.77,0,.175,1);padding:3rem 2.2rem 2.5rem;display:flex;flex-direction:column}
 #sp-drawer.open{transform:translateX(0)}
-.sp-nav{display:flex;flex-direction:column;gap:2.2rem;margin-top:1rem}
-.sp-nav-link{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:rgba(255,255,255,.7);text-decoration:none;letter-spacing:.08em;transition:color .2s}
-.sp-nav-link:hover{color:var(--white)}
+.sp-drawer-logo{font-family:'Cormorant Garamond',serif;font-size:.8rem;letter-spacing:.5em;color:rgba(255,255,255,.25);margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.sp-nav{display:flex;flex-direction:column;gap:0;flex:1}
+.sp-nav-link{display:flex;align-items:baseline;gap:1rem;padding:1.1rem 0;border-bottom:1px solid rgba(255,255,255,.06);text-decoration:none;transition:opacity .2s}
+.sp-nav-link:hover{opacity:.6}
+.sp-nav-num{font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.15em;color:rgba(255,255,255,.25);flex-shrink:0}
+.sp-nav-ja{font-family:'Noto Serif JP',serif;font-size:1rem;font-weight:300;color:var(--white);letter-spacing:.06em;word-break:keep-all;overflow-wrap:anywhere}
+.sp-nav-en{font-family:'DM Mono',monospace;font-size:.45rem;letter-spacing:.2em;color:rgba(255,255,255,.3);margin-left:auto;flex-shrink:0}
+.sp-drawer-cta{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08)}
+.sp-drawer-cta-btn{display:flex;align-items:center;justify-content:center;gap:.7rem;background:#06C755;color:#fff;font-family:'Noto Serif JP',serif;font-size:.85rem;font-weight:500;letter-spacing:.04em;padding:1rem;border-radius:100px;text-decoration:none;word-break:keep-all;overflow-wrap:anywhere}
 #sp-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9400;opacity:0;pointer-events:none;transition:opacity .45s}
 #sp-backdrop.open{opacity:1;pointer-events:auto}
 @media(max-width:960px){#sp-menu-btn{display:flex}}
@@ -719,15 +725,22 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   <span></span><span></span><span></span>
 </button>
 <div id="sp-drawer">
+  <div class="sp-drawer-logo">HAKU STUDIO</div>
   <nav class="sp-nav">
-    <a href="#works" class="sp-nav-link">制作実績</a>
-    <a href="#services" class="sp-nav-link">サービス</a>
-    <a href="#about" class="sp-nav-link">メンバー紹介</a>
-    <a href="#price" class="sp-nav-link">料金プラン</a>
-    <a href="#flow" class="sp-nav-link">制作の流れ</a>
-    <a href="#faq" class="sp-nav-link">よくある質問</a>
-    <a href="#contact" class="sp-nav-link">お問い合わせ</a>
+    <a href="#works" class="sp-nav-link"><span class="sp-nav-num">01</span><span class="sp-nav-ja">制作実績</span><span class="sp-nav-en">Works</span></a>
+    <a href="#services" class="sp-nav-link"><span class="sp-nav-num">02</span><span class="sp-nav-ja">サービス</span><span class="sp-nav-en">Services</span></a>
+    <a href="#about" class="sp-nav-link"><span class="sp-nav-num">03</span><span class="sp-nav-ja">メンバー紹介</span><span class="sp-nav-en">About</span></a>
+    <a href="#price" class="sp-nav-link"><span class="sp-nav-num">04</span><span class="sp-nav-ja">料金プラン</span><span class="sp-nav-en">Price</span></a>
+    <a href="#flow" class="sp-nav-link"><span class="sp-nav-num">05</span><span class="sp-nav-ja">制作の流れ</span><span class="sp-nav-en">Flow</span></a>
+    <a href="#faq" class="sp-nav-link"><span class="sp-nav-num">06</span><span class="sp-nav-ja">よくある質問</span><span class="sp-nav-en">FAQ</span></a>
+    <a href="#contact" class="sp-nav-link"><span class="sp-nav-num">07</span><span class="sp-nav-ja">お問い合わせ</span><span class="sp-nav-en">Contact</span></a>
   </nav>
+  <div class="sp-drawer-cta">
+    <a href="https://line.me/R/ti/p/@131gmndm" target="_blank" rel="noopener" class="sp-drawer-cta-btn">
+      <img src="line-icon.png" width="22" height="22" style="border-radius:5px;display:block;flex-shrink:0" alt="">
+      無料相談する
+    </a>
+  </div>
 </div>
 <div id="sp-backdrop"></div>
 
