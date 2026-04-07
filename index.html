@@ -572,8 +572,15 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 .support-text{font-family:'Noto Serif JP',serif;font-size:13px;color:var(--gray-600);line-height:1.95;letter-spacing:.04em}
 .support-text strong{display:block;font-weight:500;color:var(--black);margin-bottom:3px}
 .support-cta{margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
-.support-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#06C755;color:#fff;font-family:'Noto Serif JP',serif;font-size:.88rem;font-weight:500;letter-spacing:.04em;padding:14px 28px;border-radius:100px;text-decoration:none;transition:opacity .25s;word-break:keep-all;overflow-wrap:anywhere}
+.support-cta-btn{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,#ff4e9e,#c44fd8,#8b5cf6);color:#fff;font-family:'Noto Serif JP',serif;font-size:.88rem;font-weight:500;letter-spacing:.04em;padding:14px 28px;border-radius:100px;text-decoration:none;transition:opacity .25s;word-break:keep-all;overflow-wrap:anywhere}
 .support-cta-btn:hover{opacity:.8}
+/* CTAストリップ（Voice後・FAQ後） */
+.cta-strip{text-align:center;padding:5rem 2rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--white)}
+.cta-strip-label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.35em;color:var(--gray-400);text-transform:uppercase;margin-bottom:1.2rem}
+.cta-strip-title{font-family:'Noto Serif JP',serif;font-size:clamp(.95rem,2.2vw,1.15rem);font-weight:300;line-height:1.95;color:var(--black);margin-bottom:2rem;word-break:keep-all;overflow-wrap:anywhere}
+.cta-strip-btn{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,#ff4e9e,#c44fd8,#8b5cf6);border-radius:100px;padding:14px 32px;color:#fff;text-decoration:none;font-family:'Noto Serif JP',serif;font-size:.9rem;font-weight:500;letter-spacing:.04em;white-space:nowrap;transition:opacity .25s}
+.cta-strip-btn:hover{opacity:.8}
+@media(max-width:960px){.cta-strip{padding:3.5rem 1.5rem}}
 /* ④ ベネフィット */
 .sec-benefit{max-width:520px;margin:0 auto;padding:80px 32px}
 .benefit-list{display:flex;flex-direction:column}
@@ -1009,6 +1016,16 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   </div>
 </section>
 
+<!-- CTA Voice後 -->
+<div class="cta-strip rv">
+  <p class="cta-strip-label">Free Consultation</p>
+  <p class="cta-strip-title">お客様の声が、あなたの背中を押すはずです。</p>
+  <a href="https://line.me/R/ti/p/@131gmndm" target="_blank" rel="noopener" class="cta-strip-btn">
+    <svg width="22" height="22" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block;flex-shrink:0"><rect width="34" height="34" rx="8" fill="#fff" fill-opacity=".25"/><path fill="#fff" d="M28.5 16.1C28.5 10.82 23.35 6.5 17 6.5S5.5 10.82 5.5 16.1c0 4.74 4.2 8.71 9.87 9.46.38.08.9.25 1.04.58.12.3.08.76.04 1.06l-.17 1c-.05.3-.24 1.17 1.02.64s6.8-4 9.27-6.85c1.71-1.88 2.93-4.04 2.93-5.89zm-15.46 3.13h-2.9a.46.46 0 0 1-.46-.46V13a.46.46 0 0 1 .92 0v5.31h2.44a.46.46 0 0 1 0 .92zm1.96 0a.46.46 0 0 1-.46-.46V13a.46.46 0 0 1 .92 0v5.77a.46.46 0 0 1-.46.46zm6.4 0a.46.46 0 0 1-.37-.18l-2.8-3.82v3.54a.46.46 0 0 1-.92 0V13a.46.46 0 0 1 .83-.28l2.8 3.82V13a.46.46 0 0 1 .92 0v5.77a.46.46 0 0 1-.46.46zm3.82-.46a.46.46 0 0 1-.46.46h-2.9a.46.46 0 0 1-.46-.46V13a.46.46 0 0 1 .46-.46h2.9a.46.46 0 0 1 0 .92H22.8v1.62h2.44a.46.46 0 0 1 0 .92H22.8v1.62h2.44a.46.46 0 0 1 .46.46z"/></svg>
+    LINEで無料相談する
+  </a>
+</div>
+
 <!-- ⑩ ビフォーアフター -->
 <section class="sec-ba">
   <span class="sec-label js-fade-label">Before / After</span>
@@ -1253,6 +1270,16 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     </div>
   </div>
 </section>
+
+<!-- CTA FAQ後 -->
+<div class="cta-strip rv">
+  <p class="cta-strip-label">Free Consultation</p>
+  <p class="cta-strip-title">疑問が解けたら、まずは気軽にご連絡ください。</p>
+  <a href="https://line.me/R/ti/p/@131gmndm" target="_blank" rel="noopener" class="cta-strip-btn">
+    <svg width="22" height="22" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block;flex-shrink:0"><rect width="34" height="34" rx="8" fill="#fff" fill-opacity=".25"/><path fill="#fff" d="M28.5 16.1C28.5 10.82 23.35 6.5 17 6.5S5.5 10.82 5.5 16.1c0 4.74 4.2 8.71 9.87 9.46.38.08.9.25 1.04.58.12.3.08.76.04 1.06l-.17 1c-.05.3-.24 1.17 1.02.64s6.8-4 9.27-6.85c1.71-1.88 2.93-4.04 2.93-5.89zm-15.46 3.13h-2.9a.46.46 0 0 1-.46-.46V13a.46.46 0 0 1 .92 0v5.31h2.44a.46.46 0 0 1 0 .92zm1.96 0a.46.46 0 0 1-.46-.46V13a.46.46 0 0 1 .92 0v5.77a.46.46 0 0 1-.46.46zm6.4 0a.46.46 0 0 1-.37-.18l-2.8-3.82v3.54a.46.46 0 0 1-.92 0V13a.46.46 0 0 1 .83-.28l2.8 3.82V13a.46.46 0 0 1 .92 0v5.77a.46.46 0 0 1-.46.46zm3.82-.46a.46.46 0 0 1-.46.46h-2.9a.46.46 0 0 1-.46-.46V13a.46.46 0 0 1 .46-.46h2.9a.46.46 0 0 1 0 .92H22.8v1.62h2.44a.46.46 0 0 1 0 .92H22.8v1.62h2.44a.46.46 0 0 1 .46.46z"/></svg>
+    LINEで無料相談する
+  </a>
+</div>
 
 <!-- CONTACT -->
 <section id="contact">
