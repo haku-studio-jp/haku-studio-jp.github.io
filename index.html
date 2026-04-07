@@ -276,18 +276,19 @@ section{padding:10rem 5rem}
 .p-note{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.1em;color:var(--gray-400);margin-top:3rem;line-height:1.9}
 
 /* FLOW */
-#flow{background:#1e1e1c;color:var(--white)}
-#flow .s-label{color:rgba(255,255,255,.3)}
-#flow .s-label::before{background:rgba(255,255,255,.12)}
-#flow .s-title{color:var(--white)}
+#flow{background:#fafafa;color:var(--black)}
+#flow .s-label{color:var(--gray-400)}
+#flow .s-label::before{background:var(--gray-200)}
+#flow .s-title{color:var(--black)}
 .flow-list{display:flex;flex-direction:column;margin-top:5rem}
-.f-item{display:grid;grid-template-columns:110px 1fr;gap:4rem;padding:3rem 0;border-top:1px solid rgba(255,255,255,.07);transition:padding-left .3s}
-.f-item:last-child{border-bottom:1px solid rgba(255,255,255,.07)}
+.f-item{display:grid;grid-template-columns:110px 1fr;gap:4rem;padding:3rem 0;border-top:1px solid var(--line);transition:padding-left .3s}
+.f-item:last-child{border-bottom:1px solid var(--line)}
 .f-item:hover{padding-left:1.5rem}
-.f-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:rgba(255,255,255,.12);line-height:1;align-self:center}
-.f-step{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.3em;color:rgba(255,255,255,.25);text-transform:uppercase;margin-bottom:.4rem}
-.f-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:300;color:var(--white);margin-bottom:.7rem}
-.f-desc{font-size:.82rem;color:rgba(255,255,255,.4);line-height:2}
+.f-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--gray-200);line-height:1;align-self:center}
+.f-step{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.3em;color:var(--gray-400);text-transform:uppercase;margin-bottom:.4rem}
+.f-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:300;color:var(--black);margin-bottom:.7rem}
+.f-desc{font-size:.82rem;color:var(--gray-400);line-height:2}
+.f-note{font-size:.72rem;font-family:'DM Mono',monospace;letter-spacing:.05em;color:var(--gray-600);margin-top:.5rem}
 
 /* VOICE */
 #voice{background:var(--white)}
@@ -316,7 +317,6 @@ section{padding:10rem 5rem}
 #works,#services,#about,#price,#flow,#voice,#faq{position:relative;overflow:hidden}
 .c-rings{position:absolute;pointer-events:none;z-index:0;overflow:visible;width:1px;height:1px}
 .c-rings circle{fill:rgba(216,216,210,1);stroke:none;opacity:0;transform-origin:0 0;transition:transform 1.2s cubic-bezier(.34,1.3,.64,1),opacity 1s ease}
-#flow .c-rings circle{fill:rgba(255,255,255,1)}
 /* 1. WORKS — 内→外スタガー */
 #works .c-rings{top:10rem;left:0}
 #works .c-rings circle{transform:scale(0)}
@@ -1183,32 +1183,36 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
       <div class="f-num">01</div>
       <div>
         <div class="f-step">Step 01</div>
-        <div class="f-title">ご相談・ヒアリング</div>
-        <div class="f-desc">LINEにてお気軽にご連絡ください。業種・ご予算・ご希望・現状のお悩みをお聞きします。無料でご相談いただけます。</div>
+        <div class="f-title">LINEで24時間受付・無料相談</div>
+        <div class="f-desc">業種・ご予算・お悩みを簡単にヒアリング</div>
+        <div class="f-note">専門知識がなくても問題ありません</div>
       </div>
     </div>
     <div class="f-item rv d2">
       <div class="f-num">02</div>
       <div>
         <div class="f-step">Step 02</div>
-        <div class="f-title">お見積もり・ご提案</div>
-        <div class="f-desc">ヒアリング内容をもとに、プランと費用をご提案します。ご納得いただけるまで何度でもご相談ください。</div>
+        <div class="f-title">ご提案・お見積もり（最短当日）</div>
+        <div class="f-desc">目的に合わせた構成と費用をご提案</div>
+        <div class="f-note">無理な営業は一切行いません</div>
       </div>
     </div>
     <div class="f-item rv d3">
       <div class="f-num">03</div>
       <div>
         <div class="f-step">Step 03</div>
-        <div class="f-title">制作・確認</div>
-        <div class="f-desc">デザイン・コーディングを進めます。途中経過をご確認いただきながら、ご要望を反映していきます。</div>
+        <div class="f-title">制作・ご確認（ほぼ丸投げOK）</div>
+        <div class="f-desc">必要な情報だけ共有→構成・デザインまで制作</div>
+        <div class="f-note">途中確認しながら安心進捗</div>
       </div>
     </div>
     <div class="f-item rv d4">
       <div class="f-num">04</div>
       <div>
         <div class="f-step">Step 04</div>
-        <div class="f-title">公開・納品</div>
-        <div class="f-desc">最終確認後、ウェブサイトを公開します。公開後のサポートも丁寧に対応しますので、安心してお任せください。</div>
+        <div class="f-title">公開・運用スタート（最短2週間）</div>
+        <div class="f-desc">公開後も更新・改善を継続サポート</div>
+        <div class="f-note">ずっとお付き合いします</div>
       </div>
     </div>
   </div>
