@@ -2,6 +2,22 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+---
+
+## 【絶対ルール・最優先】
+
+- 日本語テキスト全体に必ず以下を適用する
+  - `word-break: keep-all`
+  - `overflow-wrap: anywhere`
+
+- 新セクション追加・テキスト変更後は必ず SP（390px）・PC（1280px）のテキスト折り返しシミュレーション結果を報告してからプッシュする
+
+- 文字切れ・不自然な改行・ひっこみが1箇所でもあればプッシュ禁止
+
+- レスポンシブ対応含む全テキストのレイアウト・字詰め・余白バランスを完璧にすること（PC・スマホ両方必ず確認）
+
+---
+
 ## Overview
 
 HAKU STUDIO のポートフォリオ・コーポレートサイト。GitHub Pages でホスティングされているシングルページサイト（SPA ではなく、単純な静的 HTML）。
