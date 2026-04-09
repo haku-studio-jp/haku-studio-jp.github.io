@@ -52,6 +52,33 @@ HAKU STUDIO のポートフォリオ・コーポレートサイト。GitHub Page
 
 GitHub Pages に直接デプロイ（ビルドステップなし）。`main` ブランチへの push が即時反映される。
 
+## サイト再現の手順（必須）
+
+参考サイトを再現する前に、以下のChrome拡張機能で必ず情報収集してから実装すること。
+
+### インストール済み解析ツール
+
+| ツール | 用途 |
+|--------|------|
+| Wappalyzer | 使用技術・フレームワーク・CMSの特定 |
+| WhatFont | フォント名・サイズ・ウェイトの特定 |
+| ColorZilla / Eye Dropper | 正確なカラーコード取得 |
+| VisBug | CSS・レイアウト・余白の解析 |
+| SEOquake | SEO構造の確認 |
+| DevTools（Animationパネル・Computedタブ） | アニメーション・適用CSS確認 |
+
+### 手順
+
+1. **Wappalyzer** で技術スタックを確認（ライブラリ・フォント・CMS等）
+2. **WhatFont** でフォント名・ウェイト・サイズを特定
+3. **ColorZilla / Eye Dropper** でカラーコードを取得
+4. **DevTools**（AnimationパネルとComputedタブ）でCSS・アニメーションを確認
+5. 取得した情報を元に実装
+
+**ユーザーにChrome拡張での調査結果を貼ってもらう分業が最も正確。**
+
+---
+
 ## 作業ルール
 
 - **コードは HTML/CSS で書く**（JS は既存のインラインスクリプトに追記する形で対応）
