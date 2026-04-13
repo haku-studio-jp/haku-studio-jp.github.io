@@ -1666,10 +1666,11 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   function toImageMode(){
     if(!heroReady || inImageMode) return;
     inImageMode = true;
-    lenis.stop(); // サークル展開中ロック
-    gsap.to(alphaProxy, { v:0, duration:.4, ease:'power2.out',
-      onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:stopLines
-    });
+    lenis.stop();
+    // ラインを即座に消す（テキスト退場中に動画が見えないように）
+    stopLines();
+    lineAlpha = 0;
+    alphaProxy.v = 0;
     gsap.timeline()
       .to('.h-title .line-wrap:nth-child(1) .line', { y:'130%',  duration:.5, ease:'power3.out' }, 0)
       .to('.h-title .line-wrap:nth-child(2) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .05)
@@ -1678,10 +1679,11 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       .to('.h-sub',            { autoAlpha:0, duration:.3 }, 0)
       .to('.hero-scroll-line', { autoAlpha:0, duration:.3 }, 0)
       .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0)
-      .add(()=>{ canvas.style.zIndex='3'; }, 0.45)
+      // テキスト退場完了後にcanvasを前面へ → サークル展開
+      .add(()=>{ canvas.style.zIndex='3'; }, 0.5)
       .to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut',
-          onComplete: ()=>{ lenis.start(); } // サークル全開でスクロール解放
-      }, .1);
+          onComplete: ()=>{ lenis.start(); }
+      }, 0.5);
   }
 
   function toLineMode(){
