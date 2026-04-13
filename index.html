@@ -749,7 +749,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- HERO -->
 <section id="hero">
-  <video id="hero-video" src="hero-video.mp4" autoplay muted loop playsinline aria-hidden="true"
+  <video id="hero-video" preload="none" muted loop playsinline aria-hidden="true"
     style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px"></video>
   <div class="hero-sticky">
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
@@ -1385,10 +1385,18 @@ const t=setInterval(()=>{
   if(n>=100){n=100;clearInterval(t);}
   fill.style.width=n+'%';cnt.textContent=n;
 },55);
-window.addEventListener('load',()=>setTimeout(()=>{document.getElementById('loader').classList.add('out');
+// ローダー消去（最大3秒待ちでも強制消去）
+function hideLoader(){
+  document.getElementById('loader').classList.add('out');
   const panels=[document.getElementById('p1'),document.getElementById('p2'),document.getElementById('p3'),document.getElementById('p4')];
   panels.forEach((p,i)=>setTimeout(()=>p&&p.classList.add('out'),i*400));
-},2300));
+  // ローダー消去後に動画src設定→再生（load event をブロックさせない）
+  const vid=document.getElementById('hero-video');
+  vid.src='hero-video.mp4';
+  vid.play().catch(()=>{});
+}
+window.addEventListener('load',()=>setTimeout(hideLoader,2300));
+setTimeout(()=>{if(!document.getElementById('loader').classList.contains('out'))hideLoader();},5000);
 
 // HEADER
 const hdr=document.getElementById('hdr');
