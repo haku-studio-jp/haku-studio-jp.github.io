@@ -1850,9 +1850,11 @@ document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
 (function(){
   const ctaBarEl=document.getElementById('fixed-cta-bar');
   if(ctaBarEl){
+    // #aboutセクション到達時に表示（works・voice通過後）
+    const _ctaRef=document.getElementById('about');
     lenis.on('scroll',({scroll})=>{
-      // ヒーローは height:200vh → ヒーロー抜けてから表示
-      if(scroll>window.innerHeight*2)ctaBarEl.classList.add('show');
+      const threshold=_ctaRef?_ctaRef.offsetTop:window.innerHeight*5;
+      if(scroll>threshold)ctaBarEl.classList.add('show');
       else ctaBarEl.classList.remove('show');
     });
   }
