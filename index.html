@@ -150,18 +150,16 @@ nav a:hover{color:var(--black)}
 @keyframes bar-drop{0%{transform:translateY(-100%)}100%{transform:translateY(300%)}}
 
 /* タグ */
-.h-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.35em;color:var(--gray-400);text-transform:uppercase;margin-bottom:2rem;opacity:0;transform:translateX(-20px);animation:slide-r .8s .9s forwards}
-@keyframes slide-r{to{opacity:1;transform:translateX(0)}}
+.h-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.35em;color:var(--gray-400);text-transform:uppercase;margin-bottom:2rem;opacity:0;visibility:hidden}
 
 /* タイトル文字アニメ */
 .h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,7rem);font-weight:300;line-height:1.05;letter-spacing:-.01em;margin-bottom:1.5rem}
 .line-wrap{display:block;overflow:hidden;padding-top:.7em;margin-right:-1em}
-.h-title .line{display:block;white-space:nowrap}
-.h-title .char{display:inline-block;opacity:0;transform:translateY(110%)}
-.h-title .char.char-run{animation:char-up .65s cubic-bezier(.77,0,.175,1) forwards}
+.h-title .line{display:block;white-space:nowrap;transform:translateY(110%)}
+.h-title .char{display:inline-block}
 .h-title em{font-style:italic;letter-spacing:-0.07em}
 
-.h-sub{font-size:.88rem;line-height:2.1;color:var(--gray-400);max-width:30em;margin-bottom:0 !important;opacity:0;transform:translateY(20px);animation:fu .8s 1.5s forwards}
+.h-sub{font-size:.88rem;line-height:2.1;color:var(--gray-400);max-width:30em;margin-bottom:0 !important;opacity:0;visibility:hidden}
 .sp-br{display:none}
 @keyframes fu{to{opacity:1;transform:translateY(0)}}
 /* HERO CTA */
@@ -1387,13 +1385,16 @@ function hideLoader(){
   ['p1','p2','p3','p4'].forEach((id,i)=>setTimeout(()=>{const p=document.getElementById(id);p&&p.classList.add('out');},i*400));
   const vid=document.getElementById('hero-video');
   if(vid){vid.src='hero-video.mp4';vid.play().catch(()=>{});}
-  // パネルが全部消えた後にタイトル文字アニメ開始
+  // パネルが全部消えた後（1.8s）にgrowin.jp方式でテキストリビール
   setTimeout(()=>{
-    document.querySelectorAll('#heroTitle .char').forEach((c,i)=>{
-      c.style.animationDelay=(i*55)+'ms';
-      c.classList.add('char-run');
-    });
-  },1800);
+    if(typeof gsap==='undefined')return;
+    gsap.timeline({ defaults:{ease:'power3.inOut'} })
+      .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%', duration:.65 }, 0)
+      .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.65 }, .1)
+      .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.65 }, .2)
+      .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, 0)
+      .to('.h-sub', { autoAlpha:1, duration:.7, ease:'power2.out' }, .25);
+  }, 1800);
 }
 window.addEventListener('load',()=>setTimeout(hideLoader,2300));
 setTimeout(()=>{if(!document.getElementById('loader').classList.contains('out'))hideLoader();},5000);
@@ -1472,7 +1473,9 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   });
 })();
 
-// HERO CANVAS — growin.jp KVスタイル（円形動画マスク + オレンジ曲線ストローク）
+// HERO CANVAS — growin.jp KVスタイル完全再現
+// ロード直後: テキスト + ライン描画、動画サークルr=0（非表示）
+// スクロール: テキスト退場 + サークルr=0→画面全体を覆うMAXに拡大 → 動画フルスクリーン表示
 (function(){
   const isSP = window.innerWidth <= 767;
   const BASE_W = isSP ? 375 : 1440;
@@ -1485,7 +1488,13 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   const video = document.getElementById('hero-video');
 
   // fitScale: canvasのCSS表示サイズ → BASE座標系へのマッピング
-  let fitScale = 1, fitOX = 0, fitOY = 0;
+  let fitScale = 1, fitOX = 0, fitOY = 0, circMax = 0;
+
+  // 円心（growin.jp: PC=右寄りセンター / SP=中央下寄り）
+  const CIRC = isSP
+    ? { x: 187, y: 560, r: 0 }
+    : { x: 1060, y: 375, r: 0 };
+
   function calcFit(){
     const dw = canvas.offsetWidth  || window.innerWidth;
     const dh = canvas.offsetHeight || window.innerHeight;
@@ -1493,17 +1502,20 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     fitScale = Math.max(sx, sy);
     fitOX = (dw - BASE_W * fitScale) / 2;
     fitOY = (dh - BASE_H * fitScale) / 2;
+    // 円心からviewport最遠隅までの距離 → 画面全体を覆うMAX半径
+    const vL = -fitOX / fitScale, vR = (dw - fitOX) / fitScale;
+    const vT = -fitOY / fitScale, vB = (dh  - fitOY) / fitScale;
+    circMax = Math.max(
+      Math.hypot(CIRC.x - vL, CIRC.y - vT),
+      Math.hypot(CIRC.x - vR, CIRC.y - vT),
+      Math.hypot(CIRC.x - vL, CIRC.y - vB),
+      Math.hypot(CIRC.x - vR, CIRC.y - vB)
+    ) * 1.05;
   }
   window.addEventListener('resize', calcFit);
   calcFit();
 
-  // 円形クリップ領域（growin.jp方式）
-  // PC: 右寄りセンター / SP: 下部センター（テキストの下に配置）
-  const CIRC = isSP
-    ? { x: 187, y: 560, r: 155 }   // SP: 画面下半分・中央
-    : { x: 1060, y: 375, r: 305 }; // PC: 右寄り・センター
-
-  // ベジェカーブ定義（growin.jp方式）
+  // ベジェカーブ定義（HAKUオリジナルカラー）
   const pcPaths = [
     { d:'M-150,680 C250,480 620,310 920,415 C1160,500 1380,155 1650,195', dir:'horizontal' },
     { d:'M1650,-55 C1240,200 790,360 540,275 C290,210 40,530 -150,645',  dir:'horizontal' },
@@ -1534,29 +1546,31 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   function draw(){
     ctx.clearRect(0, 0, BASE_W, BASE_H);
-
-    const n  = fitScale;
-    const lw = (isSP ? 70 : 90) / n;
+    const n = fitScale;
 
     ctx.save();
     ctx.translate(fitOX, fitOY);
     ctx.scale(n, n);
 
-    // ① 円形動画クリップ（growin.jpのKVビジュアル）
-    if(video.readyState >= 2){
+    // ① 動画サークル（r>0のときのみ描画）
+    // 動画はcanvas全体にカバーフィットして、サークルでクリップ
+    if(CIRC.r > 0.5 && video.readyState >= 2){
       ctx.save();
       ctx.beginPath();
       ctx.arc(CIRC.x, CIRC.y, CIRC.r, 0, Math.PI * 2);
       ctx.clip();
-      ctx.drawImage(video,
-        CIRC.x - CIRC.r, CIRC.y - CIRC.r,
-        CIRC.r * 2,      CIRC.r * 2
-      );
+      const vw = video.videoWidth  || BASE_W;
+      const vh = video.videoHeight || BASE_H;
+      const vs = Math.max(BASE_W / vw, BASE_H / vh);
+      const dx = (BASE_W - vw * vs) / 2;
+      const dy = (BASE_H - vh * vs) / 2;
+      ctx.drawImage(video, dx, dy, vw * vs, vh * vs);
       ctx.restore();
     }
 
     // ② 曲線ストローク（HAKUオリジナルカラー）
     if(lineAlpha > 0){
+      const lw = (isSP ? 70 : 90) / n;
       ctx.globalAlpha = lineAlpha;
       ctx.lineCap = ctx.lineJoin = 'round';
       ctx.lineWidth = lw;
@@ -1564,14 +1578,12 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       pathData.forEach(p => {
         if(p.dashOffset <= -1.05 || p.dashOffset >= 1.05) return;
         const scaledLen = p.length * n;
-
         const grad = p.dir === 'vertical'
           ? ctx.createLinearGradient(0, 0, 0, BASE_H * n)
           : ctx.createLinearGradient(0, 0, BASE_W * n, 0);
         grad.addColorStop(0,   'rgba(10,10,10,0)');
         grad.addColorStop(0.5, 'rgba(10,10,10,0.10)');
         grad.addColorStop(1,   'rgba(10,10,10,0.16)');
-
         ctx.save();
         ctx.setLineDash([scaledLen]);
         ctx.lineDashOffset = scaledLen * p.dashOffset;
@@ -1588,23 +1600,29 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   gsap.ticker.add(draw);
 
-  // -- アニメーション（growin.jp方式：3本を並列・スタガーで独立ループ） --
+  // -- ライン描画ループ（3本並列・スタガー） --
   const alphaProxy = { v: 0 };
+  let lineTimelines = [];
 
   function startLines(){
+    stopLines();
     resetDash();
     const ratio = (isSP ? 150 : 200) / fitScale;
-    // 各パスを独立したタイムラインで同時スタート（stagger 1.6s）
-    pathData.forEach((p, i) => {
+    lineTimelines = pathData.map((p, i) => {
       const end = -1 - ratio / p.length;
-      gsap.timeline({ repeat: -1, delay: i * 1.6 })
+      return gsap.timeline({ repeat: -1, delay: i * 1.6 })
         .to(p, { dashOffset: 0,   duration: 2.8, ease: 'power2.inOut' })
         .to(p, { dashOffset: end, duration: 2.8, ease: 'power2.inOut' })
         .set(p, { dashOffset: 1 + ratio / p.length });
     });
   }
 
-  // ローダー消えた直後（2500ms）にフェードイン → ライン開始
+  function stopLines(){
+    lineTimelines.forEach(tl => tl.kill());
+    lineTimelines = [];
+  }
+
+  // ローダー後（2500ms）にライン開始
   setTimeout(() => {
     gsap.to(alphaProxy, {
       v: 1, duration: 1, ease: 'power2.out',
@@ -1613,14 +1631,54 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     });
   }, 2500);
 
-  // ヒーロー退場 → フェードアウト / 戻り → フェードイン
+  // -- ScrollTrigger: growin.jp完全再現 --
+  let inImageMode = false;
+
+  function toImageMode(){
+    if(inImageMode) return;
+    inImageMode = true;
+    // ライン停止
+    gsap.to(alphaProxy, { v:0, duration:.4, ease:'power2.out',
+      onUpdate: ()=>{ lineAlpha = alphaProxy.v; },
+      onComplete: stopLines
+    });
+    gsap.timeline()
+      // テキスト退場（line1→下、line2/3→上）
+      .to('.h-title .line-wrap:nth-child(1) .line', { y:'110%', duration:.5, ease:'power3.out' }, 0)
+      .to('.h-title .line-wrap:nth-child(2) .line', { y:'-110%', duration:.5, ease:'power3.out' }, 0)
+      .to('.h-title .line-wrap:nth-child(3) .line', { y:'-110%', duration:.5, ease:'power3.out' }, 0)
+      .to('.h-tag', { autoAlpha:0, duration:.35 }, 0)
+      .to('.h-sub', { autoAlpha:0, duration:.35 }, 0)
+      // サークル拡大（r=0→画面全体を覆うcircMax）
+      .to(CIRC, { r: circMax, duration:.85, ease:'power2.inOut' }, .05);
+  }
+
+  function toLineMode(){
+    if(!inImageMode) return;
+    inImageMode = false;
+    // サークル縮小
+    gsap.to(CIRC, { r:0, duration:.6, ease:'power2.inOut',
+      onComplete: () => {
+        gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
+          onUpdate: ()=>{ lineAlpha = alphaProxy.v; },
+          onComplete: startLines
+        });
+      }
+    });
+    // テキスト復帰
+    gsap.timeline({ delay:.3 })
+      .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
+      .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
+      .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
+      .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
+      .to('.h-sub', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15);
+  }
+
   ScrollTrigger.create({
     trigger: '#hero',
-    start: 'top+=100 top',
-    onEnter:     () => gsap.to(alphaProxy, { v: 0, duration: 0.5, ease: 'power2.out',
-                                onUpdate: () => { lineAlpha = alphaProxy.v; } }),
-    onLeaveBack: () => gsap.to(alphaProxy, { v: 1, duration: 0.6, ease: 'power2.out',
-                                onUpdate: () => { lineAlpha = alphaProxy.v; } })
+    start: 'top+=80 top',
+    onEnter:     toImageMode,
+    onLeaveBack: toLineMode
   });
 })();
 
