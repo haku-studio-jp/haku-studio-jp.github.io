@@ -1660,8 +1660,8 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     });
     gsap.timeline()
       .to('.h-title .line-wrap:nth-child(1) .line', { y:'130%',  duration:.5, ease:'power3.out' }, 0)
-      .to('.h-title .line-wrap:nth-child(2) .line', { y:'-130%', duration:.5, ease:'power3.out' }, .05)
-      .to('.h-title .line-wrap:nth-child(3) .line', { y:'-130%', duration:.5, ease:'power3.out' }, .1)
+      .to('.h-title .line-wrap:nth-child(2) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .05)
+      .to('.h-title .line-wrap:nth-child(3) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .1)
       .to('.h-tag',            { autoAlpha:0, duration:.3 }, 0)
       .to('.h-sub',            { autoAlpha:0, duration:.3 }, 0)
       .to('.hero-scroll-line', { autoAlpha:0, duration:.3 }, 0)
@@ -1673,21 +1673,21 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   function toLineMode(){
     if(!inImageMode) return; inImageMode = false;
-    // キャンバスをテキスト背面に戻す
-    canvas.style.zIndex = '1';
+    // growin.jp準拠: CIRC縮小が完全に終わってからテキスト復帰
     gsap.to(CIRC, { r:0, duration:.6, ease:'power2.inOut', onComplete:()=>{
+      canvas.style.zIndex = '1'; // 円が消えてからキャンバス背面へ
       gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
         onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:startLines
       });
+      gsap.timeline()
+        .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
+        .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
+        .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
+        .to('.h-tag',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
+        .to('.h-sub',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
+        .to('.hero-scroll-line', { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
+        .to('.hero-lines',       { autoAlpha:1, duration:.5, ease:'power2.out' }, .2);
     }});
-    gsap.timeline({ delay:.3 })
-      .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
-      .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
-      .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
-      .to('.h-tag',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
-      .to('.h-sub',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
-      .to('.hero-scroll-line', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
-      .to('.hero-lines',       { autoAlpha:1, duration:.5, ease:'power2.out' }, .15);
   }
 
   // growin.jp方式: height:200vh + sticky
