@@ -515,8 +515,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .ct-line-btn,.ct-mail-btn{width:100%;max-width:300px;padding:1.3rem 2rem}
 
   .h-title{font-size:clamp(2.4rem,11.5vw,5.5rem) !important;text-align:center !important;width:100%;line-height:1.25;margin-top:1.2rem}
-  .h-title .line-wrap{text-align:center !important;width:100%}
-  .h-title .line{display:flex !important;justify-content:center !important;width:100%}
+  .h-title .line-wrap{text-align:center !important;width:100%;display:block !important}
+  .h-title .line{display:block !important;text-align:center !important;width:100%;white-space:normal !important}
   .line-wrap{margin-right:0}
   .h-tag{font-size:0.65rem;text-align:center;width:100%}
   .h-sub{font-size:.75rem;line-height:1.95;max-width:28em;margin-top:2rem;margin-left:auto;margin-right:auto;word-break:keep-all;overflow-wrap:anywhere;line-break:strict;text-align:center;margin-bottom:2.5rem}
@@ -1472,16 +1472,26 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   lines.forEach((line,li)=>{
     const wrap=document.createElement('div');
     wrap.className='line-wrap';
-    if(_sp){wrap.style.textAlign='center';wrap.style.width='100%';}
     const span=document.createElement('span');
     span.className='line';
-    if(_sp){span.style.display='flex';span.style.justifyContent='center';span.style.width='100%';}
-    [...line.text].forEach((ch,ci)=>{
-      const c=document.createElement(line.italic?'em':'span');
-      c.className='char';
-      c.textContent=ch;
-      span.appendChild(c);
-    });
+    if(_sp){
+      // SP: 文字分割せずテキストをそのまま入れる（text-align:centerで確実センタリング）
+      if(line.italic){
+        const em=document.createElement('em');
+        em.textContent=line.text;
+        span.appendChild(em);
+      } else {
+        span.textContent=line.text;
+      }
+    } else {
+      // PC: 文字ごとにspan.charに分割（growin.jpスタイル）
+      [...line.text].forEach((ch)=>{
+        const c=document.createElement(line.italic?'em':'span');
+        c.className='char';
+        c.textContent=ch;
+        span.appendChild(c);
+      });
+    }
     wrap.appendChild(span);
     el.appendChild(wrap);
   });
