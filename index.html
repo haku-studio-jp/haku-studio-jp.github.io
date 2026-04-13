@@ -1653,11 +1653,14 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:stopLines
     });
     gsap.timeline()
-      .to('.h-title .line-wrap:nth-child(1) .line', { y:'110%',  duration:.5, ease:'power3.out' }, 0)
-      .to('.h-title .line-wrap:nth-child(2) .line', { y:'-110%', duration:.5, ease:'power3.out' }, 0)
-      .to('.h-title .line-wrap:nth-child(3) .line', { y:'-110%', duration:.5, ease:'power3.out' }, 0)
-      .to('.h-tag', { autoAlpha:0, duration:.35 }, 0)
-      .to('.h-sub', { autoAlpha:0, duration:.35 }, 0)
+      // line1: 下へ退場（padding-topなし方向なので110%で確実に消える）
+      .to('.h-title .line-wrap:nth-child(1) .line', { y:'120%',  duration:.5, ease:'power3.out' }, 0)
+      // line2,3: 上へ退場 — padding-top:.7em分を加味して200%に
+      .to('.h-title .line-wrap:nth-child(2) .line', { y:'-200%', duration:.5, ease:'power3.out' }, .05)
+      .to('.h-title .line-wrap:nth-child(3) .line', { y:'-200%', duration:.5, ease:'power3.out' }, .1)
+      .to('.h-tag',             { autoAlpha:0, duration:.3 }, 0)
+      .to('.h-sub',             { autoAlpha:0, duration:.3 }, 0)
+      .to('.hero-scroll-line',  { autoAlpha:0, duration:.3 }, 0)
       .to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut' }, .05);
   }
 
@@ -1669,11 +1672,12 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       });
     }});
     gsap.timeline({ delay:.3 })
-      .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
-      .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
-      .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
-      .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
-      .to('.h-sub', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15);
+      .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%',    duration:.6, ease:'power4.out' }, 0)
+      .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%',    duration:.6, ease:'power4.out' }, 0)
+      .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%',    duration:.6, ease:'power4.out' }, 0)
+      .to('.h-tag',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
+      .to('.h-sub',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
+      .to('.hero-scroll-line', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15);
   }
 
   // growin.jp方式: height:200vh + sticky でスクロールしながらヒーロー固定
