@@ -1393,7 +1393,8 @@ function hideLoader(){
       .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.65 }, .1)
       .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.65 }, .2)
       .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, 0)
-      .to('.h-sub', { autoAlpha:1, duration:.7, ease:'power2.out' }, .25);
+      .to('.h-sub', { autoAlpha:1, duration:.7, ease:'power2.out' }, .25)
+      .add(()=>{ if(typeof window.lockHeroScroll==='function') window.lockHeroScroll(); }, 1.0);
   }, 1800);
 }
 window.addEventListener('load',()=>setTimeout(hideLoader,2300));
@@ -1672,13 +1673,38 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
       .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
       .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
-      .to('.h-sub', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15);
+      .to('.h-sub', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
+      .add(lockHeroScroll, 1.0);
   }
 
-  ScrollTrigger.create({
-    trigger: '#hero', start: 'top+=80 top',
-    onEnter: toImageMode, onLeaveBack: toLineMode
+  // ─── スクロールロック ───────────────────────────────
+  // ヒーロー表示中はlenis.stop()でロック。
+  // wheel/touchstart で一度だけ解除→toImageMode()。
+  // 先頭(scroll<10)に戻ったら再ロック→toLineMode()。
+  let hasScrolledDown = false;
+
+  function lockHeroScroll() {
+    lenis.stop();
+    const onIntent = () => {
+      window.removeEventListener('wheel',     onIntent);
+      window.removeEventListener('touchstart', onIntent);
+      lenis.start();
+      toImageMode();
+    };
+    window.addEventListener('wheel',      onIntent, { passive: true });
+    window.addEventListener('touchstart', onIntent, { passive: true });
+  }
+
+  lenis.on('scroll', ({ scroll }) => {
+    if (scroll > 50) hasScrolledDown = true;
+    if (scroll < 10 && inImageMode && hasScrolledDown) {
+      hasScrolledDown = false;
+      toLineMode();
+    }
   });
+
+  // hideLoader から呼べるよう公開
+  window.lockHeroScroll = lockHeroScroll;
 })();
 
 
