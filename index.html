@@ -2,7 +2,10 @@
 <html lang="ja">
 <head>
 <script>
-  window.location.href = "https://haku-studio.jp";
+  // github.io経由でアクセスした時だけカスタムドメインへリダイレクト
+  if(location.hostname !== 'haku-studio.jp') {
+    window.location.href = "https://haku-studio.jp";
+  }
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1370,6 +1373,12 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <script>
 // ① LOADER（最優先 — GSAP/Lenis初期化より前に実行してエラーの影響を受けない）
+// エラー追跡（ローダー数値にエラー行を表示）
+window.onerror=function(msg,src,line){
+  const c=document.getElementById('ldCount');
+  if(c)c.textContent='ERR:'+line;
+  console.error('JS Error line '+line+': '+msg);
+};
 let n=0;
 const fill=document.getElementById('ldFill'),cnt=document.getElementById('ldCount');
 const t=setInterval(()=>{
