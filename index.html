@@ -159,7 +159,7 @@ nav a:hover{color:var(--black)}
 .h-title .char{display:inline-block}
 .h-title em{font-style:italic;letter-spacing:-0.07em}
 
-.h-sub{font-size:.88rem;line-height:2.1;color:var(--gray-400);max-width:30em;margin-bottom:0 !important;opacity:0;visibility:hidden;word-break:keep-all;overflow-wrap:anywhere;line-break:strict}
+.h-sub{font-size:.88rem;line-height:2.1;color:var(--gray-400);max-width:34em;margin-bottom:0 !important;opacity:0;visibility:hidden;word-break:keep-all;overflow-wrap:anywhere;line-break:strict}
 .sp-br{display:none}
 @keyframes fu{to{opacity:1;transform:translateY(0)}}
 /* HERO CTA */
@@ -1597,16 +1597,16 @@ document.querySelectorAll('.fq-q').forEach(q=>{
         ctx.drawImage(off, 0, 0, BASE_W, BASE_H);
         ctx.globalAlpha = 1;
       } else {
-        // 動画未ロード時フォールバック: シンプルな暗いストローク
+        // 動画未ロード時フォールバック: ダークストローク（視認性を確保）
         offCtx.globalCompositeOperation = 'source-over';
-        ctx.globalAlpha = lineAlpha * 0.12;
+        ctx.globalAlpha = lineAlpha * 0.55;
         ctx.strokeStyle = 'rgba(10,10,10,1)';
         ctx.lineWidth = LINE_W / n;
         ctx.lineCap = ctx.lineJoin = 'round';
         pathData.forEach(p => {
           if(Math.abs(p.dashOffset) >= 1.02) return;
-          ctx.setLineDash([p.length * n]);
-          ctx.lineDashOffset = p.length * n * p.dashOffset;
+          ctx.setLineDash([p.length]);
+          ctx.lineDashOffset = p.length * p.dashOffset;
           ctx.stroke(p.path2d);
         });
         ctx.globalAlpha = 1;
@@ -1650,10 +1650,10 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   // テキストリビール完了後にhideLoaderから呼ばれる（growin.jp順序: テキスト先行→ライン）
   window.startHeroLines = function() {
+    startLines(); // ← 即座にアニメ開始（lineAlpha fade-inと並行）
     gsap.to(alphaProxy, {
       v: 1, duration: 1, ease: 'power2.out',
-      onUpdate:   () => { lineAlpha = alphaProxy.v; },
-      onComplete: startLines
+      onUpdate: () => { lineAlpha = alphaProxy.v; }
     });
   };
 
@@ -1701,10 +1701,10 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   }
 
   // growin.jp方式: height:200vh + sticky
-  // start:30% = ビューポート高さの30%スクロールで発火（早すぎる発火を防ぐ）
+  // start:top+=100 top = 100pxスクロール後に発火（growin.jp完全準拠）
   ScrollTrigger.create({
     trigger: '#hero',
-    start: 'top+=30% top',
+    start: 'top+=100 top',
     onEnter:     toImageMode,
     onLeaveBack: toLineMode
   });
