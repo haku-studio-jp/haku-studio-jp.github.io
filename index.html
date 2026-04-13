@@ -515,8 +515,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .ct-line-btn,.ct-mail-btn{width:100%;max-width:300px;padding:1.3rem 2rem}
 
   .h-title{font-size:clamp(2.4rem,11.5vw,5.5rem) !important;width:100%;line-height:1.25;margin-top:1.2rem}
-  .h-title .line-wrap{display:block !important;overflow:hidden !important;padding-top:.7em;margin:0}
-  .h-title .line{display:block !important;white-space:nowrap !important}
+  .h-title .line-wrap{display:flex !important;justify-content:center !important;overflow:hidden !important;padding-top:.7em;margin:0}
+  .h-title .line{white-space:nowrap !important}
   .line-wrap{margin-right:0}
   .h-tag{font-size:0.65rem;text-align:center;width:100%}
   .h-sub{font-size:.75rem;line-height:1.95;max-width:28em;margin-top:2rem;margin-left:auto;margin-right:auto;word-break:keep-all;overflow-wrap:anywhere;line-break:strict;text-align:center;margin-bottom:2.5rem}
@@ -1496,25 +1496,7 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     el.appendChild(wrap);
   });
 
-  // SP: フォント読込後に実テキスト幅を計測してpxでセンタリング
-  // （CSS max-content は iOS Safari + flex 内 block で信頼できないため JS で処理）
-  if(_sp){
-    document.fonts.ready.then(()=>{
-      const contW=el.offsetWidth;
-      el.querySelectorAll('.line-wrap').forEach(wrap=>{
-        const line=wrap.querySelector('.line');
-        if(!line)return;
-        // display:inline に一時変更して実幅を計測
-        line.style.setProperty('display','inline','important');
-        const w=line.getBoundingClientRect().width;
-        line.style.removeProperty('display'); // CSSの display:block !important に戻る
-        if(w>0&&w<contW){
-          wrap.style.width=Math.ceil(w)+'px';
-          wrap.style.marginLeft=Math.floor((contW-w)/2)+'px';
-        }
-      });
-    });
-  }
+  // SP: センタリングは CSS flex で処理（JS不要）
 })();
 
 // HERO CANVAS — growin.jp KVスタイル完全再現
@@ -1573,11 +1555,26 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     // ほぼ縦方向（中央）
     'M250,60 C340,220 200,400 290,560 C360,690 180,760 200,920'
   ];
-  const pathData = (isSP ? spPaths : pcPaths).map(d => {
-    const el = document.createElementNS('http://www.w3.org/2000/svg','path');
-    el.setAttribute('d', d);
-    return { path2d: new Path2D(d), length: el.getTotalLength(), dashOffset: 1.05 };
-  });
+  // getTotalLength: Safari は detached SVG で 0 を返す場合があるため DOM 一時追加で再計測
+  function getSvgPathLength(d){
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',d);
+    let len=0;
+    try{ len=p.getTotalLength(); }catch(e){}
+    if(!len){
+      const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg.style.cssText='position:fixed;top:-9999px;width:1px;height:1px;overflow:hidden;visibility:hidden';
+      svg.appendChild(p);
+      document.body.appendChild(svg);
+      try{ len=p.getTotalLength(); }catch(e){}
+      document.body.removeChild(svg);
+      if(!len) len=1200;
+    }
+    return len;
+  }
+  const pathData = (isSP ? spPaths : pcPaths).map(d => ({
+    path2d: new Path2D(d), length: getSvgPathLength(d), dashOffset: 1.05
+  }));
 
   // 動画をBASE座標にカバーフィットで描画（共通ヘルパー）
   function drawVideoCover(c){
@@ -1699,6 +1696,7 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   function toImageMode(){
     if(!heroReady || inImageMode) return;
+    if(window.scrollY < 20) return; // ブラウザスクロール復元・誤発火防止（20px未満は無視）
     inImageMode = true;
     lenis.stop();
     // ラインを即座に消す（テキスト退場中に動画が見えないように）
@@ -1742,7 +1740,11 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   // growin.jp方式: height:200vh + sticky
   // start:80px + 時間ガード = iOS Safari誤発火防止
-  window.setHeroReady = function(){ heroReady = true; lenis.start(); };
+  window.setHeroReady = function(){
+    heroReady = true;
+    window.scrollTo(0, 0); // ページロード時のスクロール位置をリセット
+    lenis.start();
+  };
 
   ScrollTrigger.create({
     trigger: '#hero',
