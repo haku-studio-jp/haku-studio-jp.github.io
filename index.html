@@ -1369,34 +1369,30 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
 
 <script>
-// LENIS + GSAP 初期化
-gsap.registerPlugin(ScrollTrigger);
-const lenis = new Lenis({ lerp: 0.12 });
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add((time) => lenis.raf(time * 1000));
-gsap.ticker.lagSmoothing(0);
-
-
-// LOADER
+// ① LOADER（最優先 — GSAP/Lenis初期化より前に実行してエラーの影響を受けない）
 let n=0;
 const fill=document.getElementById('ldFill'),cnt=document.getElementById('ldCount');
 const t=setInterval(()=>{
   n+=Math.floor(Math.random()*12)+5;
   if(n>=100){n=100;clearInterval(t);}
-  fill.style.width=n+'%';cnt.textContent=n;
+  if(fill)fill.style.width=n+'%';
+  if(cnt)cnt.textContent=n;
 },55);
-// ローダー消去（最大3秒待ちでも強制消去）
 function hideLoader(){
   document.getElementById('loader').classList.add('out');
-  const panels=[document.getElementById('p1'),document.getElementById('p2'),document.getElementById('p3'),document.getElementById('p4')];
-  panels.forEach((p,i)=>setTimeout(()=>p&&p.classList.add('out'),i*400));
-  // ローダー消去後に動画src設定→再生（load event をブロックさせない）
+  ['p1','p2','p3','p4'].forEach((id,i)=>setTimeout(()=>{const p=document.getElementById(id);p&&p.classList.add('out');},i*400));
   const vid=document.getElementById('hero-video');
-  vid.src='hero-video.mp4';
-  vid.play().catch(()=>{});
+  if(vid){vid.src='hero-video.mp4';vid.play().catch(()=>{});}
 }
 window.addEventListener('load',()=>setTimeout(hideLoader,2300));
 setTimeout(()=>{if(!document.getElementById('loader').classList.contains('out'))hideLoader();},5000);
+
+// ② LENIS + GSAP 初期化
+gsap.registerPlugin(ScrollTrigger);
+const lenis = new Lenis({ lerp: 0.12 });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
 
 // HEADER
 const hdr=document.getElementById('hdr');
