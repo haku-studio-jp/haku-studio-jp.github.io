@@ -1540,7 +1540,7 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   }
 
   let lineAlpha = 0;
-  const LINE_W = 110; // growin.jp風: 細めの帯でビデオを見せる
+  const LINE_W = isSP ? 38 : 110; // SP: 38/375px=10%幅, PC: 110/1440px=7.6%幅
 
   function draw(){
     ctx.clearRect(0, 0, BASE_W, BASE_H);
