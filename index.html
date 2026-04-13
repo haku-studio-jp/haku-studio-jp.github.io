@@ -159,7 +159,7 @@ nav a:hover{color:var(--black)}
 .h-title .char{display:inline-block}
 .h-title em{font-style:italic;letter-spacing:-0.07em}
 
-.h-sub{font-size:.88rem;line-height:2.1;color:var(--gray-400);max-width:30em;margin-bottom:0 !important;opacity:0;visibility:hidden}
+.h-sub{font-size:.88rem;line-height:2.1;color:var(--gray-400);max-width:30em;margin-bottom:0 !important;opacity:0;visibility:hidden;word-break:keep-all;overflow-wrap:anywhere;line-break:strict}
 .sp-br{display:none}
 @keyframes fu{to{opacity:1;transform:translateY(0)}}
 /* HERO CTA */
@@ -759,7 +759,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     <div class="hero-l">
       <div class="h-tag">WEB DESIGN STUDIO · IBARAKI</div>
       <h1 class="h-title" id="heroTitle"></h1>
-      <p class="h-sub">茨城県日立市を拠点に、飲食店・店舗・中小企業の<br class="sp-br">ホームページ制作を手がけるWebデザインスタジオです。シンプルで美しく、伝わるデザインを提供します。</p>
+      <p class="h-sub">茨城県日立市を拠点に、飲食店・店舗・中小企業の<br class="sp-br">ホームページ制作を手がけるWebデザインスタジオです。<br>シンプルで美しく、伝わるデザインを提供します。</p>
     </div>
     <div class="hero-scroll-line">
       <div class="hero-scroll-txt">Scroll</div>
@@ -1371,6 +1371,10 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
 
 <script>
+// スクロール復元を無効化（ページロード時に動画が見える誤発火を防ぐ）
+if(history.scrollRestoration) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
 // ① LOADER（最優先 — GSAP/Lenis初期化より前に実行してエラーの影響を受けない）
 let n=0;
 const fill=document.getElementById('ldFill'),cnt=document.getElementById('ldCount');
