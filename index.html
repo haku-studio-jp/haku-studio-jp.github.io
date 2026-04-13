@@ -515,7 +515,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .ct-line-btn,.ct-mail-btn{width:100%;max-width:300px;padding:1.3rem 2rem}
 
   .h-title{font-size:clamp(2.4rem,11.5vw,5.5rem) !important;width:100%;line-height:1.25;margin-top:1.2rem}
-  .h-title .line-wrap{display:block !important;position:relative !important;left:50% !important;-webkit-transform:translateX(-50%) !important;transform:translateX(-50%) !important;width:-webkit-max-content !important;width:max-content !important;overflow:hidden !important;padding-top:.7em;margin:0 !important}
+  .h-title .line-wrap{display:block !important;overflow:hidden !important;padding-top:.7em;margin:0}
   .h-title .line{display:block !important;white-space:nowrap !important}
   .line-wrap{margin-right:0}
   .h-tag{font-size:0.65rem;text-align:center;width:100%}
@@ -1495,6 +1495,26 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     wrap.appendChild(span);
     el.appendChild(wrap);
   });
+
+  // SP: フォント読込後に実テキスト幅を計測してpxでセンタリング
+  // （CSS max-content は iOS Safari + flex 内 block で信頼できないため JS で処理）
+  if(_sp){
+    document.fonts.ready.then(()=>{
+      const contW=el.offsetWidth;
+      el.querySelectorAll('.line-wrap').forEach(wrap=>{
+        const line=wrap.querySelector('.line');
+        if(!line)return;
+        // display:inline に一時変更して実幅を計測
+        line.style.setProperty('display','inline','important');
+        const w=line.getBoundingClientRect().width;
+        line.style.removeProperty('display'); // CSSの display:block !important に戻る
+        if(w>0&&w<contW){
+          wrap.style.width=Math.ceil(w)+'px';
+          wrap.style.marginLeft=Math.floor((contW-w)/2)+'px';
+        }
+      });
+    });
+  }
 })();
 
 // HERO CANVAS — growin.jp KVスタイル完全再現
