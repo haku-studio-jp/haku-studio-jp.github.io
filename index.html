@@ -1468,11 +1468,14 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   ];
   const el=document.getElementById('heroTitle');
   if(!el)return;
+  const _sp=window.innerWidth<=960;
   lines.forEach((line,li)=>{
     const wrap=document.createElement('div');
     wrap.className='line-wrap';
+    if(_sp){wrap.style.textAlign='center';wrap.style.width='100%';}
     const span=document.createElement('span');
     span.className='line';
+    if(_sp){span.style.display='flex';span.style.justifyContent='center';span.style.width='100%';}
     [...line.text].forEach((ch,ci)=>{
       const c=document.createElement(line.italic?'em':'span');
       c.className='char';
