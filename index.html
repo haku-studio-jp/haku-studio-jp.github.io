@@ -112,7 +112,7 @@ nav a{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:
 nav a:hover{color:var(--black)}
 
 /* HERO */
-#hero{position:relative;height:calc(100vh + 80px);background:var(--white)}
+#hero{position:relative;height:calc(100vh + 80px);background:#eaebef}
 .hero-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:clip}
 .hero-l{display:flex;flex-direction:column;justify-content:flex-end;padding:0 5rem 6rem 5rem;position:relative;z-index:2;max-width:900px}
 
@@ -749,6 +749,8 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 
 <!-- HERO -->
 <section id="hero">
+  <video id="hero-video" src="hero-video.mp4" autoplay muted loop playsinline aria-hidden="true"
+    style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px"></video>
   <div class="hero-sticky">
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-lines"><span></span><span></span><span></span><span></span></div>
@@ -949,7 +951,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     </a>
 
     <!-- あおば整体院 -->
-    <a href="https://haku-studio-jp.github.io/demo-seikotsuin/" target="_blank" class="w-card rv d2">
+    <a href="https://haku-studio.jp/demo-seikotsuin/" target="_blank" class="w-card rv d2">
       <div class="w-thumb">
         <img src="aoba-thumb.jpg" alt="あおば整体院">
       </div>
@@ -965,9 +967,9 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     </a>
 
     <!-- 酒場 燈 -->
-    <a href="https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/" target="_blank" class="w-card rv d3">
+    <a href="https://haku-studio.jp/demo-izakaya/demo-izakaya/" target="_blank" class="w-card rv d3">
       <div class="w-thumb">
-        <img src="https://haku-studio-jp.github.io/demo-izakaya/demo-izakaya/food1.jpg" alt="酒場 燈">
+        <img src="https://haku-studio.jp/demo-izakaya/demo-izakaya/food1.jpg" alt="酒場 燈">
       </div>
       <div class="w-body">
         <div class="w-cats">
@@ -1456,7 +1458,7 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   });
 })();
 
-// HERO CANVAS マーカーライン（growin.jp方式・色はhakaパレット）
+// HERO CANVAS — growin.jp KVスタイル（円形動画マスク + オレンジ曲線ストローク）
 (function(){
   const isSP = window.innerWidth <= 767;
   const BASE_W = isSP ? 375 : 1440;
@@ -1466,6 +1468,7 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   canvas.width  = BASE_W;
   canvas.height = BASE_H;
   const ctx = canvas.getContext('2d');
+  const video = document.getElementById('hero-video');
 
   // fitScale: canvasのCSS表示サイズ → BASE座標系へのマッピング
   let fitScale = 1, fitOX = 0, fitOY = 0;
@@ -1480,7 +1483,13 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   window.addEventListener('resize', calcFit);
   calcFit();
 
-  // ベジェカーブ定義
+  // 円形クリップ領域（growin.jp方式）
+  // PC: 右寄りセンター / SP: 下部センター（テキストの下に配置）
+  const CIRC = isSP
+    ? { x: 187, y: 560, r: 155 }   // SP: 画面下半分・中央
+    : { x: 1060, y: 375, r: 305 }; // PC: 右寄り・センター
+
+  // ベジェカーブ定義（growin.jp方式）
   const pcPaths = [
     { d:'M-150,680 C250,480 620,310 920,415 C1160,500 1380,155 1650,195', dir:'horizontal' },
     { d:'M1650,-55 C1240,200 790,360 540,275 C290,210 40,530 -150,645',  dir:'horizontal' },
@@ -1511,40 +1520,56 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   function draw(){
     ctx.clearRect(0, 0, BASE_W, BASE_H);
-    if(lineAlpha <= 0) return;
 
     const n  = fitScale;
-    const lw = (isSP ? 80 : 100) / n; // BASE座標での線幅 → 表示で約100px
+    const lw = (isSP ? 70 : 90) / n;
 
     ctx.save();
     ctx.translate(fitOX, fitOY);
     ctx.scale(n, n);
-    ctx.globalAlpha = lineAlpha;
-    ctx.lineCap = ctx.lineJoin = 'round';
-    ctx.lineWidth = lw;
 
-    pathData.forEach(p => {
-      if(p.dashOffset <= -0.99 || p.dashOffset >= 1) return;
-      const scaledLen = p.length * n;
-
-      // タウプ色グラデーション（--white:#fafaf8 を汚さない透明→暖色）
-      const grad = p.dir === 'vertical'
-        ? ctx.createLinearGradient(0, 0, 0, BASE_H * n)
-        : ctx.createLinearGradient(0, 0, BASE_W * n, 0);
-      grad.addColorStop(0,   'rgba(10,10,10,0)');
-      grad.addColorStop(0.5, 'rgba(10,10,10,0.10)');
-      grad.addColorStop(1,   'rgba(10,10,10,0.16)');
-
+    // ① 円形動画クリップ（growin.jpのKVビジュアル）
+    if(video.readyState >= 2){
       ctx.save();
-      ctx.setLineDash([scaledLen]);
-      ctx.lineDashOffset = scaledLen * p.dashOffset;
-      ctx.strokeStyle = grad;
-      ctx.stroke(p.path2d);
+      ctx.beginPath();
+      ctx.arc(CIRC.x, CIRC.y, CIRC.r, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.drawImage(video,
+        CIRC.x - CIRC.r, CIRC.y - CIRC.r,
+        CIRC.r * 2,      CIRC.r * 2
+      );
       ctx.restore();
-    });
+    }
+
+    // ② オレンジ曲線ストローク（growin.jpのカラー #E9450A）
+    if(lineAlpha > 0){
+      ctx.globalAlpha = lineAlpha;
+      ctx.lineCap = ctx.lineJoin = 'round';
+      ctx.lineWidth = lw;
+
+      pathData.forEach(p => {
+        if(p.dashOffset <= -0.99 || p.dashOffset >= 1) return;
+        const scaledLen = p.length * n;
+
+        const grad = p.dir === 'vertical'
+          ? ctx.createLinearGradient(0, 0, 0, BASE_H * n)
+          : ctx.createLinearGradient(0, 0, BASE_W * n, 0);
+        grad.addColorStop(0,   'rgba(233,69,10,0)');
+        grad.addColorStop(0.4, 'rgba(233,69,10,0.55)');
+        grad.addColorStop(1,   'rgba(233,69,10,0.8)');
+
+        ctx.save();
+        ctx.setLineDash([scaledLen]);
+        ctx.lineDashOffset = scaledLen * p.dashOffset;
+        ctx.strokeStyle = grad;
+        ctx.stroke(p.path2d);
+        ctx.restore();
+      });
+
+      ctx.globalAlpha = 1;
+    }
 
     ctx.restore();
-    ctx.globalAlpha = 1;
   }
 
   gsap.ticker.add(draw);
