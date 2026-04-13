@@ -1696,7 +1696,6 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   function toImageMode(){
     if(!heroReady || inImageMode) return;
-    if(window.scrollY < 20) return; // ブラウザスクロール復元・誤発火防止（20px未満は無視）
     inImageMode = true;
     lenis.stop();
     // ラインを即座に消す（テキスト退場中に動画が見えないように）
@@ -1742,7 +1741,8 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   // start:80px + 時間ガード = iOS Safari誤発火防止
   window.setHeroReady = function(){
     heroReady = true;
-    window.scrollTo(0, 0); // ページロード時のスクロール位置をリセット
+    window.scrollTo(0, 0); // ブラウザスクロール復元リセット
+    ScrollTrigger.update();  // リセット後にトリガー状態を再評価（再発火可能にする）
     lenis.start();
   };
 
