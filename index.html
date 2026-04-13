@@ -1394,7 +1394,8 @@ function hideLoader(){
       .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.65 }, .2)
       .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, 0)
       .to('.h-sub', { autoAlpha:1, duration:.7, ease:'power2.out' }, .25)
-      .add(()=>{ if(typeof window.startHeroLines==='function') window.startHeroLines(); }, 0.95);
+      .add(()=>{ if(typeof window.startHeroLines==='function') window.startHeroLines(); }, 0.95)
+      .add(()=>{ if(typeof window.setHeroReady==='function') window.setHeroReady(); }, 0.95);
   }, 1800);
 }
 window.addEventListener('load',()=>setTimeout(hideLoader,2300));
@@ -1652,9 +1653,12 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   // -- ScrollTrigger: growin.jp完全再現 --
   let inImageMode = false;
+  let heroReady = false; // テキスト完全表示後にtrueになる（それまでtoImageMode発火禁止）
+
+  window.setHeroReady = function(){ heroReady = true; };
 
   function toImageMode(){
-    if(inImageMode) return; inImageMode = true;
+    if(!heroReady || inImageMode) return; inImageMode = true;
     gsap.to(alphaProxy, { v:0, duration:.4, ease:'power2.out',
       onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:stopLines
     });
