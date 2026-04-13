@@ -1394,7 +1394,8 @@ function hideLoader(){
       .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.65 }, .2)
       .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, 0)
       .to('.h-sub', { autoAlpha:1, duration:.7, ease:'power2.out' }, .25)
-      .add(()=>{ if(typeof window.lockHeroScroll==='function') window.lockHeroScroll(); }, 1.0);
+      .add(()=>{ if(typeof window.startHeroLines==='function') window.startHeroLines(); }, 0.95)
+      .add(()=>{ if(typeof window.lockHeroScroll==='function') window.lockHeroScroll(); }, 2.1);
   }, 1800);
 }
 window.addEventListener('load',()=>setTimeout(hideLoader,2300));
@@ -1635,14 +1636,14 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     lineTimelines = [];
   }
 
-  // ローダー後2500msにライン開始（動画ロード待ち不要、フォールバックあり）
-  setTimeout(() => {
+  // テキストリビール完了後にhideLoaderから呼ばれる（growin.jp順序: テキスト先行→ライン）
+  window.startHeroLines = function() {
     gsap.to(alphaProxy, {
       v: 1, duration: 1, ease: 'power2.out',
       onUpdate:   () => { lineAlpha = alphaProxy.v; },
       onComplete: startLines
     });
-  }, 2500);
+  };
 
   // -- ScrollTrigger: growin.jp完全再現 --
   let inImageMode = false;
