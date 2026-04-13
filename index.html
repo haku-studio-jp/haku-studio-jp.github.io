@@ -1701,10 +1701,10 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   }
 
   // growin.jp方式: height:200vh + sticky
-  // start:top+=100 top = 100pxスクロール後に発火（growin.jp完全準拠）
+  // start:top+=1 top = 1pxスクロールで即発火
   ScrollTrigger.create({
     trigger: '#hero',
-    start: 'top+=100 top',
+    start: 'top+=1 top',
     onEnter:     toImageMode,
     onLeaveBack: toLineMode
   });
