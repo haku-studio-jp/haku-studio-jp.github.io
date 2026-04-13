@@ -115,7 +115,7 @@ nav a{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:
 nav a:hover{color:var(--black)}
 
 /* HERO */
-#hero{position:relative;height:calc(100vh + 80px);background:#eaebef}
+#hero{position:relative;height:200vh;background:#eaebef}
 .hero-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:clip}
 .hero-l{display:flex;flex-direction:column;justify-content:flex-end;padding:0 5rem 15rem 5rem;position:relative;z-index:2;max-width:900px}
 
@@ -1394,8 +1394,7 @@ function hideLoader(){
       .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.65 }, .2)
       .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, 0)
       .to('.h-sub', { autoAlpha:1, duration:.7, ease:'power2.out' }, .25)
-      .add(()=>{ if(typeof window.startHeroLines==='function') window.startHeroLines(); }, 0.95)
-      .add(()=>{ if(typeof window.lockHeroScroll==='function') window.lockHeroScroll(); }, 2.1);
+      .add(()=>{ if(typeof window.startHeroLines==='function') window.startHeroLines(); }, 0.95);
   }, 1800);
 }
 window.addEventListener('load',()=>setTimeout(hideLoader,2300));
@@ -1674,38 +1673,16 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
       .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
       .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
-      .to('.h-sub', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15)
-      .add(lockHeroScroll, 1.0);
+      .to('.h-sub', { autoAlpha:1, duration:.5, ease:'power2.out' }, .15);
   }
 
-  // ─── スクロールロック ───────────────────────────────
-  // ヒーロー表示中はlenis.stop()でロック。
-  // wheel/touchstart で一度だけ解除→toImageMode()。
-  // 先頭(scroll<10)に戻ったら再ロック→toLineMode()。
-  let hasScrolledDown = false;
-
-  function lockHeroScroll() {
-    lenis.stop();
-    const onIntent = () => {
-      window.removeEventListener('wheel',     onIntent);
-      window.removeEventListener('touchstart', onIntent);
-      lenis.start();
-      toImageMode();
-    };
-    window.addEventListener('wheel',      onIntent, { passive: true });
-    window.addEventListener('touchstart', onIntent, { passive: true });
-  }
-
-  lenis.on('scroll', ({ scroll }) => {
-    if (scroll > 50) hasScrolledDown = true;
-    if (scroll < 10 && inImageMode && hasScrolledDown) {
-      hasScrolledDown = false;
-      toLineMode();
-    }
+  // growin.jp方式: height:200vh + sticky でスクロールしながらヒーロー固定
+  ScrollTrigger.create({
+    trigger: '#hero',
+    start: 'top+=100 top',
+    onEnter:     toImageMode,
+    onLeaveBack: toLineMode
   });
-
-  // hideLoader から呼べるよう公開
-  window.lockHeroScroll = lockHeroScroll;
 })();
 
 
