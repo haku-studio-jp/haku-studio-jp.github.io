@@ -1711,10 +1711,11 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       .to('.hero-scroll-line', { autoAlpha:0, duration:.3 }, 0)
       .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0)
       // テキスト退場完了後にcanvasを前面へ → サークル展開
-      .add(()=>{ canvas.style.zIndex='3'; }, 0.5)
+      // 0.7s = 全行退場完了（0.1+0.5=0.6s）より後。SP/PC両方でテキスト消えてから動画出す
+      .add(()=>{ canvas.style.zIndex='3'; }, 0.7)
       .to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut',
           onComplete: ()=>{ lenis.start(); }
-      }, 0.5);
+      }, 0.7);
   }
 
   function toLineMode(){
