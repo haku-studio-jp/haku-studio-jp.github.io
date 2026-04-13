@@ -1541,22 +1541,22 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       ctx.restore();
     }
 
-    // ② オレンジ曲線ストローク（growin.jpのカラー #E9450A）
+    // ② 曲線ストローク（HAKUオリジナルカラー）
     if(lineAlpha > 0){
       ctx.globalAlpha = lineAlpha;
       ctx.lineCap = ctx.lineJoin = 'round';
       ctx.lineWidth = lw;
 
       pathData.forEach(p => {
-        if(p.dashOffset <= -0.99 || p.dashOffset >= 1) return;
+        if(p.dashOffset <= -1.05 || p.dashOffset >= 1.05) return;
         const scaledLen = p.length * n;
 
         const grad = p.dir === 'vertical'
           ? ctx.createLinearGradient(0, 0, 0, BASE_H * n)
           : ctx.createLinearGradient(0, 0, BASE_W * n, 0);
-        grad.addColorStop(0,   'rgba(233,69,10,0)');
-        grad.addColorStop(0.4, 'rgba(233,69,10,0.55)');
-        grad.addColorStop(1,   'rgba(233,69,10,0.8)');
+        grad.addColorStop(0,   'rgba(10,10,10,0)');
+        grad.addColorStop(0.5, 'rgba(10,10,10,0.10)');
+        grad.addColorStop(1,   'rgba(10,10,10,0.16)');
 
         ctx.save();
         ctx.setLineDash([scaledLen]);
@@ -1574,20 +1574,19 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   gsap.ticker.add(draw);
 
-  // -- アニメーションタイムライン --
-  let lineTl = null;
+  // -- アニメーション（growin.jp方式：3本を並列・スタガーで独立ループ） --
   const alphaProxy = { v: 0 };
 
   function startLines(){
     resetDash();
-    lineTl = gsap.timeline({ repeat: -1 });
+    const ratio = (isSP ? 150 : 200) / fitScale;
+    // 各パスを独立したタイムラインで同時スタート（stagger 1.6s）
     pathData.forEach((p, i) => {
-      const next = pathData[(i + 1) % pathData.length];
-      const ratio = (isSP ? 150 : 200) / fitScale;
-      lineTl
-        .to(p, { dashOffset: 0,  duration: 2, ease: 'power2.inOut' })
-        .to(p, { dashOffset: -1, duration: 2, ease: 'power2.inOut' })
-        .set(next, { dashOffset: 1 + ratio / next.length }, '+=0');
+      const end = -1 - ratio / p.length;
+      gsap.timeline({ repeat: -1, delay: i * 1.6 })
+        .to(p, { dashOffset: 0,   duration: 2.8, ease: 'power2.inOut' })
+        .to(p, { dashOffset: end, duration: 2.8, ease: 'power2.inOut' })
+        .set(p, { dashOffset: 1 + ratio / p.length });
     });
   }
 
