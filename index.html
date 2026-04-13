@@ -1851,7 +1851,8 @@ document.querySelectorAll('[data-count]').forEach(el=>numObs.observe(el));
   const ctaBarEl=document.getElementById('fixed-cta-bar');
   if(ctaBarEl){
     lenis.on('scroll',({scroll})=>{
-      if(scroll>window.innerHeight*0.7)ctaBarEl.classList.add('show');
+      // ヒーローは height:200vh → ヒーロー抜けてから表示
+      if(scroll>window.innerHeight*2)ctaBarEl.classList.add('show');
       else ctaBarEl.classList.remove('show');
     });
   }
