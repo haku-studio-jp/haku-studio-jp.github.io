@@ -1401,8 +1401,8 @@ function hideLoader(){
       .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, 0)
       .to('.h-sub', { autoAlpha:1, duration:.7, ease:'power2.out' }, .25)
       .add(()=>{ if(typeof window.startHeroLines==='function') window.startHeroLines(); }, 0.95)
-      .add(()=>{ if(typeof window.setHeroReady==='function') window.setHeroReady(); }, 0.95);
-  }, 1800);
+      .add(()=>{ if(typeof window.setHeroReady==='function') window.setHeroReady(); }, 0.4);
+  }, 1200);
 }
 window.addEventListener('load',()=>setTimeout(hideLoader,2300));
 setTimeout(()=>{if(!document.getElementById('loader').classList.contains('out'))hideLoader();},5000);
@@ -1410,6 +1410,7 @@ setTimeout(()=>{if(!document.getElementById('loader').classList.contains('out'))
 // ② LENIS + GSAP 初期化
 gsap.registerPlugin(ScrollTrigger);
 const lenis = new Lenis({ lerp: 0.12 });
+lenis.stop(); // ローダー中はスクロール禁止（setHeroReadyで解放）
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
@@ -1663,8 +1664,8 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   function toImageMode(){
     if(!heroReady || inImageMode) return;
-    if(Date.now() - heroReadyAt < 300) return; // heroReady直後の誤発火防止
     inImageMode = true;
+    lenis.stop(); // サークル展開中ロック
     gsap.to(alphaProxy, { v:0, duration:.4, ease:'power2.out',
       onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:stopLines
     });
@@ -1676,16 +1677,17 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       .to('.h-sub',            { autoAlpha:0, duration:.3 }, 0)
       .to('.hero-scroll-line', { autoAlpha:0, duration:.3 }, 0)
       .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0)
-      // テキストアニメ完了後にキャンバスをテキスト前面へ → 消え残し完全ゼロ
       .add(()=>{ canvas.style.zIndex='3'; }, 0.45)
-      .to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut' }, .1);
+      .to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut',
+          onComplete: ()=>{ lenis.start(); } // サークル全開でスクロール解放
+      }, .1);
   }
 
   function toLineMode(){
     if(!inImageMode) return; inImageMode = false;
-    // growin.jp準拠: CIRC縮小が完全に終わってからテキスト復帰
+    lenis.stop(); // 逆アニメ中ロック
     gsap.to(CIRC, { r:0, duration:.6, ease:'power2.inOut', onComplete:()=>{
-      canvas.style.zIndex = '1'; // 円が消えてからキャンバス背面へ
+      canvas.style.zIndex = '1';
       gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
         onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:startLines
       });
@@ -1696,14 +1698,14 @@ document.querySelectorAll('.fq-q').forEach(q=>{
         .to('.h-tag',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
         .to('.h-sub',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
         .to('.hero-scroll-line', { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
-        .to('.hero-lines',       { autoAlpha:1, duration:.5, ease:'power2.out' }, .2);
+        .to('.hero-lines',       { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
+        .add(()=>{ lenis.start(); }, 0.8); // テキスト復帰後スクロール解放
     }});
   }
 
   // growin.jp方式: height:200vh + sticky
   // start:80px + 時間ガード = iOS Safari誤発火防止
-  let heroReadyAt = 0;
-  window.setHeroReady = function(){ heroReady = true; heroReadyAt = Date.now(); };
+  window.setHeroReady = function(){ heroReady = true; lenis.start(); };
 
   ScrollTrigger.create({
     trigger: '#hero',
