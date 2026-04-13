@@ -1474,8 +1474,9 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 })();
 
 // HERO CANVAS — growin.jp KVスタイル完全再現
-// ロード直後: テキスト + ライン描画、動画サークルr=0（非表示）
-// スクロール: テキスト退場 + サークルr=0→画面全体を覆うMAXに拡大 → 動画フルスクリーン表示
+// 【線モード】太い白ストローク → source-in で動画をマスク → HAKUダーク tint
+//            growin.jpのオレンジ写真と同じ合成手法、色だけHAKU仕様
+// 【サークルモード】スクロール時: サークルr=0→MAX拡大 → 動画フルスクリーン
 (function(){
   const isSP = window.innerWidth <= 767;
   const BASE_W = isSP ? 375 : 1440;
@@ -1487,112 +1488,125 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   const ctx = canvas.getContext('2d');
   const video = document.getElementById('hero-video');
 
-  // fitScale: canvasのCSS表示サイズ → BASE座標系へのマッピング
-  let fitScale = 1, fitOX = 0, fitOY = 0, circMax = 0;
+  // オフスクリーンキャンバス（動画マスク合成専用・BASE座標、スケールなし）
+  const off = document.createElement('canvas');
+  off.width = BASE_W; off.height = BASE_H;
+  const offCtx = off.getContext('2d');
 
-  // 円心（growin.jp: PC=右寄りセンター / SP=中央下寄り）
-  const CIRC = isSP
-    ? { x: 187, y: 560, r: 0 }
-    : { x: 1060, y: 375, r: 0 };
+  let fitScale = 1, fitOX = 0, fitOY = 0, circMax = 0;
+  const CIRC = isSP ? { x:187, y:560, r:0 } : { x:1060, y:375, r:0 };
 
   function calcFit(){
-    const dw = canvas.offsetWidth  || window.innerWidth;
+    const dw = canvas.offsetWidth || window.innerWidth;
     const dh = canvas.offsetHeight || window.innerHeight;
-    const sx = dw / BASE_W, sy = dh / BASE_H;
-    fitScale = Math.max(sx, sy);
+    fitScale = Math.max(dw / BASE_W, dh / BASE_H);
     fitOX = (dw - BASE_W * fitScale) / 2;
     fitOY = (dh - BASE_H * fitScale) / 2;
-    // 円心からviewport最遠隅までの距離 → 画面全体を覆うMAX半径
-    const vL = -fitOX / fitScale, vR = (dw - fitOX) / fitScale;
-    const vT = -fitOY / fitScale, vB = (dh  - fitOY) / fitScale;
+    const vL=-fitOX/fitScale, vR=(dw-fitOX)/fitScale;
+    const vT=-fitOY/fitScale, vB=(dh-fitOY)/fitScale;
     circMax = Math.max(
-      Math.hypot(CIRC.x - vL, CIRC.y - vT),
-      Math.hypot(CIRC.x - vR, CIRC.y - vT),
-      Math.hypot(CIRC.x - vL, CIRC.y - vB),
-      Math.hypot(CIRC.x - vR, CIRC.y - vB)
+      Math.hypot(CIRC.x-vL, CIRC.y-vT), Math.hypot(CIRC.x-vR, CIRC.y-vT),
+      Math.hypot(CIRC.x-vL, CIRC.y-vB), Math.hypot(CIRC.x-vR, CIRC.y-vB)
     ) * 1.05;
   }
   window.addEventListener('resize', calcFit);
   calcFit();
 
-  // ベジェカーブ定義（HAKUオリジナルカラー）
+  // ベジェカーブ定義（growin.jp同等の大きな流れるパス）
   const pcPaths = [
-    { d:'M-150,680 C250,480 620,310 920,415 C1160,500 1380,155 1650,195', dir:'horizontal' },
-    { d:'M1650,-55 C1240,200 790,360 540,275 C290,210 40,530 -150,645',  dir:'horizontal' },
-    { d:'M860,-80 C700,210 1010,390 770,615 C570,810 850,925 730,1060',  dir:'vertical'   }
+    'M-150,680 C250,480 620,310 920,415 C1160,500 1380,155 1650,195',
+    'M1650,-55 C1240,200 790,360 540,275 C290,210 40,530 -150,645',
+    'M860,-80 C700,210 1010,390 770,615 C570,810 850,925 730,1060'
   ];
   const spPaths = [
-    { d:'M-80,650 C80,450 185,275 280,375 C345,440 400,195 480,218',    dir:'horizontal' },
-    { d:'M480,-30 C355,150 200,285 120,235 C55,195 -25,405 -80,505',    dir:'horizontal' },
-    { d:'M225,-60 C160,185 325,320 200,525 C120,665 265,785 180,955',   dir:'vertical'   }
+    'M-80,650 C80,450 185,275 280,375 C345,440 400,195 480,218',
+    'M480,-30 C355,150 200,285 120,235 C55,195 -25,405 -80,505',
+    'M225,-60 C160,185 325,320 200,525 C120,665 265,785 180,955'
   ];
-  const defs = isSP ? spPaths : pcPaths;
-
-  const pathData = defs.map(({ d, dir }) => {
-    const el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  const pathData = (isSP ? spPaths : pcPaths).map(d => {
+    const el = document.createElementNS('http://www.w3.org/2000/svg','path');
     el.setAttribute('d', d);
-    return { path2d: new Path2D(d), length: el.getTotalLength(), dashOffset: 1, dir };
+    return { path2d: new Path2D(d), length: el.getTotalLength(), dashOffset: 1.05 };
   });
 
-  function resetDash(){
-    pathData.forEach(p => {
-      const ratio = (isSP ? 150 : 200) / fitScale;
-      p.dashOffset = 1 + ratio / p.length;
-    });
+  // 動画をBASE座標にカバーフィットで描画（共通ヘルパー）
+  function drawVideoCover(c){
+    if(video.readyState < 2) return false;
+    const vw = video.videoWidth || BASE_W, vh = video.videoHeight || BASE_H;
+    const vs = Math.max(BASE_W/vw, BASE_H/vh);
+    c.drawImage(video, (BASE_W-vw*vs)/2, (BASE_H-vh*vs)/2, vw*vs, vh*vs);
+    return true;
   }
 
-  // -- 描画 --
   let lineAlpha = 0;
+  const LINE_W = 200; // growin.jp = 200/fitScale → 視覚的に200px幅
 
   function draw(){
     ctx.clearRect(0, 0, BASE_W, BASE_H);
     const n = fitScale;
-
     ctx.save();
     ctx.translate(fitOX, fitOY);
     ctx.scale(n, n);
 
-    // ① 動画サークル（r>0のときのみ描画）
-    // 動画はcanvas全体にカバーフィットして、サークルでクリップ
+    // ① 線モード: growin.jp方式 太白ストローク→source-in動画→HAKUダークtint
+    if(lineAlpha > 0){
+      offCtx.clearRect(0, 0, BASE_W, BASE_H);
+
+      // Step1: 白い太ストロークをオフスクリーンに（マスク形状）
+      offCtx.globalCompositeOperation = 'source-over';
+      offCtx.strokeStyle = '#ffffff';
+      offCtx.lineWidth = LINE_W;
+      offCtx.lineCap = offCtx.lineJoin = 'round';
+      pathData.forEach(p => {
+        if(Math.abs(p.dashOffset) >= 1.02) return;
+        offCtx.setLineDash([p.length]);
+        offCtx.lineDashOffset = p.length * p.dashOffset;
+        offCtx.stroke(p.path2d);
+      });
+
+      // Step2: source-in = 動画を白ストローク形状のみに切り抜き
+      offCtx.globalCompositeOperation = 'source-in';
+      const drawn = drawVideoCover(offCtx);
+
+      if(drawn){
+        // Step3: HAKUダークtint（growin.jpのオレンジ相当、色だけHAKU）
+        offCtx.globalCompositeOperation = 'source-atop';
+        const g = offCtx.createLinearGradient(0,0,BASE_W,0);
+        g.addColorStop(0, 'rgba(10,10,10,0.10)');
+        g.addColorStop(1, 'rgba(10,10,10,0.30)');
+        offCtx.fillStyle = g;
+        offCtx.fillRect(0, 0, BASE_W, BASE_H);
+        offCtx.globalCompositeOperation = 'source-over';
+
+        // Step4: メインキャンバスへ合成（BASE座標でそのまま描画）
+        ctx.globalAlpha = lineAlpha;
+        ctx.drawImage(off, 0, 0, BASE_W, BASE_H);
+        ctx.globalAlpha = 1;
+      } else {
+        // 動画未ロード時フォールバック: シンプルな暗いストローク
+        offCtx.globalCompositeOperation = 'source-over';
+        ctx.globalAlpha = lineAlpha * 0.12;
+        ctx.strokeStyle = 'rgba(10,10,10,1)';
+        ctx.lineWidth = LINE_W / n;
+        ctx.lineCap = ctx.lineJoin = 'round';
+        pathData.forEach(p => {
+          if(Math.abs(p.dashOffset) >= 1.02) return;
+          ctx.setLineDash([p.length * n]);
+          ctx.lineDashOffset = p.length * n * p.dashOffset;
+          ctx.stroke(p.path2d);
+        });
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    // ② サークルモード: スクロール後に動画フルスクリーン（r=0→circMax）
     if(CIRC.r > 0.5 && video.readyState >= 2){
       ctx.save();
       ctx.beginPath();
       ctx.arc(CIRC.x, CIRC.y, CIRC.r, 0, Math.PI * 2);
       ctx.clip();
-      const vw = video.videoWidth  || BASE_W;
-      const vh = video.videoHeight || BASE_H;
-      const vs = Math.max(BASE_W / vw, BASE_H / vh);
-      const dx = (BASE_W - vw * vs) / 2;
-      const dy = (BASE_H - vh * vs) / 2;
-      ctx.drawImage(video, dx, dy, vw * vs, vh * vs);
+      drawVideoCover(ctx);
       ctx.restore();
-    }
-
-    // ② 曲線ストローク（HAKUオリジナルカラー）
-    if(lineAlpha > 0){
-      const lw = (isSP ? 70 : 90) / n;
-      ctx.globalAlpha = lineAlpha;
-      ctx.lineCap = ctx.lineJoin = 'round';
-      ctx.lineWidth = lw;
-
-      pathData.forEach(p => {
-        if(p.dashOffset <= -1.05 || p.dashOffset >= 1.05) return;
-        const scaledLen = p.length * n;
-        const grad = p.dir === 'vertical'
-          ? ctx.createLinearGradient(0, 0, 0, BASE_H * n)
-          : ctx.createLinearGradient(0, 0, BASE_W * n, 0);
-        grad.addColorStop(0,   'rgba(10,10,10,0)');
-        grad.addColorStop(0.5, 'rgba(10,10,10,0.10)');
-        grad.addColorStop(1,   'rgba(10,10,10,0.16)');
-        ctx.save();
-        ctx.setLineDash([scaledLen]);
-        ctx.lineDashOffset = scaledLen * p.dashOffset;
-        ctx.strokeStyle = grad;
-        ctx.stroke(p.path2d);
-        ctx.restore();
-      });
-
-      ctx.globalAlpha = 1;
     }
 
     ctx.restore();
@@ -1600,21 +1614,19 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   gsap.ticker.add(draw);
 
-  // -- ライン描画ループ（3本並列・スタガー） --
+  // -- ライン描画ループ（3本並列・1.6sスタガー、growin.jp準拠） --
   const alphaProxy = { v: 0 };
   let lineTimelines = [];
 
   function startLines(){
     stopLines();
-    resetDash();
-    const ratio = (isSP ? 150 : 200) / fitScale;
-    lineTimelines = pathData.map((p, i) => {
-      const end = -1 - ratio / p.length;
-      return gsap.timeline({ repeat: -1, delay: i * 1.6 })
-        .to(p, { dashOffset: 0,   duration: 2.8, ease: 'power2.inOut' })
-        .to(p, { dashOffset: end, duration: 2.8, ease: 'power2.inOut' })
-        .set(p, { dashOffset: 1 + ratio / p.length });
-    });
+    pathData.forEach(p => { p.dashOffset = 1.05; });
+    lineTimelines = pathData.map((p, i) =>
+      gsap.timeline({ repeat:-1, delay: i * 1.6 })
+        .to(p, { dashOffset: 0,    duration: 2.5, ease:'power2.inOut' })
+        .to(p, { dashOffset:-1.05, duration: 2.5, ease:'power2.inOut' })
+        .set(p, { dashOffset: 1.05 })
+    );
   }
 
   function stopLines(){
@@ -1622,7 +1634,7 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     lineTimelines = [];
   }
 
-  // ローダー後（2500ms）にライン開始
+  // ローダー後2500msにライン開始（動画ロード待ち不要、フォールバックあり）
   setTimeout(() => {
     gsap.to(alphaProxy, {
       v: 1, duration: 1, ease: 'power2.out',
@@ -1635,37 +1647,26 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   let inImageMode = false;
 
   function toImageMode(){
-    if(inImageMode) return;
-    inImageMode = true;
-    // ライン停止
+    if(inImageMode) return; inImageMode = true;
     gsap.to(alphaProxy, { v:0, duration:.4, ease:'power2.out',
-      onUpdate: ()=>{ lineAlpha = alphaProxy.v; },
-      onComplete: stopLines
+      onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:stopLines
     });
     gsap.timeline()
-      // テキスト退場（line1→下、line2/3→上）
-      .to('.h-title .line-wrap:nth-child(1) .line', { y:'110%', duration:.5, ease:'power3.out' }, 0)
+      .to('.h-title .line-wrap:nth-child(1) .line', { y:'110%',  duration:.5, ease:'power3.out' }, 0)
       .to('.h-title .line-wrap:nth-child(2) .line', { y:'-110%', duration:.5, ease:'power3.out' }, 0)
       .to('.h-title .line-wrap:nth-child(3) .line', { y:'-110%', duration:.5, ease:'power3.out' }, 0)
       .to('.h-tag', { autoAlpha:0, duration:.35 }, 0)
       .to('.h-sub', { autoAlpha:0, duration:.35 }, 0)
-      // サークル拡大（r=0→画面全体を覆うcircMax）
-      .to(CIRC, { r: circMax, duration:.85, ease:'power2.inOut' }, .05);
+      .to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut' }, .05);
   }
 
   function toLineMode(){
-    if(!inImageMode) return;
-    inImageMode = false;
-    // サークル縮小
-    gsap.to(CIRC, { r:0, duration:.6, ease:'power2.inOut',
-      onComplete: () => {
-        gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
-          onUpdate: ()=>{ lineAlpha = alphaProxy.v; },
-          onComplete: startLines
-        });
-      }
-    });
-    // テキスト復帰
+    if(!inImageMode) return; inImageMode = false;
+    gsap.to(CIRC, { r:0, duration:.6, ease:'power2.inOut', onComplete:()=>{
+      gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
+        onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:startLines
+      });
+    }});
     gsap.timeline({ delay:.3 })
       .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
       .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, 0)
@@ -1675,10 +1676,8 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   }
 
   ScrollTrigger.create({
-    trigger: '#hero',
-    start: 'top+=80 top',
-    onEnter:     toImageMode,
-    onLeaveBack: toLineMode
+    trigger: '#hero', start: 'top+=80 top',
+    onEnter: toImageMode, onLeaveBack: toLineMode
   });
 })();
 
