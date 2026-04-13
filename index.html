@@ -1661,10 +1661,10 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   let inImageMode = false;
   let heroReady = false; // テキスト完全表示後にtrueになる（それまでtoImageMode発火禁止）
 
-  window.setHeroReady = function(){ heroReady = true; };
-
   function toImageMode(){
-    if(!heroReady || inImageMode) return; inImageMode = true;
+    if(!heroReady || inImageMode) return;
+    if(Date.now() - heroReadyAt < 300) return; // heroReady直後の誤発火防止
+    inImageMode = true;
     gsap.to(alphaProxy, { v:0, duration:.4, ease:'power2.out',
       onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:stopLines
     });
@@ -1701,11 +1701,14 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   }
 
   // growin.jp方式: height:200vh + sticky
-  // start:top+=1 top = 1pxスクロールで即発火
+  // start:80px + 時間ガード = iOS Safari誤発火防止
+  let heroReadyAt = 0;
+  window.setHeroReady = function(){ heroReady = true; heroReadyAt = Date.now(); };
+
   ScrollTrigger.create({
     trigger: '#hero',
-    start: 'top+=1 top',
-    onEnter:     toImageMode,
+    start: 'top+=80 top',
+    onEnter: toImageMode,
     onLeaveBack: toLineMode
   });
 })();
