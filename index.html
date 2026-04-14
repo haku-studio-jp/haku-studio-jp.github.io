@@ -1726,8 +1726,7 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     window.scrollTo(0, 0); // iOSは非同期のため先にリセット
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        heroReady = true; // scrollTo反映後に有効化
-        ScrollTrigger.refresh(); // 全トリガーを現在位置で再計算
+        heroReady = true; // scrollTo反映後に有効化（refresh/update不要: ユーザースクロール時に自然発火）
         lenis.start();
       });
     });
