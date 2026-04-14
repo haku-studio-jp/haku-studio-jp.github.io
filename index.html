@@ -1595,55 +1595,19 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     ctx.translate(fitOX, fitOY);
     ctx.scale(n, n);
 
-    // ① 線モード: growin.jp方式 太白ストローク→source-in動画→HAKUダークtint
+    // ① 線モード: シンプルカラーストローク（動画は使わない・iOS source-in バグ回避）
     if(lineAlpha > 0){
-      offCtx.clearRect(0, 0, BASE_W, BASE_H);
-
-      // Step1: 白い太ストロークをオフスクリーンに（マスク形状）
-      offCtx.globalCompositeOperation = 'source-over';
-      offCtx.strokeStyle = '#ffffff';
-      offCtx.lineWidth = LINE_W;
-      offCtx.lineCap = offCtx.lineJoin = 'round';
+      ctx.globalAlpha = lineAlpha * 0.45;
+      ctx.strokeStyle = 'rgba(10,10,10,0.9)';
+      ctx.lineWidth = LINE_W / n;
+      ctx.lineCap = ctx.lineJoin = 'round';
       pathData.forEach(p => {
         if(Math.abs(p.dashOffset) >= 1.02) return;
-        offCtx.setLineDash([p.length]);
-        offCtx.lineDashOffset = p.length * p.dashOffset;
-        offCtx.stroke(p.path2d);
+        ctx.setLineDash([p.length]);
+        ctx.lineDashOffset = p.length * p.dashOffset;
+        ctx.stroke(p.path2d);
       });
-
-      // Step2: source-in = 動画を白ストローク形状のみに切り抜き
-      offCtx.globalCompositeOperation = 'source-in';
-      const drawn = drawVideoCover(offCtx);
-
-      if(drawn){
-        // Step3: HAKUダークtint（growin.jpのオレンジ相当、色だけHAKU）
-        offCtx.globalCompositeOperation = 'source-atop';
-        const g = offCtx.createLinearGradient(0,0,BASE_W,0);
-        g.addColorStop(0, 'rgba(10,10,10,0.10)');
-        g.addColorStop(1, 'rgba(10,10,10,0.30)');
-        offCtx.fillStyle = g;
-        offCtx.fillRect(0, 0, BASE_W, BASE_H);
-        offCtx.globalCompositeOperation = 'source-over';
-
-        // Step4: メインキャンバスへ合成（BASE座標でそのまま描画）
-        ctx.globalAlpha = lineAlpha;
-        ctx.drawImage(off, 0, 0, BASE_W, BASE_H);
-        ctx.globalAlpha = 1;
-      } else {
-        // 動画未ロード時フォールバック: ダークストローク（視認性を確保）
-        offCtx.globalCompositeOperation = 'source-over';
-        ctx.globalAlpha = lineAlpha * 0.55;
-        ctx.strokeStyle = 'rgba(10,10,10,1)';
-        ctx.lineWidth = LINE_W / n;
-        ctx.lineCap = ctx.lineJoin = 'round';
-        pathData.forEach(p => {
-          if(Math.abs(p.dashOffset) >= 1.02) return;
-          ctx.setLineDash([p.length]);
-          ctx.lineDashOffset = p.length * p.dashOffset;
-          ctx.stroke(p.path2d);
-        });
-        ctx.globalAlpha = 1;
-      }
+      ctx.globalAlpha = 1;
     }
 
     // ② サークルモード: スクロール後に動画フルスクリーン（r=0→circMax）
