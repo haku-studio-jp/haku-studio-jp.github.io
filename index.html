@@ -1649,22 +1649,22 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     });
   };
 
-  // -- ScrollTrigger: growin.jp完全再現 --
+  // -- ヒーロー状態管理 --
   let inImageMode = false;
-  let isAnimating  = false; // アニメ中は toImageMode/toLineMode 両方ブロック（WordPress版と同一）
-  let heroReady = false; // テキスト完全表示後にtrueになる（それまでtoImageMode発火禁止）
+  let isAnimating  = false;
+  let heroReady    = false;
+  let scrolledDownInImageMode = false; // imageMode中に一度でも下にスクロールしたか
 
-  // iOS Safari touchmove 強制停止（lenis.stop()だけでは不十分）
+  // -- スクロールロック --
   const _noTouch = function(e){ e.preventDefault(); };
+
   function lockScroll(){
-    // Lenisのlerpが進行中でも即座にキャンセル（PC: スワイプ量に関わらず現在位置で止める）
-    lenis.scrollTo(window.scrollY, { immediate: true });
+    try { lenis.scrollTo(window.scrollY, { immediate: true }); } catch(e){}
     lenis.stop();
-    const sb = window.innerWidth - document.documentElement.clientWidth;
     document.documentElement.style.overflow = 'hidden';
-    if(sb > 0) document.body.style.paddingRight = sb + 'px';
     document.addEventListener('touchmove', _noTouch, { passive: false });
   }
+
   function unlockScroll(){
     document.documentElement.style.overflow = '';
     document.body.style.paddingRight = '';
@@ -1672,24 +1672,20 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     lenis.start();
   }
 
+  // -- toImageMode（テキスト退場 → CIRC展開） --
   function toImageMode(){
     if(!heroReady || inImageMode || isAnimating) return;
     inImageMode = true;
     isAnimating  = true;
-    lockScroll();
-    // ラインを即座に消す（テキスト退場中に動画が見えないように）
-    stopLines();
-    lineAlpha = 0;
-    alphaProxy.v = 0;
-    // テキスト退場を先に完結させ、onCompleteでCIRC展開（直列保証）
-    gsap.timeline({
-      onComplete: () => {
-        canvas.style.zIndex = '3';
-        gsap.to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut',
-          onComplete: ()=>{ isAnimating = false; unlockScroll(); }
-        });
-      }
-    })
+    scrolledDownInImageMode = false;
+    stopLines(); lineAlpha = 0; alphaProxy.v = 0;
+    // テキスト退場完了後にCIRC展開（直列）
+    gsap.timeline({ onComplete: () => {
+      canvas.style.zIndex = '3';
+      gsap.to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut',
+        onComplete: ()=>{ isAnimating = false; unlockScroll(); }
+      });
+    }})
       .to('.h-title .line-wrap:nth-child(1) .line', { y:'130%',  duration:.5, ease:'power3.out' }, 0)
       .to('.h-title .line-wrap:nth-child(2) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .05)
       .to('.h-title .line-wrap:nth-child(3) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .1)
@@ -1699,53 +1695,64 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0);
   }
 
+  // -- toLineMode（CIRC収縮 → テキスト復帰 → 再ロック） --
   function toLineMode(){
     if(!inImageMode || isAnimating) return;
     inImageMode = false;
     isAnimating  = true;
-    lockScroll();
+    scrolledDownInImageMode = false;
+    lenis.stop(); // 即座にロック
     gsap.to(CIRC, { r:0, duration:.6, ease:'power2.inOut', onComplete:()=>{
       canvas.style.zIndex = '1';
-      pathData.forEach(p => { p.dashOffset = 1.05; }); // フェードイン前にリセット（中途半端な位置で出ないように）
+      pathData.forEach(p => { p.dashOffset = 1.05; });
       gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
         onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:startLines
       });
-      gsap.timeline()
+      gsap.timeline({ onComplete: ()=>{ isAnimating = false; lockScroll(); } })
         .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
         .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
         .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
         .to('.h-tag',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
         .to('.h-sub',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
         .to('.hero-scroll-line', { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
-        .to('.hero-lines',       { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
-        .add(()=>{ isAnimating = false; unlockScroll(); }, 0.8); // テキスト復帰後スクロール解放
+        .to('.hero-lines',       { autoAlpha:1, duration:.5, ease:'power2.out' }, .2);
     }});
   }
 
-  // SP: タッチ検知（iOS scroll restoration は touchstart を発火しない）
-  let userTouched = false;
-  document.addEventListener('touchstart', () => { userTouched = true; }, { passive: true, once: true });
+  // -- ジェスチャー検知（スクロールロック中にトリガー） --
+  // SP: touchmove で下スワイプ検知
+  let touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if(!heroReady || inImageMode || isAnimating) return;
+    if(touchStartY - e.touches[0].clientY > 15) toImageMode();
+  }, { passive: true });
 
+  // PC: wheel で下スクロール検知
+  document.addEventListener('wheel', e => {
+    if(!heroReady || inImageMode || isAnimating) return;
+    if(e.deltaY > 0) toImageMode();
+  }, { passive: true });
+
+  // imageMode中: lenis scroll監視でトップ戻り検知 → toLineMode
+  lenis.on('scroll', ({ scroll }) => {
+    if(!inImageMode || isAnimating) return;
+    if(scroll > 80) scrolledDownInImageMode = true;
+    // 一度下にスクロールしてからトップに戻ったときだけtoLineMode
+    if(scrolledDownInImageMode && scroll < 10) toLineMode();
+  });
+
+  // setHeroReady: ロック維持のままheroReady=trueにするだけ
+  // （lenis.start()はtoImageMode完了後にunlockScrollで行う）
   window.setHeroReady = function(){
     window.scrollTo(0, 0);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        heroReady = true;
-        lenis.start();
-      });
-    });
+    heroReady = true;
+    // lockScrollで_notouch追加（初回: lenis.stop()はinitで済み）
+    document.documentElement.style.overflow = 'hidden';
+    document.addEventListener('touchmove', _noTouch, { passive: false });
   };
-
-  ScrollTrigger.create({
-    trigger: '#hero',
-    start: 'top+=5 top',
-    onEnter: () => {
-      // SP: ユーザーが実際にタッチしていない場合はiOS scroll restoration誤発火と判定してスキップ
-      if(isSP && !userTouched) return;
-      toImageMode();
-    },
-    onLeaveBack: toLineMode
-  });
 })();
 
 
