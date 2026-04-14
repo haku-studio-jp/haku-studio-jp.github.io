@@ -1722,13 +1722,15 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     }});
   }
 
-  // growin.jp方式: height:200vh + sticky
-  // start:80px + 時間ガード = iOS Safari誤発火防止
+  // SP: タッチ検知（iOS scroll restoration は touchstart を発火しない）
+  let userTouched = false;
+  document.addEventListener('touchstart', () => { userTouched = true; }, { passive: true, once: true });
+
   window.setHeroReady = function(){
-    window.scrollTo(0, 0); // iOSは非同期のため先にリセット
+    window.scrollTo(0, 0);
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        heroReady = true; // scrollTo反映後に有効化（refresh/update不要: ユーザースクロール時に自然発火）
+        heroReady = true;
         lenis.start();
       });
     });
@@ -1737,7 +1739,11 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   ScrollTrigger.create({
     trigger: '#hero',
     start: 'top+=5 top',
-    onEnter: toImageMode,
+    onEnter: () => {
+      // SP: ユーザーが実際にタッチしていない場合はiOS scroll restoration誤発火と判定してスキップ
+      if(isSP && !userTouched) return;
+      toImageMode();
+    },
     onLeaveBack: toLineMode
   });
 })();
