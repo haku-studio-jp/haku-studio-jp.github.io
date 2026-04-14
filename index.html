@@ -1698,11 +1698,13 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   // iOS Safari touchmove 強制停止（lenis.stop()だけでは不十分）
   const _noTouch = function(e){ e.preventDefault(); };
   function lockScroll(){
+    // Lenisのlerpが進行中でも即座にキャンセル（PC: スワイプ量に関わらず現在位置で止める）
+    lenis.scrollTo(window.scrollY, { immediate: true });
+    lenis.stop();
     const sb = window.innerWidth - document.documentElement.clientWidth;
     document.documentElement.style.overflow = 'hidden';
     if(sb > 0) document.body.style.paddingRight = sb + 'px';
     document.addEventListener('touchmove', _noTouch, { passive: false });
-    lenis.stop();
   }
   function unlockScroll(){
     document.documentElement.style.overflow = '';
