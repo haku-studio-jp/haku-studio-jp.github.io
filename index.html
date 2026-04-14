@@ -532,7 +532,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .w-name{font-size:1.4rem}
   .about-role{white-space:nowrap}
   html,body{overflow-x:hidden}
-  /* SP: hero-video を全画面配置・初期opacity:0（テキスト退場後にGSAPでフェードイン） */
+  /* SP: hero-video を全画面配置・初期display:none（iOSのGPU先行レンダリング防止） */
   #hero-video{
     position:absolute !important;
     inset:0 !important;
@@ -541,7 +541,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
     left:0 !important;
     top:0 !important;
     object-fit:cover !important;
-    opacity:0 !important;
+    display:none !important;
     pointer-events:none !important;
     z-index:3 !important;
   }
@@ -1696,37 +1696,26 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     stopLines(); lineAlpha = 0; alphaProxy.v = 0;
 
     if(isSP){
-      // Step1: テキスト退場（完全に終わってからStep2へ）
-      const textEls = [
-        '.h-title .line-wrap:nth-child(1) .line',
-        '.h-title .line-wrap:nth-child(2) .line',
-        '.h-title .line-wrap:nth-child(3) .line',
-        '.h-tag', '.h-sub', '.hero-scroll-line', '.hero-lines'
-      ];
-
-      // まずテキストを退場させる
-      const tl = gsap.timeline({
+      gsap.timeline({
         onComplete: () => {
-          // テキストが完全に消えてから動画をフェードイン
-          gsap.to('#hero-video', {
-            opacity: 1,
-            duration: 0.8,
-            ease: 'power2.out',
-            onComplete: () => {
-              isAnimating = false;
-              unlockScroll();
+          // テキスト完全退場後、ここで初めてvideoを表示してフェードイン
+          const v = document.getElementById('hero-video');
+          v.style.display = 'block';
+          gsap.fromTo(v,
+            { opacity: 0 },
+            { opacity: 1, duration: 0.8, ease: 'power2.out',
+              onComplete: () => { isAnimating = false; unlockScroll(); }
             }
-          });
+          );
         }
-      });
-
-      tl.to('.h-title .line-wrap:nth-child(1) .line', { y:'130%',  duration:.5, ease:'power3.out' }, 0)
-        .to('.h-title .line-wrap:nth-child(2) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .05)
-        .to('.h-title .line-wrap:nth-child(3) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .1)
-        .to('.h-tag',            { autoAlpha:0, duration:.3 }, 0)
-        .to('.h-sub',            { autoAlpha:0, duration:.3 }, 0)
-        .to('.hero-scroll-line', { autoAlpha:0, duration:.3 }, 0)
-        .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0);
+      })
+      .to('.h-title .line-wrap:nth-child(1) .line', { y:'130%',  duration:.5, ease:'power3.out' }, 0)
+      .to('.h-title .line-wrap:nth-child(2) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .05)
+      .to('.h-title .line-wrap:nth-child(3) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .1)
+      .to('.h-tag',            { autoAlpha:0, duration:.3 }, 0)
+      .to('.h-sub',            { autoAlpha:0, duration:.3 }, 0)
+      .to('.hero-scroll-line', { autoAlpha:0, duration:.3 }, 0)
+      .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0);
     } else {
       // PC: テキスト退場完了後にcanvas CIRC展開（直列）
       gsap.timeline({ onComplete: () => {
