@@ -532,16 +532,14 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .w-name{font-size:1.4rem}
   .about-role{white-space:nowrap}
   html,body{overflow-x:hidden}
-  /* SP: hero-video を全画面配置・初期display:none（iOSのGPU先行レンダリング防止） */
+  /* SP: hero-video 全画面配置・初期display:none（iOSのGPU先行レンダリング防止） */
   #hero-video{
+    display:none !important;
     position:absolute !important;
     inset:0 !important;
     width:100% !important;
     height:100% !important;
-    left:0 !important;
-    top:0 !important;
     object-fit:cover !important;
-    display:none !important;
     pointer-events:none !important;
     z-index:3 !important;
   }
@@ -768,7 +766,7 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
 <!-- HERO -->
 <section id="hero">
   <video id="hero-video" preload="none" muted loop playsinline aria-hidden="true"
-    style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px"></video>
+    style="display:none;position:absolute;pointer-events:none"></video>
   <div class="hero-sticky">
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-lines"><span></span><span></span><span></span><span></span></div>
