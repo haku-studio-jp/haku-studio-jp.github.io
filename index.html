@@ -514,9 +514,9 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .ct-btns{flex-direction:column;align-items:center;width:100%}
   .ct-line-btn,.ct-mail-btn{width:100%;max-width:300px;padding:1.3rem 2rem}
 
-  .h-title{font-size:clamp(2.4rem,11.5vw,5.5rem) !important;width:100%;line-height:1.25;margin-top:1.2rem}
+  .h-title{font-size:clamp(2.4rem,11.5vw,5.5rem) !important;width:100%;line-height:1.25;margin-top:1.2rem;text-align:center}
   .h-title .line-wrap{display:flex !important;justify-content:center !important;align-items:flex-start !important;overflow:hidden !important;padding-top:.7em;margin:0}
-  .h-title .line{white-space:nowrap !important}
+  .h-title .line{white-space:nowrap !important;text-align:center}
   .line-wrap{margin-right:0}
   .h-tag{font-size:0.65rem;text-align:center;width:100%}
   .h-sub{font-size:.75rem;line-height:1.95;max-width:28em;margin-top:2rem;margin-left:auto;margin-right:auto;word-break:keep-all;overflow-wrap:anywhere;line-break:strict;text-align:center;margin-bottom:2.5rem}
@@ -1692,12 +1692,30 @@ document.querySelectorAll('.fq-q').forEach(q=>{
 
   // -- ScrollTrigger: growin.jp完全再現 --
   let inImageMode = false;
+  let isAnimating  = false; // アニメ中は toImageMode/toLineMode 両方ブロック（WordPress版と同一）
   let heroReady = false; // テキスト完全表示後にtrueになる（それまでtoImageMode発火禁止）
 
-  function toImageMode(){
-    if(!heroReady || inImageMode) return;
-    inImageMode = true;
+  // iOS Safari touchmove 強制停止（lenis.stop()だけでは不十分）
+  const _noTouch = function(e){ e.preventDefault(); };
+  function lockScroll(){
+    const sb = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.overflow = 'hidden';
+    if(sb > 0) document.body.style.paddingRight = sb + 'px';
+    document.addEventListener('touchmove', _noTouch, { passive: false });
     lenis.stop();
+  }
+  function unlockScroll(){
+    document.documentElement.style.overflow = '';
+    document.body.style.paddingRight = '';
+    document.removeEventListener('touchmove', _noTouch);
+    lenis.start();
+  }
+
+  function toImageMode(){
+    if(!heroReady || inImageMode || isAnimating) return;
+    inImageMode = true;
+    isAnimating  = true;
+    lockScroll();
     // ラインを即座に消す（テキスト退場中に動画が見えないように）
     stopLines();
     lineAlpha = 0;
@@ -1714,13 +1732,15 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       // 0.7s = 全行退場完了（0.1+0.5=0.6s）より後。SP/PC両方でテキスト消えてから動画出す
       .add(()=>{ canvas.style.zIndex='3'; }, 0.7)
       .to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut',
-          onComplete: ()=>{ lenis.start(); }
+          onComplete: ()=>{ isAnimating = false; unlockScroll(); }
       }, 0.7);
   }
 
   function toLineMode(){
-    if(!inImageMode) return; inImageMode = false;
-    lenis.stop(); // 逆アニメ中ロック
+    if(!inImageMode || isAnimating) return;
+    inImageMode = false;
+    isAnimating  = true;
+    lockScroll();
     gsap.to(CIRC, { r:0, duration:.6, ease:'power2.inOut', onComplete:()=>{
       canvas.style.zIndex = '1';
       gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
@@ -1734,7 +1754,7 @@ document.querySelectorAll('.fq-q').forEach(q=>{
         .to('.h-sub',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
         .to('.hero-scroll-line', { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
         .to('.hero-lines',       { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
-        .add(()=>{ lenis.start(); }, 0.8); // テキスト復帰後スクロール解放
+        .add(()=>{ isAnimating = false; unlockScroll(); }, 0.8); // テキスト復帰後スクロール解放
     }});
   }
 
