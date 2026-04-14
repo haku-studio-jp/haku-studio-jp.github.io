@@ -530,6 +530,19 @@ footer{background:var(--black);border-top:1px solid rgba(255,255,255,.06);paddin
   .w-name{font-size:1.4rem}
   .about-role{white-space:nowrap}
   html,body{overflow-x:hidden}
+  /* SP: hero-video を全画面配置・初期opacity:0（テキスト退場後にGSAPでフェードイン） */
+  #hero-video{
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    left:0 !important;
+    top:0 !important;
+    object-fit:cover !important;
+    opacity:0 !important;
+    pointer-events:none !important;
+    z-index:3 !important;
+  }
 }
 
 /* ── VALUE SECTION ── */
@@ -1605,8 +1618,8 @@ document.querySelectorAll('.fq-q').forEach(q=>{
       ctx.globalAlpha = 1;
     }
 
-    // ② サークルモード: スクロール後に動画フルスクリーン（r=0→circMax）
-    if(CIRC.r > 0.5 && video.readyState >= 2){
+    // ② サークルモード: スクロール後に動画フルスクリーン（PCのみ。SPはDOM video要素のopacityで制御）
+    if(!isSP && CIRC.r > 0.5 && video.readyState >= 2){
       ctx.save();
       ctx.beginPath();
       ctx.arc(CIRC.x, CIRC.y, CIRC.r, 0, Math.PI * 2);
@@ -1672,51 +1685,85 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     lenis.start();
   }
 
-  // -- toImageMode（テキスト退場 → CIRC展開） --
+  // -- toImageMode（テキスト退場 → 動画表示） --
   function toImageMode(){
     if(!heroReady || inImageMode || isAnimating) return;
     inImageMode = true;
     isAnimating  = true;
     scrolledDownInImageMode = false;
     stopLines(); lineAlpha = 0; alphaProxy.v = 0;
-    // テキスト退場完了後にCIRC展開（直列）
-    gsap.timeline({ onComplete: () => {
-      canvas.style.zIndex = '3';
-      gsap.to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut',
-        onComplete: ()=>{ isAnimating = false; unlockScroll(); }
-      });
-    }})
-      .to('.h-title .line-wrap:nth-child(1) .line', { y:'130%',  duration:.5, ease:'power3.out' }, 0)
-      .to('.h-title .line-wrap:nth-child(2) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .05)
-      .to('.h-title .line-wrap:nth-child(3) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .1)
-      .to('.h-tag',            { autoAlpha:0, duration:.3 }, 0)
-      .to('.h-sub',            { autoAlpha:0, duration:.3 }, 0)
-      .to('.hero-scroll-line', { autoAlpha:0, duration:.3 }, 0)
-      .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0);
+
+    if(isSP){
+      // SP: テキスト退場 → DOM video element を opacity でフェードイン（"+=0.1" 遅延）
+      gsap.timeline({ onComplete: ()=>{ isAnimating = false; unlockScroll(); } })
+        .to('.h-title .line-wrap:nth-child(1) .line', { y:'130%',  duration:.5, ease:'power3.out' }, 0)
+        .to('.h-title .line-wrap:nth-child(2) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .05)
+        .to('.h-title .line-wrap:nth-child(3) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .1)
+        .to('.h-tag',            { autoAlpha:0, duration:.3 }, 0)
+        .to('.h-sub',            { autoAlpha:0, duration:.3 }, 0)
+        .to('.hero-scroll-line', { autoAlpha:0, duration:.3 }, 0)
+        .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0)
+        .to('#hero-video',       { opacity:1,   duration:.8, ease:'power2.out' }, '+=0.1');
+    } else {
+      // PC: テキスト退場完了後にcanvas CIRC展開（直列）
+      gsap.timeline({ onComplete: () => {
+        canvas.style.zIndex = '3';
+        gsap.to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut',
+          onComplete: ()=>{ isAnimating = false; unlockScroll(); }
+        });
+      }})
+        .to('.h-title .line-wrap:nth-child(1) .line', { y:'130%',  duration:.5, ease:'power3.out' }, 0)
+        .to('.h-title .line-wrap:nth-child(2) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .05)
+        .to('.h-title .line-wrap:nth-child(3) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .1)
+        .to('.h-tag',            { autoAlpha:0, duration:.3 }, 0)
+        .to('.h-sub',            { autoAlpha:0, duration:.3 }, 0)
+        .to('.hero-scroll-line', { autoAlpha:0, duration:.3 }, 0)
+        .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0);
+    }
   }
 
-  // -- toLineMode（CIRC収縮 → テキスト復帰 → 再ロック） --
+  // -- toLineMode（動画非表示 → テキスト復帰 → 再ロック） --
   function toLineMode(){
     if(!inImageMode || isAnimating) return;
     inImageMode = false;
     isAnimating  = true;
     scrolledDownInImageMode = false;
     lenis.stop(); // 即座にロック
-    gsap.to(CIRC, { r:0, duration:.6, ease:'power2.inOut', onComplete:()=>{
-      canvas.style.zIndex = '1';
-      pathData.forEach(p => { p.dashOffset = 1.05; });
-      gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
-        onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:startLines
-      });
-      gsap.timeline({ onComplete: ()=>{ isAnimating = false; lockScroll(); } })
-        .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
-        .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
-        .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
-        .to('.h-tag',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
-        .to('.h-sub',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
-        .to('.hero-scroll-line', { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
-        .to('.hero-lines',       { autoAlpha:1, duration:.5, ease:'power2.out' }, .2);
-    }});
+
+    if(isSP){
+      // SP: DOM video を opacity:0 → テキスト復帰
+      gsap.to('#hero-video', { opacity:0, duration:.4, ease:'power2.in', onComplete: ()=>{
+        pathData.forEach(p => { p.dashOffset = 1.05; });
+        gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
+          onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:startLines
+        });
+        gsap.timeline({ onComplete: ()=>{ isAnimating = false; lockScroll(); } })
+          .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
+          .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
+          .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
+          .to('.h-tag',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
+          .to('.h-sub',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
+          .to('.hero-scroll-line', { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
+          .to('.hero-lines',       { autoAlpha:1, duration:.5, ease:'power2.out' }, .2);
+      }});
+    } else {
+      // PC: CIRC収縮 → テキスト復帰
+      gsap.to(CIRC, { r:0, duration:.6, ease:'power2.inOut', onComplete:()=>{
+        canvas.style.zIndex = '1';
+        pathData.forEach(p => { p.dashOffset = 1.05; });
+        gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
+          onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:startLines
+        });
+        gsap.timeline({ onComplete: ()=>{ isAnimating = false; lockScroll(); } })
+          .to('.h-title .line-wrap:nth-child(1) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
+          .to('.h-title .line-wrap:nth-child(2) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
+          .to('.h-title .line-wrap:nth-child(3) .line', { y:'0%', duration:.6, ease:'power4.out' }, .1)
+          .to('.h-tag',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
+          .to('.h-sub',            { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
+          .to('.hero-scroll-line', { autoAlpha:1, duration:.5, ease:'power2.out' }, .2)
+          .to('.hero-lines',       { autoAlpha:1, duration:.5, ease:'power2.out' }, .2);
+      }});
+    }
   }
 
   // -- ジェスチャー検知（スクロールロック中にトリガー） --
