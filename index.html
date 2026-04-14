@@ -1403,7 +1403,7 @@ function hideLoader(){
       .to('.h-tag', { autoAlpha:1, duration:.5, ease:'power2.out' }, 0)
       .to('.h-sub', { autoAlpha:1, duration:.7, ease:'power2.out' }, .25)
       .add(()=>{ if(typeof window.startHeroLines==='function') window.startHeroLines(); }, 0.95)
-      .add(()=>{ if(typeof window.setHeroReady==='function') window.setHeroReady(); }, 0.4);
+      .add(()=>{ if(typeof window.setHeroReady==='function') window.setHeroReady(); }, 1.0);
   }, 1200);
 }
 window.addEventListener('load',()=>setTimeout(hideLoader,2300));
@@ -1723,10 +1723,14 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   // growin.jp方式: height:200vh + sticky
   // start:80px + 時間ガード = iOS Safari誤発火防止
   window.setHeroReady = function(){
-    heroReady = true;
-    window.scrollTo(0, 0); // ブラウザスクロール復元リセット
-    ScrollTrigger.update();  // リセット後にトリガー状態を再評価（再発火可能にする）
-    lenis.start();
+    window.scrollTo(0, 0); // iOSは非同期のため先にリセット
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        heroReady = true; // scrollTo反映後に有効化
+        ScrollTrigger.refresh(); // 全トリガーを現在位置で再計算
+        lenis.start();
+      });
+    });
   };
 
   ScrollTrigger.create({
