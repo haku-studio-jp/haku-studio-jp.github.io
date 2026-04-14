@@ -1514,11 +1514,6 @@ document.querySelectorAll('.fq-q').forEach(q=>{
   const ctx = canvas.getContext('2d');
   const video = document.getElementById('hero-video');
 
-  // オフスクリーンキャンバス（動画マスク合成専用・BASE座標、スケールなし）
-  const off = document.createElement('canvas');
-  off.width = BASE_W; off.height = BASE_H;
-  const offCtx = off.getContext('2d');
-
   let fitScale = 1, fitOX = 0, fitOY = 0, circMax = 0;
   const CIRC = isSP ? { x:187, y:560, r:0 } : { x:1060, y:375, r:0 };
 
@@ -1709,6 +1704,7 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     lockScroll();
     gsap.to(CIRC, { r:0, duration:.6, ease:'power2.inOut', onComplete:()=>{
       canvas.style.zIndex = '1';
+      pathData.forEach(p => { p.dashOffset = 1.05; }); // フェードイン前にリセット（中途半端な位置で出ないように）
       gsap.to(alphaProxy, { v:1, duration:.8, ease:'power2.out',
         onUpdate:()=>{ lineAlpha=alphaProxy.v; }, onComplete:startLines
       });
