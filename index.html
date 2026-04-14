@@ -1681,20 +1681,22 @@ document.querySelectorAll('.fq-q').forEach(q=>{
     stopLines();
     lineAlpha = 0;
     alphaProxy.v = 0;
-    gsap.timeline()
+    // テキスト退場を先に完結させ、onCompleteでCIRC展開（直列保証）
+    gsap.timeline({
+      onComplete: () => {
+        canvas.style.zIndex = '3';
+        gsap.to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut',
+          onComplete: ()=>{ isAnimating = false; unlockScroll(); }
+        });
+      }
+    })
       .to('.h-title .line-wrap:nth-child(1) .line', { y:'130%',  duration:.5, ease:'power3.out' }, 0)
       .to('.h-title .line-wrap:nth-child(2) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .05)
       .to('.h-title .line-wrap:nth-child(3) .line', { y:'-180%', duration:.5, ease:'power3.out' }, .1)
       .to('.h-tag',            { autoAlpha:0, duration:.3 }, 0)
       .to('.h-sub',            { autoAlpha:0, duration:.3 }, 0)
       .to('.hero-scroll-line', { autoAlpha:0, duration:.3 }, 0)
-      .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0)
-      // テキスト退場完了後にcanvasを前面へ → サークル展開
-      // 0.7s = 全行退場完了（0.1+0.5=0.6s）より後。SP/PC両方でテキスト消えてから動画出す
-      .add(()=>{ canvas.style.zIndex='3'; }, 0.7)
-      .to(CIRC, { r:circMax, duration:.85, ease:'power2.inOut',
-          onComplete: ()=>{ isAnimating = false; unlockScroll(); }
-      }, 0.7);
+      .to('.hero-lines',       { autoAlpha:0, duration:.3 }, 0);
   }
 
   function toLineMode(){
